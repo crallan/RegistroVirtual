@@ -1,0 +1,29 @@
+﻿@model Models.UserModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/css/site/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login">
+        <h1>Login</h1>
+
+        @using (Html.BeginForm("Validate", "Login", FormMethod.Post))
+        {
+            @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Username" })
+            @Html.PasswordFor(m => m.Passsword, new { required = "required", placeholder = "Password" })
+            
+            <button type="submit" class="btn btn-primary btn-block btn-large">Let me in</button>
+        }
+
+    </div>
+</body>
+</html>
