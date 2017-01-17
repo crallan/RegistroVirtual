@@ -1,4 +1,5 @@
 ﻿using Models;
+using Services.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,14 @@ namespace Services.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
+        RegistroVirtualEntities context = new RegistroVirtualEntities();
+
         public bool Authenticate(UserModel user)
         {
-            if (user.Username.Equals("achacon") && user.Passsword.Equals("123")) {
+            var users = context.Users.Where(x => x.Username.Equals(user.Username)
+                       && x.Password.Equals(user.Password));
+
+            if (users.Count() > 0) {
                 return true;
             }
 

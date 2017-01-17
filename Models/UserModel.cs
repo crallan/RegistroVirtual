@@ -10,7 +10,7 @@ namespace Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Passsword { get; set; }
+        public string Password { get; set; }
 
         public UserModel()
         {
@@ -20,7 +20,7 @@ namespace Models
         public UserModel(string Username, string Password)
         {
             this.Username = Username;
-            this.Passsword = Passsword;
+            this.Password = Password;
         }
     }
 }
