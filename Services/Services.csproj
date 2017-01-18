@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract\IRepository.cs" />
+    <Compile Include="Model\Classes.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Institution.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
@@ -70,12 +73,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegistroVirtualModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Roles.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Students.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Subjects.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Users.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\StudentRepository.cs" />
     <Compile Include="Repositories\AuthenticationRepository.cs" />
     <Compile Include="Specializations\IAuthenticationRepository.cs" />
+    <Compile Include="Specializations\IStudentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

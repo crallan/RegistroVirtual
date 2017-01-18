@@ -1,5 +1,6 @@
 ﻿using Models;
 using Services.Model;
+using Services.Specializations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,18 @@ namespace Services.Repositories
 
         public UserModel Get(string id)
         {
-            throw new NotImplementedException();
+            var user = from u in context.Users
+                       select new UserModel()
+                       {
+                           Id = u.Id,
+                           Username = u.Username,
+                           Password = u.Password
+                       };
+
+            return user.FirstOrDefault();
         }
 
-        public void Save(UserModel entity)
+        public bool Save(UserModel entity)
         {
             throw new NotImplementedException();
         }

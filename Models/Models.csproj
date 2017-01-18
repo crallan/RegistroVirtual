@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SectionModel.cs" />
+    <Compile Include="SubjectModel.cs" />
+    <Compile Include="RoleModel.cs" />
+    <Compile Include="InstitutionModel.cs" />
+    <Compile Include="StudentModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

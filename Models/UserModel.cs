@@ -14,7 +14,6 @@ namespace Models
 
         public UserModel()
         {
-                
         }
 
         public UserModel(string Username, string Password)

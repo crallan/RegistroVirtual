@@ -12,21 +12,18 @@ namespace Services.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Roles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Roles()
         {
-            this.Subjects = new HashSet<Subjects>();
+            this.Users = new HashSet<Users>();
         }
     
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Name { get; set; }
     
-        public virtual Institution Institution { get; set; }
-        public virtual Roles Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Subjects> Subjects { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

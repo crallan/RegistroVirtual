@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Services.Specializations
 {
-    public interface IAuthenticationRepository : IRepository<UserModel, string>
+    public interface IStudentRepository : IRepository<StudentModel, string>
     {
-        bool Authenticate(UserModel user);
+        bool GetListByClass(int classId);
     }
 }

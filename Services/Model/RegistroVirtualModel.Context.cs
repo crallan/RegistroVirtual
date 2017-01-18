@@ -27,5 +27,9 @@ namespace Services.Model
     
         public virtual DbSet<Institution> Institution { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Classes> Classes { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<Students> Students { get; set; }
     }
 }

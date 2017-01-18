@@ -4,13 +4,52 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RegistroVirtualDb.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RegistroVirtualDb.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Institution">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="ClassId" Type="int" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="SubjectsByUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -19,13 +58,115 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="InstitutionId" Type="int" />
+          <Property Name="RolId" Type="int" />
         </EntityType>
+        <Association Name="FK_Classes_Institution">
+          <End Role="Institution" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="0..1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectsByUsers_SubjectsByUsers">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="SubjectsByUsers" Type="Self.SubjectsByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubjectsByUsers">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectsByUsers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SubjectsByUsers" Type="Self.SubjectsByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubjectsByUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Institution">
+          <End Role="Institution" Type="Self.Institution" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RegistroVirtualDbStoreContainer">
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Institution" EntityType="Self.Institution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectsByUsers" EntityType="Self.SubjectsByUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Classes_Institution" Association="Self.FK_Classes_Institution">
+            <End Role="Institution" EntitySet="Institution" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_Classes" Association="Self.FK_Students_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectsByUsers_SubjectsByUsers" Association="Self.FK_SubjectsByUsers_SubjectsByUsers">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectsByUsers" EntitySet="SubjectsByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectsByUsers_Users" Association="Self.FK_SubjectsByUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SubjectsByUsers" EntitySet="SubjectsByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Institution" Association="Self.FK_Users_Institution">
+            <End Role="Institution" EntitySet="Institution" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RegistroVirtualDb" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -35,6 +176,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.FK_Users_Institution" FromRole="Institution" ToRole="Users" />
+          <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Classes_Institution" FromRole="Institution" ToRole="Classes" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -43,11 +186,92 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Institution" Relationship="RegistroVirtualDb.FK_Users_Institution" FromRole="Users" ToRole="Institution" />
+          <NavigationProperty Name="Roles" Relationship="RegistroVirtualDb.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="Subjects" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Users" ToRole="Subjects" />
         </EntityType>
         <EntityContainer Name="RegistroVirtualEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Institution" EntityType="Self.Institution" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Classes" EntityType="RegistroVirtualDb.Classes" />
+          <EntitySet Name="Roles" EntityType="RegistroVirtualDb.Roles" />
+          <EntitySet Name="Subjects" EntityType="RegistroVirtualDb.Subjects" />
+          <AssociationSet Name="FK_Users_Institution" Association="RegistroVirtualDb.FK_Users_Institution">
+            <End Role="Institution" EntitySet="Institution" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="RegistroVirtualDb.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectsByUsers" Association="RegistroVirtualDb.SubjectsByUsers">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Institution" Association="RegistroVirtualDb.FK_Classes_Institution">
+            <End Role="Institution" EntitySet="Institution" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <EntitySet Name="Students" EntityType="RegistroVirtualDb.Students" />
+          <AssociationSet Name="FK_Students_Classes" Association="RegistroVirtualDb.FK_Students_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Institution" Relationship="RegistroVirtualDb.FK_Classes_Institution" FromRole="Classes" ToRole="Institution" />
+          <NavigationProperty Name="Students" Relationship="RegistroVirtualDb.FK_Students_Classes" FromRole="Classes" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Subjects" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Users_Institution">
+          <End Type="RegistroVirtualDb.Institution" Role="Institution" Multiplicity="0..1" />
+          <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="RegistroVirtualDb.Roles" Role="Roles" Multiplicity="0..1" />
+          <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        <Association Name="SubjectsByUsers">
+          <End Type="RegistroVirtualDb.Subjects" Role="Subjects" Multiplicity="*" />
+          <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Classes_Institution">
+          <End Type="RegistroVirtualDb.Institution" Role="Institution" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.Classes" Role="Classes" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Students_Classes" FromRole="Students" ToRole="Classes" />
+        </EntityType>
+        <Association Name="FK_Students_Classes">
+          <End Type="RegistroVirtualDb.Classes" Role="Classes" Multiplicity="0..1" />
+          <End Type="RegistroVirtualDb.Students" Role="Students" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -71,6 +295,82 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Users_Institution" TypeName="RegistroVirtualDb.FK_Users_Institution" StoreEntitySet="Users">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Institution">
+              <ScalarProperty Name="Id" ColumnName="InstitutionId" />
+            </EndProperty>
+            <Condition ColumnName="InstitutionId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Users_Roles" TypeName="RegistroVirtualDb.FK_Users_Roles" StoreEntitySet="Users">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="Id" ColumnName="RolId" />
+            </EndProperty>
+            <Condition ColumnName="RolId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SubjectsByUsers" TypeName="RegistroVirtualDb.SubjectsByUsers" StoreEntitySet="SubjectsByUsers">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Subjects">
+              <ScalarProperty Name="Id" ColumnName="SubjectId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Classes_Institution" TypeName="RegistroVirtualDb.FK_Classes_Institution" StoreEntitySet="Classes">
+            <EndProperty Name="Classes">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Institution">
+              <ScalarProperty Name="Id" ColumnName="InstitutionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Students_Classes" TypeName="RegistroVirtualDb.FK_Students_Classes" StoreEntitySet="Students">
+            <EndProperty Name="Students">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Classes">
+              <ScalarProperty Name="Id" ColumnName="ClassId" />
+            </EndProperty>
+            <Condition ColumnName="ClassId" IsNull="false" />
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

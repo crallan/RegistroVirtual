@@ -1,0 +1,15 @@
+﻿@model Models.StudentModel
+
+@{
+    ViewBag.Title = "Student";
+    Layout = "~/Layouts/DashboardLayout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "Student", FormMethod.Post))
+{
+    @Html.TextBoxFor(m => m.FirstName, new { required = "required", placeholder = "First Name" })
+    @Html.TextBoxFor(m => m.LastName, new { required = "required", placeholder = "Last Name" })
+
+    <button type="submit" class="btn btn-primary btn-block btn-large">Save</button>
+}
+
