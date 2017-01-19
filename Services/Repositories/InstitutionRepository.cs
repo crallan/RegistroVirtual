@@ -16,7 +16,15 @@ namespace Services.Repositories
 
         public InstitutionModel Get(string id)
         {
-            throw new NotImplementedException();
+            var institution = from i in context.Institution
+                         where i.Id.ToString().Equals(id)
+                         select new InstitutionModel()
+                         {
+                             Id = i.Id,
+                             Name = i.Name
+                         };
+
+            return institution.FirstOrDefault();
         }
 
         public IEnumerable<InstitutionModel> GetInstitutionsList()
@@ -40,7 +48,7 @@ namespace Services.Repositories
             try
             {
                 //Add
-                if (dbInstitution.Id.Equals(0))
+                if (institutionModel.Id.Equals(0))
                 {
                     dbInstitution.Name = institutionModel.Name;
 

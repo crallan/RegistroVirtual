@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Models;
+using RegistroVirtual.Attributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,20 +10,47 @@ using System.Web.Mvc;
 
 namespace RegistroVirtual.Controllers
 {
+    [SessionAuthorize]
     public class StudentController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string FirstNameFilter, string LastNameFilter)
+        {
+            List<StudentModel> students = new List<StudentModel>();
+            Student student = new Student();
+            students = student.GetList().ToList();
+
+            if (!string.IsNullOrEmpty(FirstNameFilter))
+            {
+                students = students.Where(x => x.FirstName.ToLowerInvariant().Contains(FirstNameFilter.ToLowerInvariant())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(LastNameFilter))
+            {
+                students = students.Where(x => x.LastName.ToLowerInvariant().Contains(LastNameFilter.ToLowerInvariant())).ToList();
+            }
+
+            return View(students);
+        }
+
+        public ActionResult Create(string id)
         {
             StudentModel student = new StudentModel();
             List<SelectListItem> classOptions = new List<SelectListItem>();
             List<ClassModel> classes = new Class().GetClassesList().ToList();
 
-            foreach (ClassModel @class in classes) {
+            foreach (ClassModel @class in classes)
+            {
                 classOptions.Add(new SelectListItem
                 {
                     Text = @class.Name,
                     Value = @class.Id.ToString()
                 });
+            }
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                Student studentDomain = new Student();
+                student = studentDomain.Get(id);
             }
 
             student.Classes = classOptions;
@@ -61,9 +89,14 @@ namespace RegistroVirtual.Controllers
         public ActionResult Save(StudentModel studentModel)
         {
             Student student = new Student();
-            student.Save(studentModel);
 
-            return View("Index");
+            if (student.Save(studentModel))
+            {
+                return RedirectToAction("Index");
+            }
+            else {
+                return RedirectToAction("Create");
+            } 
         }
 
     }

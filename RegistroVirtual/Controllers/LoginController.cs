@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Models;
+using RegistroVirtual.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,16 @@ namespace RegistroVirtual.Controllers
 
             if (user.Authenticate(userModel))
             {
+                Session["User"] = userModel.Username;
                 return RedirectToAction("Index", "Dashboard");
             }
 
+            return View("Index");
+        }
+
+        public ActionResult Logout()
+        {
+            Session["User"] = null;
             return View("Index");
         }
 

@@ -16,7 +16,15 @@ namespace Services.Repositories
 
         public ClassModel Get(string id)
         {
-            throw new NotImplementedException();
+            var @class = from c in context.Classes
+                          where c.Id.ToString().Equals(id)
+                          select new ClassModel()
+                          {
+                              Id = c.Id,
+                              Name = c.Name
+                          };
+
+            return @class.FirstOrDefault();
         }
 
         public IEnumerable<ClassModel> GetClassesList()
@@ -40,9 +48,10 @@ namespace Services.Repositories
             try
             {
                 //Add
-                if (dbClass.Id.Equals(0))
+                if (classModel.Id.Equals(0))
                 {
                     dbClass.Name = classModel.Name;
+                    dbClass.Institution = context.Institution.Single(p => p.Id.Equals(classModel.InstitutionId));
 
                     context.Classes.Add(dbClass);
                     result = context.SaveChanges();

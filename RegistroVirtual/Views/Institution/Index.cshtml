@@ -1,9 +1,17 @@
-﻿@model Models.InstitutionModel
+﻿@model IEnumerable<Models.InstitutionModel>
 
 @{
-    ViewBag.Title = "Institution";
+    ViewBag.Title = "Institutions";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
+
+@{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 5,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.Numeric);
+}
+
+<link href="~/Content/css/site/grid.css" rel="stylesheet" />
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -12,25 +20,54 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Institution
+                    Institutions
                 </h1>
             </div>
         </div>
 
-        <!-- Form -->
-        <div class="col-md-4">
-            @using (Html.BeginForm("Save", "Institution", FormMethod.Post))
-            {
-                <div class="form-group">
-                    <label>Name:</label>
-                    @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Name", @class = "form-control" })
-                </div>
+        <div class="row filters-container">
 
-                <button type="submit" class="btn btn-primary btn-block btn-large">Save</button>
-            }
+            <div class="col-lg-12">
+                <h3>
+                    Filter
+                </h3>
+            </div>
+
+            <div class="col-lg-6">
+                @using (Html.BeginForm("Index", "Institution", FormMethod.Get))
+                {
+                    <div class="form-group col-md-8">
+                        <label>Name:</label>
+                        @Html.TextBox("NameFilter", string.Empty, new { placeholder = "Name", @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-5">
+                        <button type="submit" class="btn btn-primary btn-block btn-large"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- List -->
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/Institution/Create" class="fa fa-plus-square new-button" aria-hidden="true"></a>
+            </div>
+        </div>
+        <div class="row grid-container">
+            <div class="col-lg-6">
+                @grid.GetHtml(tableStyle: "webGrid",
+                footerStyle: "footer",
+                headerStyle: "header",
+                alternatingRowStyle: "alt",
+                selectedRowStyle: "select",
+                columns: grid.Columns(
+                grid.Column("Name", "Name"),
+                grid.Column(columnName: "Action", style: "action", format: (item) => Html.ActionLink(" ", "Create", new { id = item.id }, new { @class = "fa fa-pencil edit-button" }))
+                ))
+            </div>
+
         </div>
     </div>
+
 </div>
-
-
-

@@ -1,0 +1,48 @@
+﻿.webGrid {
+    margin: 4px;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #d6d6d6;
+    text-align: center;
+}
+
+.header {
+    background-color: #337ab7;
+    font-size: 16px;
+}
+
+.header a{
+    color: #FFF;
+    font-weight: bold;
+}
+
+.webGrid th, .webGrid td {
+    border: 1px solid #2b5569;
+    padding: 5px;
+    text-align: center;
+}
+
+.alt {
+    background-color: #E4E9F5;
+    color: #000;
+}
+
+.gridHead a:hover {
+    text-decoration: underline;
+}
+
+.description {
+    width: auto;
+}
+
+.select {
+    background-color: #71857C;
+}
+
+.footer {
+    text-align: center;
+}
+
+.action {
+    width: 30px;
+}

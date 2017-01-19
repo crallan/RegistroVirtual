@@ -10,7 +10,8 @@ namespace Services.Specializations
 {
     public interface IStudentRepository : IRepository<StudentModel, string>
     {
-        bool GetListByClass(int classId);
+        IEnumerable<StudentModel> GetList();
+        IEnumerable<StudentModel> GetListByClass(int classId);
         bool Import(ImportModel importModel);
     }
 }

@@ -20,5 +20,10 @@ namespace Domain
         {
             return new ClassRepository().Save(@class);
         }
+
+        public ClassModel Get(string id)
+        {
+            return new ClassRepository().Get(id);
+        }
     }
 }

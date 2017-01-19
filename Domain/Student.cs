@@ -20,5 +20,15 @@ namespace Domain
         {
             return new StudentRepository().Import(importModel);
         }
+
+        public IEnumerable<StudentModel> GetList()
+        {
+            return new StudentRepository().GetList();
+        }
+
+        public StudentModel Get(string id)
+        {
+            return new StudentRepository().Get(id);
+        }
     }
 }

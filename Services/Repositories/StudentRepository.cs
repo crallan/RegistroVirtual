@@ -19,10 +19,34 @@ namespace Services.Repositories
 
         public StudentModel Get(string id)
         {
-            throw new NotImplementedException();
+            var student = from s in context.Students
+                          where s.Id.ToString().Equals(id)
+                          select new StudentModel()
+                           {
+                               Id = s.Id,
+                               FirstName = s.FirstName,
+                               LastName = s.LastName,
+                               ClassId = s.Classes.Id
+                           };
+
+            return student.FirstOrDefault();
         }
 
-        public bool GetListByClass(int classId)
+        public IEnumerable<StudentModel> GetList()
+        {
+            var students = from s in context.Students
+                          select new StudentModel()
+                          {
+                              Id = s.Id,
+                              FirstName = s.FirstName,
+                              LastName = s.LastName,
+                              ClassId = s.Classes.Id
+                          };
+
+            return students;
+        }
+
+        public IEnumerable<StudentModel> GetListByClass(int classId)
         {
             throw new NotImplementedException();
         }
@@ -59,11 +83,12 @@ namespace Services.Repositories
         public bool Save(StudentModel student)
         {
             Students dbStudent = new Students();
-            student.Id = 2;
+
             int result;
 
             try
             {
+
                 //Add
                 if (student.Id.Equals(0))
                 {

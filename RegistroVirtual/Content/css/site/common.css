@@ -9,3 +9,12 @@
 #page-wrapper {
     min-height: 100%;
 }
+
+.filters-container {
+    margin-bottom: 3%;
+}
+
+.new-button, .edit-button {
+    font-size: 22px;
+}
+

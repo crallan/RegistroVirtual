@@ -20,5 +20,10 @@ namespace Domain
         {
             return new InstitutionRepository().Save(institution);
         }
+
+        public InstitutionModel Get(string id)
+        {
+            return new InstitutionRepository().Get(id);
+        }
     }
 }
