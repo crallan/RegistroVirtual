@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Student
+    public class Class
     {
         //Methods
-        public bool Save(StudentModel student)
+        public IEnumerable<ClassModel> GetClassesList()
         {
-            return new StudentRepository().Save(student);
+            return new ClassRepository().GetClassesList();
         }
 
-        public bool Import(ImportModel importModel)
+        public bool Save(ClassModel @class)
         {
-            return new StudentRepository().Import(importModel);
+            return new ClassRepository().Save(@class);
         }
     }
 }

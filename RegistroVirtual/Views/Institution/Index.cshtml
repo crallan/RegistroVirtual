@@ -1,0 +1,36 @@
+﻿@model Models.InstitutionModel
+
+@{
+    ViewBag.Title = "Institution";
+    Layout = "~/Layouts/DashboardLayout.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Institution
+                </h1>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="col-md-4">
+            @using (Html.BeginForm("Save", "Institution", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Name:</label>
+                    @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Name", @class = "form-control" })
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-large">Save</button>
+            }
+        </div>
+    </div>
+</div>
+
+
+

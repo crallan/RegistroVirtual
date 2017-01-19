@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Services.Specializations
 {
-    public interface IStudentRepository : IRepository<StudentModel, string>
+    public interface IInstitutionRepository : IRepository<InstitutionModel, string>
     {
-        bool GetListByClass(int classId);
-        bool Import(ImportModel importModel);
+        IEnumerable<InstitutionModel> GetInstitutionsList();
     }
 }
