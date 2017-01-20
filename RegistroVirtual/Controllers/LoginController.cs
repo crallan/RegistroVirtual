@@ -22,7 +22,11 @@ namespace RegistroVirtual.Controllers
 
             if (user.Authenticate(userModel))
             {
-                Session["User"] = userModel.Username;
+                User userDomain = new User();
+                userModel = userDomain.GetUserByUsername(userModel.Username);
+                userModel.Password = string.Empty;
+
+                Session["User"] = userModel;
                 return RedirectToAction("Index", "Dashboard");
             }
 

@@ -15,5 +15,10 @@ namespace Domain
             return new AuthenticationRepository().Authenticate(user);
         }
 
+        public UserModel GetUserByUsername(string userName)
+        {
+            return new AuthenticationRepository().GetUserByUsername(userName);
+        }
+
     }
 }

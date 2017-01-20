@@ -28,6 +28,21 @@ namespace Services.Repositories
         public UserModel Get(string id)
         {
             var user = from u in context.Users
+                       where u.Id.Equals(id)
+                       select new UserModel()
+                       {
+                           Id = u.Id,
+                           Username = u.Username,
+                           Password = u.Password
+                       };
+
+            return user.FirstOrDefault();
+        }
+
+        public UserModel GetUserByUsername(string username)
+        {
+            var user = from u in context.Users
+                       where u.Username.Equals(username)
                        select new UserModel()
                        {
                            Id = u.Id,

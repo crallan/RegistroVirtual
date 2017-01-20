@@ -11,5 +11,6 @@ namespace Services.Specializations
     public interface IAuthenticationRepository : IRepository<UserModel, string>
     {
         bool Authenticate(UserModel user);
+        UserModel GetUserByUsername(string username);
     }
 }

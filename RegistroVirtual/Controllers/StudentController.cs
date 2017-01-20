@@ -83,7 +83,7 @@ namespace RegistroVirtual.Controllers
                 }
             }
 
-            return View();
+            return View("ImportTask");
         }
 
         public ActionResult Save(StudentModel studentModel)
