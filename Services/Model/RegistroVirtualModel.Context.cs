@@ -31,5 +31,10 @@ namespace Services.Model
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Students> Students { get; set; }
+        public virtual DbSet<Exams> Exams { get; set; }
+        public virtual DbSet<ExtraclassWorks> ExtraclassWorks { get; set; }
+        public virtual DbSet<RegisterProfiles> RegisterProfiles { get; set; }
+        public virtual DbSet<SchoolYears> SchoolYears { get; set; }
+        public virtual DbSet<Trimesters> Trimesters { get; set; }
     }
 }

@@ -12,24 +12,25 @@ namespace Services.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class RegisterProfiles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public RegisterProfiles()
         {
-            this.Subjects = new HashSet<Subjects>();
-            this.RegisterProfiles = new HashSet<RegisterProfiles>();
+            this.ExtraclassWorks = new HashSet<ExtraclassWorks>();
         }
     
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Name { get; set; }
+        public double DailyWorkPercentage { get; set; }
+        public double ConceptPercentage { get; set; }
+        public double AssistancePercentage { get; set; }
     
-        public virtual Institution Institution { get; set; }
-        public virtual Roles Roles { get; set; }
+        public virtual Exams Exams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Subjects> Subjects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RegisterProfiles> RegisterProfiles { get; set; }
+        public virtual ICollection<ExtraclassWorks> ExtraclassWorks { get; set; }
+        public virtual SchoolYears SchoolYears { get; set; }
+        public virtual Trimesters Trimesters { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

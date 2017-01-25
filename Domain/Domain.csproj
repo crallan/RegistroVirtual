@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RegisterProfile.cs" />
+    <Compile Include="SchoolYear.cs" />
+    <Compile Include="Trimester.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
