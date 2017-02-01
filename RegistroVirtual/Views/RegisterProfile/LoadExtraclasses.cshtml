@@ -1,0 +1,36 @@
+﻿@model  IEnumerable<Models.ExtraclassWorkModel>
+
+
+@{
+    var gridExtraclasses = new WebGrid(Model, canPage: false,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+
+<div class="row grid-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-subtitle">
+                Extraclasses
+            </h3>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        @gridExtraclasses.GetHtml(tableStyle: "webGrid",
+                        footerStyle: "footer",
+                        headerStyle: "header",
+                        alternatingRowStyle: "alt",
+                        selectedRowStyle: "select",
+                        rowStyle: "webgrid-row-style",
+                        mode: WebGridPagerModes.All,
+                        columns: gridExtraclasses.Columns(
+                             gridExtraclasses.Column("Percentage", "Percentage", format: @<text>  <span class="display-mode"> <label id="lblPercentage">@item.Percentage</label> </span> <input type="text" id="Percentage" value="@item.Percentage" class="edit-mode" /></text>, style: "col2Width"),
+                             gridExtraclasses.Column("Action", style: "action col3Width", format: @<text>
+                                <a class="edit-extraclass display-mode edit-button fa fa-pencil"></a>
+                                <a class="save-extraclass edit-mode save-button fa fa-floppy-o" data-extraclass-id="@item.Id"></a>
+                                <a class="cancel-extraclass edit-mode cancel-button fa fa-ban"></a>
+                            </text>, canSort: false)
+                        ))
+    </div>
+
+</div>
+

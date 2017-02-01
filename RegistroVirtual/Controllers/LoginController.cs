@@ -11,8 +11,9 @@ namespace RegistroVirtual.Controllers
 {
     public class LoginController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -27,7 +28,17 @@ namespace RegistroVirtual.Controllers
                 userModel.Password = string.Empty;
 
                 Session["User"] = userModel;
-                return RedirectToAction("Index", "Dashboard");
+
+                string returnUrl = Request.Form["returnUrl"];
+                
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                
             }
 
             return View("Index");

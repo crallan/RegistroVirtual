@@ -18,6 +18,7 @@ namespace Services.Model
         public RegisterProfiles()
         {
             this.ExtraclassWorks = new HashSet<ExtraclassWorks>();
+            this.Exams = new HashSet<Exams>();
         }
     
         public int Id { get; set; }
@@ -26,11 +27,12 @@ namespace Services.Model
         public double ConceptPercentage { get; set; }
         public double AssistancePercentage { get; set; }
     
-        public virtual Exams Exams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraclassWorks> ExtraclassWorks { get; set; }
         public virtual SchoolYears SchoolYears { get; set; }
         public virtual Trimesters Trimesters { get; set; }
         public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exams> Exams { get; set; }
     }
 }

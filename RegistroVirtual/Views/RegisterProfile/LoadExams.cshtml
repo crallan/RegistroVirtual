@@ -1,0 +1,37 @@
+﻿@model  IEnumerable<Models.ExamModel>
+
+
+@{
+    var gridExams = new WebGrid(Model, canPage: false,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+
+<div class="row grid-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-subtitle">
+                Exams
+            </h3>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        @gridExams.GetHtml(tableStyle: "webGrid",
+                        footerStyle: "footer",
+                        headerStyle: "header",
+                        alternatingRowStyle: "alt",
+                        selectedRowStyle: "select",
+                        rowStyle: "webgrid-row-style",
+                        mode: WebGridPagerModes.All,
+                        columns: gridExams.Columns(
+                             gridExams.Column("Percentage", "Percentage", format: @<text>  <span class="display-mode"> <label id="lblPercentage">@item.Percentage</label> </span> <input type="text" id="Percentage" value="@item.Percentage" class="edit-mode" /></text>, style: "col2Width"),
+                             gridExams.Column("Score", "Score", format: @<text> <span class="display-mode"> <label id="lblScore">@item.Score</label> </span>  <input type="text" id="Score" value="@item.Score" class="edit-mode" /> </text>, style: "col2Width"),
+                             gridExams.Column("Action", style: "action col3Width", format: @<text>
+                                <a class="edit-exam display-mode edit-button fa fa-pencil"></a>
+                                <a class="save-exam edit-mode save-button fa fa-floppy-o" data-exam-id="@item.Id"></a>
+                                <a class="cancel-exam edit-mode cancel-button fa fa-ban"></a>
+                            </text>, canSort: false)
+                        ))
+    </div>
+
+</div>
+

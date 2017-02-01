@@ -16,16 +16,16 @@
         <AssociationConnector Association="RegistroVirtualDb.FK_Classes_Institution" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Students" Width="1.5" PointX="5.875" PointY="4.375" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Students_Classes" />
-        <EntityTypeShape EntityType="RegistroVirtualDb.Exams" Width="1.5" PointX="11.125" PointY="5" />
         <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorks" Width="1.5" PointX="11.125" PointY="7.625" />
         <EntityTypeShape EntityType="RegistroVirtualDb.RegisterProfiles" Width="1.5" PointX="8.875" PointY="0.75" />
         <EntityTypeShape EntityType="RegistroVirtualDb.SchoolYears" Width="1.5" PointX="6.625" PointY="9.875" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Trimesters" Width="1.5" PointX="6.625" PointY="7.625" />
-        <AssociationConnector Association="RegistroVirtualDb.FK_Exams_RegisterProfiles" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorks_RegisterProfiles" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_SchoolYears" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Trimesters" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Users" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.Exams" Width="1.5" PointX="11.125" PointY="1.375" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Exams_RegisterProfiles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

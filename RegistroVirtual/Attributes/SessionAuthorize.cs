@@ -15,7 +15,7 @@ namespace RegistroVirtual.Attributes
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectResult("/Login");
+            filterContext.Result = new RedirectResult("/Login?returnUrl=" + HttpContext.Current.Request.Url);
         }
     }
 }

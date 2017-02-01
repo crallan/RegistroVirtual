@@ -17,7 +17,6 @@ namespace Services.Model
         public int Id { get; set; }
         public double Percentage { get; set; }
         public int Score { get; set; }
-        public int RegisterProfileId { get; set; }
     
         public virtual RegisterProfiles RegisterProfiles { get; set; }
     }

@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,6 +110,8 @@
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ExtraclassWorkRepository.cs" />
+    <Compile Include="Repositories\ExamRepository.cs" />
     <Compile Include="Repositories\RegisterProfileRepository.cs" />
     <Compile Include="Repositories\SchoolYearRepository.cs" />
     <Compile Include="Repositories\TrimesterRepository.cs" />
@@ -117,6 +120,8 @@
     <Compile Include="Repositories\StudentRepository.cs" />
     <Compile Include="Repositories\AuthenticationRepository.cs" />
     <Compile Include="Specializations\IAuthenticationRepository.cs" />
+    <Compile Include="Specializations\IExtraclassWorkRepository.cs" />
+    <Compile Include="Specializations\IExamRepository.cs" />
     <Compile Include="Specializations\IRegisterProfileRepository.cs" />
     <Compile Include="Specializations\ISchoolYearRepository.cs" />
     <Compile Include="Specializations\ITrimesterRepository.cs" />

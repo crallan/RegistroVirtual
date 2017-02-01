@@ -152,6 +152,8 @@
     <Content Include="Content\js\plugins\morris\morris.js" />
     <Content Include="Content\js\plugins\morris\morris.min.js" />
     <Content Include="Content\js\plugins\morris\raphael.min.js" />
+    <Content Include="Content\js\site\register-profile-extraclass.js" />
+    <Content Include="Content\js\site\register-profile-exam.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -221,6 +223,8 @@
     <Content Include="Views\Institution\Index.cshtml" />
     <Content Include="Views\RegisterProfile\Create.cshtml" />
     <Content Include="Views\RegisterProfile\Index.cshtml" />
+    <Content Include="Views\RegisterProfile\LoadExams.cshtml" />
+    <Content Include="Views\RegisterProfile\LoadExtraclasses.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
