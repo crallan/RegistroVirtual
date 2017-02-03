@@ -18,3 +18,18 @@
     font-size: 22px;
 }
 
+.error-message {
+    background-color: #f5d9d8;
+    color: red;
+    padding: 15px;
+    border: 1px solid #cc8e8e;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    background-color: #9cec9c;
+    color: #3c763d;
+    padding: 15px;
+    border: 1px solid #3c763d;
+    margin-bottom: 15px;
+}

@@ -15,7 +15,7 @@ namespace RegistroVirtual.Controllers
         static List<ExamModel> Exams;
         static List<ExtraclassWorkModel> Extraclasses;
         
-        public ActionResult Index(string NameFilter)
+        public ActionResult Index(string NameFilter, bool success = false)
         {
             List<RegisterProfileModel> profiles = new List<RegisterProfileModel>();
             RegisterProfile registerProfile = new RegisterProfile();
@@ -32,10 +32,15 @@ namespace RegistroVirtual.Controllers
                 profile.ExtraclassWorks = new ExtraclassWork().GetExtraclassWorksByRegisterProfile(profile.Id).ToList();
             }
 
+            if (success)
+            {
+                ViewBag.SuccessMessage = "El registro se ha guardado de manera exitosa";
+            }
+
             return View(profiles);
         }
 
-        public ActionResult Create(string id)
+        public ActionResult Create(string id, bool error = false)
         {
             RegisterProfileModel registerProfile = new RegisterProfileModel();
 
@@ -96,6 +101,10 @@ namespace RegistroVirtual.Controllers
 
             registerProfile.SchoolYears = schoolYearsOptions;
 
+            if (error) {
+                ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el registro.";
+            }
+            
             return View(registerProfile);
         }
 
@@ -163,13 +172,22 @@ namespace RegistroVirtual.Controllers
             profileModel.ExtraclassWorks = Extraclasses.Where( x => x.Percentage != 0).ToList();
             profileModel.Exams = Exams.Where(x => x.Percentage != 0 && x.Score != 0).ToList(); ;
 
-            if (registerProfile.Save(profileModel))
+            bool test = false;
+
+            if (test)//registerProfile.Save(profileModel)
             {
                 return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Create");
+                if (!profileModel.Id.Equals(0))
+                {
+                    return RedirectToAction("Create", new {id = profileModel.Id, error = true});
+                } else
+                {
+                    return RedirectToAction("Create", new {error = true});
+                }
+                
             }
         }
 
