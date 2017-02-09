@@ -11,10 +11,21 @@
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
     <link href="~/Content/css/site/login.css" rel="stylesheet" />
+    <link href="~/Content/css/site/common.css" rel="stylesheet" />
 </head>
 <body>
     <div class="login">
         <h1>Login</h1>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <!-- Error -->
+            <div class="row">
+                <div class="col-lg-6 error-message">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        }
 
         @using (Html.BeginForm("Validate", "Login", FormMethod.Post))
         {

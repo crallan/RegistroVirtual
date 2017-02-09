@@ -11,15 +11,22 @@ namespace RegistroVirtual.Controllers
 {
     public class LoginController : Controller
     {
-        public ActionResult Index(string returnUrl)
+        public ActionResult Index(string returnUrl, bool error = false)
         {
             ViewBag.ReturnUrl = returnUrl;
+
+            if (error)
+            {
+                ViewBag.ErrorMessage = "No se ha podido realizar la autenticacion, valide sus credenciales.";
+            }
+
             return View();
         }
 
         public ActionResult Validate(UserModel userModel)
         {
             User user = new User();
+            string returnUrl = Request.Form["returnUrl"];
 
             if (user.Authenticate(userModel))
             {
@@ -28,9 +35,7 @@ namespace RegistroVirtual.Controllers
                 userModel.Password = string.Empty;
 
                 Session["User"] = userModel;
-
-                string returnUrl = Request.Form["returnUrl"];
-                
+               
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect(returnUrl);
@@ -41,7 +46,16 @@ namespace RegistroVirtual.Controllers
                 
             }
 
-            return View("Index");
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction("Index", new { error = true });
+            }
+            else
+            {
+                return RedirectToAction("Index", new { returnUrl = returnUrl, error = true });
+            }
+
+            
         }
 
         public ActionResult Logout()
