@@ -44,6 +44,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
           <Property Name="TrimesterId" Type="int" Nullable="false" />
           <Property Name="SchoolYearId" Type="int" Nullable="false" />
           <Property Name="DailyWorkPercentage" Type="float" Nullable="false" />
@@ -64,6 +65,19 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegisterProfileId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="DailyWorkPercentage" Type="float" />
+          <Property Name="ConceptPercentage" Type="float" />
+          <Property Name="AssistancePercentage" Type="float" />
+          <Property Name="Belated" Type="int" />
+          <Property Name="Absences" Type="int" />
         </EntityType>
         <EntityType Name="Students">
           <Key>
@@ -103,6 +117,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="25" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="25" />
           <Property Name="InstitutionId" Type="int" />
           <Property Name="RolId" Type="int" />
         </EntityType>
@@ -154,6 +170,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RegisterProfiles_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="RegisterProfiles" Type="Self.RegisterProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegisterProfiles">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RegisterProfiles_Trimesters">
           <End Role="Trimesters" Type="Self.Trimesters" Multiplicity="1" />
           <End Role="RegisterProfiles" Type="Self.RegisterProfiles" Multiplicity="*" />
@@ -175,6 +203,30 @@
             </Principal>
             <Dependent Role="RegisterProfiles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scores_RegisterProfiles">
+          <End Role="RegisterProfiles" Type="Self.RegisterProfiles" Multiplicity="1" />
+          <End Role="Scores" Type="Self.Scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisterProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Scores">
+              <PropertyRef Name="RegisterProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scores_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Scores" Type="Self.Scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Scores">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -246,6 +298,7 @@
           <EntitySet Name="RegisterProfiles" EntityType="Self.RegisterProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolYears" EntityType="Self.SchoolYears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scores" EntityType="Self.Scores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubjectsByUsers" EntityType="Self.SubjectsByUsers" Schema="dbo" store:Type="Tables" />
@@ -267,6 +320,10 @@
             <End Role="SchoolYears" EntitySet="SchoolYears" />
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_RegisterProfiles_Subjects" Association="Self.FK_RegisterProfiles_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
+          </AssociationSet>
           <AssociationSet Name="FK_RegisterProfiles_Trimesters" Association="Self.FK_RegisterProfiles_Trimesters">
             <End Role="Trimesters" EntitySet="Trimesters" />
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
@@ -274,6 +331,14 @@
           <AssociationSet Name="FK_RegisterProfiles_Users" Association="Self.FK_RegisterProfiles_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scores_RegisterProfiles" Association="Self.FK_Scores_RegisterProfiles">
+            <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
+            <End Role="Scores" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scores_Students" Association="Self.FK_Scores_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Scores" EntitySet="Scores" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Classes" Association="Self.FK_Students_Classes">
             <End Role="Classes" EntitySet="Classes" />
@@ -320,6 +385,8 @@
           <NavigationProperty Name="Roles" Relationship="RegistroVirtualDb.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Subjects" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Users" ToRole="Subjects" />
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Users" FromRole="Users" ToRole="RegisterProfiles" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="RegistroVirtualEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Institution" EntityType="Self.Institution" />
@@ -373,6 +440,19 @@
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
             <End Role="Exams" EntitySet="Exams" />
           </AssociationSet>
+          <EntitySet Name="Scores" EntityType="RegistroVirtualDb.Scores" />
+          <AssociationSet Name="FK_RegisterProfiles_Subjects" Association="RegistroVirtualDb.FK_RegisterProfiles_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scores_RegisterProfiles" Association="RegistroVirtualDb.FK_Scores_RegisterProfiles">
+            <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
+            <End Role="Scores" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scores_Students" Association="RegistroVirtualDb.FK_Scores_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Scores" EntitySet="Scores" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Classes">
           <Key>
@@ -398,6 +478,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Subjects" ToRole="Users" />
+          <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Subjects" FromRole="Subjects" ToRole="RegisterProfiles" />
         </EntityType>
         <Association Name="FK_Users_Institution">
           <End Type="RegistroVirtualDb.Institution" Role="Institution" Multiplicity="0..1" />
@@ -423,6 +504,7 @@
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Students_Classes" FromRole="Students" ToRole="Classes" />
+          <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_Scores_Students" FromRole="Students" ToRole="Scores" />
         </EntityType>
         <Association Name="FK_Students_Classes">
           <End Type="RegistroVirtualDb.Classes" Role="Classes" Multiplicity="0..1" />
@@ -450,6 +532,8 @@
           <NavigationProperty Name="Trimesters" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Trimesters" FromRole="RegisterProfiles" ToRole="Trimesters" />
           <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Users" FromRole="RegisterProfiles" ToRole="Users" />
           <NavigationProperty Name="Exams" Relationship="RegistroVirtualDb.FK_Exams_RegisterProfiles" FromRole="RegisterProfiles" ToRole="Exams" />
+          <NavigationProperty Name="Subjects" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Subjects" FromRole="RegisterProfiles" ToRole="Subjects" />
+          <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_Scores_RegisterProfiles" FromRole="RegisterProfiles" ToRole="Scores" />
         </EntityType>
         <EntityType Name="SchoolYears">
           <Key>
@@ -497,6 +581,31 @@
           <End Type="RegistroVirtualDb.RegisterProfiles" Role="RegisterProfiles" Multiplicity="1" />
           <End Type="RegistroVirtualDb.Exams" Role="Exams" Multiplicity="*" />
         </Association>
+        <EntityType Name="Scores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DailyWorkPercentage" Type="Double" />
+          <Property Name="ConceptPercentage" Type="Double" />
+          <Property Name="AssistancePercentage" Type="Double" />
+          <Property Name="Belated" Type="Int32" />
+          <Property Name="Absences" Type="Int32" />
+          <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_Scores_RegisterProfiles" FromRole="Scores" ToRole="RegisterProfiles" />
+          <NavigationProperty Name="Students" Relationship="RegistroVirtualDb.FK_Scores_Students" FromRole="Scores" ToRole="Students" />
+        </EntityType>
+        <Association Name="FK_RegisterProfiles_Subjects">
+          <End Type="RegistroVirtualDb.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.RegisterProfiles" Role="RegisterProfiles" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Scores_RegisterProfiles">
+          <End Type="RegistroVirtualDb.RegisterProfiles" Role="RegisterProfiles" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Scores_Students">
+          <End Type="RegistroVirtualDb.Students" Role="Students" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -514,6 +623,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="RegistroVirtualDb.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -679,6 +790,42 @@
             </EndProperty>
             <EndProperty Name="RegisterProfiles">
               <ScalarProperty Name="Id" ColumnName="RegisterProfileId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Scores">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.Scores">
+              <MappingFragment StoreEntitySet="Scores">
+                <ScalarProperty Name="Absences" ColumnName="Absences" />
+                <ScalarProperty Name="Belated" ColumnName="Belated" />
+                <ScalarProperty Name="AssistancePercentage" ColumnName="AssistancePercentage" />
+                <ScalarProperty Name="ConceptPercentage" ColumnName="ConceptPercentage" />
+                <ScalarProperty Name="DailyWorkPercentage" ColumnName="DailyWorkPercentage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_RegisterProfiles_Subjects" TypeName="RegistroVirtualDb.FK_RegisterProfiles_Subjects" StoreEntitySet="RegisterProfiles">
+            <EndProperty Name="RegisterProfiles">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Subjects">
+              <ScalarProperty Name="Id" ColumnName="SubjectId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Scores_RegisterProfiles" TypeName="RegistroVirtualDb.FK_Scores_RegisterProfiles" StoreEntitySet="Scores">
+            <EndProperty Name="Scores">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="RegisterProfiles">
+              <ScalarProperty Name="Id" ColumnName="RegisterProfileId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Scores_Students" TypeName="RegistroVirtualDb.FK_Scores_Students" StoreEntitySet="Scores">
+            <EndProperty Name="Scores">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Students">
+              <ScalarProperty Name="Id" ColumnName="StudentId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

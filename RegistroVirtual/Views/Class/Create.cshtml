@@ -18,6 +18,16 @@
             </div>
         </div>
 
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <!-- Error -->
+            <div class="row">
+                <div class="col-lg-6 error-message">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        }
+
         <!-- Form -->
         <div class="col-md-4">
             @using (Html.BeginForm("Save", "Class", FormMethod.Post))

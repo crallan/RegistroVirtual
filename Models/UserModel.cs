@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Models
 {
@@ -11,15 +12,21 @@ namespace Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public List<int> SelectedSubjects { get; set; }
+        public MultiSelectList Subjects { get; set; }
 
         public UserModel()
         {
         }
 
-        public UserModel(string Username, string Password)
+        public UserModel(string Username, string Password, string FirstName, string LastName)
         {
             this.Username = Username;
             this.Password = Password;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
         }
     }
 }

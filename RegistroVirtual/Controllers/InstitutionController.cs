@@ -12,7 +12,7 @@ namespace RegistroVirtual.Controllers
     [SessionAuthorize]
     public class InstitutionController : Controller
     {
-        public ActionResult Index(string NameFilter)
+        public ActionResult Index(string NameFilter, bool success = false)
         {
             List<InstitutionModel> institutions = new List<InstitutionModel>();
             Institution institution = new Institution();
@@ -23,10 +23,15 @@ namespace RegistroVirtual.Controllers
                 institutions = institutions.Where(x => x.Name.ToLowerInvariant().Contains(NameFilter.ToLowerInvariant())).ToList();
             }
 
+            if (success)
+            {
+                ViewBag.SuccessMessage = "La institucion se ha guardado de manera exitosa";
+            }
+
             return View(institutions);
         }
 
-        public ActionResult Create(string id)
+        public ActionResult Create(string id, bool error = false)
         {
             InstitutionModel institution = new InstitutionModel();
 
@@ -36,6 +41,11 @@ namespace RegistroVirtual.Controllers
                 institution = institutionDomain.Get(id);
             }
 
+            if (error)
+            {
+                ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el institucion.";
+            }
+            
             return View(institution);
         }
 
@@ -49,7 +59,14 @@ namespace RegistroVirtual.Controllers
             }
             else
             {
-                return RedirectToAction("Create");
+                if (!institutionModel.Id.Equals(0))
+                {
+                    return RedirectToAction("Create", new { id = institutionModel.Id, error = true });
+                }
+                else
+                {
+                    return RedirectToAction("Create", new { error = true });
+                }
             }
         }
 

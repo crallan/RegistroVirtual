@@ -97,6 +97,9 @@
     <Compile Include="Model\SchoolYears.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Scores.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Students.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
@@ -113,6 +116,7 @@
     <Compile Include="Repositories\ExtraclassWorkRepository.cs" />
     <Compile Include="Repositories\ExamRepository.cs" />
     <Compile Include="Repositories\RegisterProfileRepository.cs" />
+    <Compile Include="Repositories\SubjectRepository.cs" />
     <Compile Include="Repositories\SchoolYearRepository.cs" />
     <Compile Include="Repositories\TrimesterRepository.cs" />
     <Compile Include="Repositories\InstitutionRepository.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="Specializations\IExamRepository.cs" />
     <Compile Include="Specializations\IRegisterProfileRepository.cs" />
     <Compile Include="Specializations\ISchoolYearRepository.cs" />
+    <Compile Include="Specializations\ISubjectRepository.cs" />
     <Compile Include="Specializations\ITrimesterRepository.cs" />
     <Compile Include="Specializations\IInstitutionRepository.cs" />
     <Compile Include="Specializations\IClassRepository.cs" />

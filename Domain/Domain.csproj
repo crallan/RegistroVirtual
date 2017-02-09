@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Subject.cs" />
     <Compile Include="ExtraclassWork.cs" />
     <Compile Include="Exams.cs" />
     <Compile Include="RegisterProfile.cs" />

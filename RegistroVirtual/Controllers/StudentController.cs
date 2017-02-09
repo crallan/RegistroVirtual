@@ -13,7 +13,7 @@ namespace RegistroVirtual.Controllers
     [SessionAuthorize]
     public class StudentController : Controller
     {
-        public ActionResult Index(string FirstNameFilter, string LastNameFilter)
+        public ActionResult Index(string FirstNameFilter, string LastNameFilter, bool success = false)
         {
             List<StudentModel> students = new List<StudentModel>();
             Student student = new Student();
@@ -29,10 +29,15 @@ namespace RegistroVirtual.Controllers
                 students = students.Where(x => x.LastName.ToLowerInvariant().Contains(LastNameFilter.ToLowerInvariant())).ToList();
             }
 
+            if (success)
+            {
+                ViewBag.SuccessMessage = "El estudiante se ha guardado de manera exitosa";
+            }
+
             return View(students);
         }
 
-        public ActionResult Create(string id)
+        public ActionResult Create(string id, bool error = false)
         {
             StudentModel student = new StudentModel();
             List<SelectListItem> classOptions = new List<SelectListItem>();
@@ -54,6 +59,11 @@ namespace RegistroVirtual.Controllers
             }
 
             student.Classes = classOptions;
+
+            if (error)
+            {
+                ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el estudiante.";
+            }
 
             return View(student);
         }
@@ -94,8 +104,16 @@ namespace RegistroVirtual.Controllers
             {
                 return RedirectToAction("Index");
             }
-            else {
-                return RedirectToAction("Create");
+            else
+            {
+                if (!studentModel.Id.Equals(0))
+                {
+                    return RedirectToAction("Create", new { id = studentModel.Id, error = true });
+                }
+                else
+                {
+                    return RedirectToAction("Create", new { error = true });
+                }
             } 
         }
 

@@ -172,9 +172,7 @@ namespace RegistroVirtual.Controllers
             profileModel.ExtraclassWorks = Extraclasses.Where( x => x.Percentage != 0).ToList();
             profileModel.Exams = Exams.Where(x => x.Percentage != 0 && x.Score != 0).ToList(); ;
 
-            bool test = false;
-
-            if (test)//registerProfile.Save(profileModel)
+            if (registerProfile.Save(profileModel))
             {
                 return RedirectToAction("Index");
             }

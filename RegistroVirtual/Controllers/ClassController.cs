@@ -13,7 +13,7 @@ namespace RegistroVirtual.Controllers
     public class ClassController : Controller
     {
 
-        public ActionResult Index(string NameFilter)
+        public ActionResult Index(string NameFilter, bool success = false)
         {
             List<ClassModel> classes = new List<ClassModel>();
             Class @class = new Class();
@@ -24,10 +24,15 @@ namespace RegistroVirtual.Controllers
                 classes = classes.Where(x => x.Name.ToLowerInvariant().Contains(NameFilter.ToLowerInvariant())).ToList();
             }
 
+            if (success)
+            {
+                ViewBag.SuccessMessage = "La clase se ha guardado de manera exitosa";
+            }
+
             return View(classes);
         }
 
-        public ActionResult Create(string id)
+        public ActionResult Create(string id, bool error = false)
         {
             ClassModel @class = new ClassModel();
             List<SelectListItem> institutionsOptions = new List<SelectListItem>();
@@ -50,6 +55,11 @@ namespace RegistroVirtual.Controllers
 
             @class.Institutions = institutionsOptions;
 
+            if (error)
+            {
+                ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar la clase.";
+            }
+
             return View(@class);
         }
 
@@ -63,7 +73,14 @@ namespace RegistroVirtual.Controllers
             }
             else
             {
-                return RedirectToAction("Create");
+                if (!classModel.Id.Equals(0))
+                {
+                    return RedirectToAction("Create", new { id = classModel.Id, error = true });
+                }
+                else
+                {
+                    return RedirectToAction("Create", new { error = true });
+                }
             }
 
         }

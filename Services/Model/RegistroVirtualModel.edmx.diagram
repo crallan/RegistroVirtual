@@ -26,6 +26,10 @@
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Users" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Exams" Width="1.5" PointX="11.125" PointY="1.375" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Exams_RegisterProfiles" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.Scores" Width="1.5" PointX="11.125" PointY="4.25" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Subjects" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Scores_RegisterProfiles" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Scores_Students" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

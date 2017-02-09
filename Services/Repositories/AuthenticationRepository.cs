@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Services.Repositories
 {
@@ -25,14 +26,29 @@ namespace Services.Repositories
             return false;
         }
 
+        public IEnumerable<UserModel> GetList()
+        {
+            var users = from u in context.Users
+                           select new UserModel()
+                           {
+                               Id = u.Id,
+                               FirstName = u.FirstName,
+                               LastName = u.LastName
+                           };
+
+            return users;
+        }
+
         public UserModel Get(string id)
         {
             var user = from u in context.Users
-                       where u.Id.Equals(id)
+                       where u.Id.ToString().Equals(id)
                        select new UserModel()
                        {
                            Id = u.Id,
                            Username = u.Username,
+                           FirstName = u.FirstName,
+                           LastName = u.LastName,
                            Password = u.Password
                        };
 
@@ -47,15 +63,61 @@ namespace Services.Repositories
                        {
                            Id = u.Id,
                            Username = u.Username,
+                           FirstName = u.FirstName,
+                           LastName = u.LastName,
                            Password = u.Password
                        };
 
             return user.FirstOrDefault();
         }
 
-        public bool Save(UserModel entity)
+        public bool Save(UserModel user)
         {
-            throw new NotImplementedException();
+            Users dbUser = new Users();
+
+            int result;
+
+            try
+            {
+                //Add
+                if (user.Id.Equals(0))
+                {
+                    using (TransactionScope transactionScope = new TransactionScope())
+                    {
+                        dbUser.FirstName = user.FirstName;
+                        dbUser.LastName = user.LastName;
+                        dbUser.Username = user.Username;
+                        dbUser.Password = user.Password;
+                        dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
+
+                        context.Users.Add(dbUser);
+                        result = context.SaveChanges();
+
+                        transactionScope.Complete();
+                    }
+                }
+                else
+                {
+                    // get the record
+                    dbUser = context.Users.Single(p => p.Id.Equals(user.Id));
+
+                    // set new values
+                    dbUser.FirstName = user.FirstName;
+                    dbUser.LastName = user.LastName;
+                    dbUser.Username = user.Username;
+                    dbUser.Password = user.Password;
+                    dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
+
+                    // save them back to the database
+                    result = context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

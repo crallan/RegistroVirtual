@@ -25,6 +25,16 @@
             </div>
         </div>
 
+        @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+        {
+            <!-- Error -->
+            <div class="row">
+                <div class="col-lg-6 success-message">
+                    @ViewBag.SuccessMessage
+                </div>
+            </div>
+        }
+
         <div class="row filters-container">
 
             <div class="col-lg-12">

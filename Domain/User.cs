@@ -20,5 +20,20 @@ namespace Domain
             return new AuthenticationRepository().GetUserByUsername(userName);
         }
 
+        public bool Save(UserModel user)
+        {
+            return new AuthenticationRepository().Save(user);
+        }
+
+        public IEnumerable<UserModel> GetList()
+        {
+            return new AuthenticationRepository().GetList();
+        }
+
+        public UserModel Get(string id)
+        {
+            return new AuthenticationRepository().Get(id);
+        }
+
     }
 }

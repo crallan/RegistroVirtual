@@ -12,5 +12,6 @@ namespace Services.Specializations
     {
         bool Authenticate(UserModel user);
         UserModel GetUserByUsername(string username);
+        IEnumerable<UserModel> GetList();
     }
 }

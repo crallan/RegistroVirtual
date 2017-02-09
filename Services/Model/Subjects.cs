@@ -18,6 +18,7 @@ namespace Services.Model
         public Subjects()
         {
             this.Users = new HashSet<Users>();
+            this.RegisterProfiles = new HashSet<RegisterProfiles>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace Services.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Users> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegisterProfiles> RegisterProfiles { get; set; }
     }
 }

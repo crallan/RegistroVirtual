@@ -36,5 +36,6 @@ namespace Services.Model
         public virtual DbSet<SchoolYears> SchoolYears { get; set; }
         public virtual DbSet<Trimesters> Trimesters { get; set; }
         public virtual DbSet<Exams> Exams { get; set; }
+        public virtual DbSet<Scores> Scores { get; set; }
     }
 }
