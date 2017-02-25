@@ -49,6 +49,10 @@
                         @Html.DropDownListFor(m => m.SchoolYearId, Model.SchoolYears, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
+                        <label>Subjects:</label>
+                        @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
                         <label>Daily Work Percentage:</label>
                         @Html.TextBoxFor(m => m.DailyWorkPercentage, new { required = "required", @class = "form-control", @type = "number", min = "1", max = "25" })
                     </div>

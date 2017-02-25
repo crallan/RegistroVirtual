@@ -12,15 +12,18 @@
         $('.save-exam').on('click', function () {
             var tr = $(this).parents('tr:first');
             var ExamId = $(this).attr("data-exam-id");
+            var Name = tr.find("#Name").val();
             var Percentage = tr.find("#Percentage").val();
             var Score = tr.find("#Score").val();
 
+            tr.find("#lblName").text(Name);
             tr.find("#lblPercentage").text(Percentage);
             tr.find("#lblScore").text(Score);
             tr.find('.edit-mode, .display-mode').toggle();
             var ExamModel =
             {
                 "Id": ExamId,
+                "Name": Name,
                 "Percentage": Percentage,
                 "Score": Score
             };

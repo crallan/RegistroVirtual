@@ -12,13 +12,16 @@
         $('.save-extraclass').on('click', function () {
             var tr = $(this).parents('tr:first');
             var ExtraclassId = $(this).attr("data-extraclass-id");
+            var Name = tr.find("#Name").val();
             var Percentage = tr.find("#Percentage").val();
 
+            tr.find("#lblName").text(Name);
             tr.find("#lblPercentage").text(Percentage);
             tr.find('.edit-mode, .display-mode').toggle();
             var ExtraclassModel =
             {
                 "Id": ExtraclassId,
+                "Name": Name,
                 "Percentage": Percentage
             };
 

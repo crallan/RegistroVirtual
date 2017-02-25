@@ -55,7 +55,7 @@ namespace RegistroVirtual.Controllers
 
             if (institution.Save(institutionModel))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { success = true });
             }
             else
             {

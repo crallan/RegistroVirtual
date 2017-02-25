@@ -70,6 +70,8 @@ namespace Services.Repositories
                         dbProfiles.ConceptPercentage = profileModel.ConceptPercentage;
                         dbProfiles.Trimesters = context.Trimesters.Single(p => p.Id.Equals(profileModel.TrimesterId));
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
+                        dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
+                        dbProfiles.YearCreated = DateTime.Now.Year;
 
                         context.RegisterProfiles.Add(dbProfiles);
                         result = context.SaveChanges();
@@ -81,6 +83,7 @@ namespace Services.Repositories
                             foreach (ExamModel examModel in profileModel.Exams)
                             {
                                 Exams exam = new Exams();
+                                exam.Name = examModel.Name;
                                 exam.Percentage = examModel.Percentage;
                                 exam.Score = examModel.Score;
                                 exam.RegisterProfiles = dbProfiles;
@@ -91,6 +94,7 @@ namespace Services.Repositories
                             foreach (ExtraclassWorkModel extraclassModel in profileModel.ExtraclassWorks)
                             {
                                 ExtraclassWorks extraclass = new ExtraclassWorks();
+                                extraclass.Name = extraclassModel.Name;
                                 extraclass.Percentage = extraclassModel.Percentage;
                                 extraclass.RegisterProfiles = dbProfiles;
 
@@ -119,19 +123,22 @@ namespace Services.Repositories
                         dbProfiles.ConceptPercentage = profileModel.ConceptPercentage;
                         dbProfiles.Trimesters = context.Trimesters.Single(p => p.Id.Equals(profileModel.TrimesterId));
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
-                        
+                        dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
+
                         foreach (ExamModel examModel in profileModel.Exams)
                         {
                             Exams exam = context.Exams.FirstOrDefault(p => p.Id.Equals(examModel.Id));
 
                             if (exam != null)
                             {
+                                exam.Name = examModel.Name;
                                 exam.Percentage = examModel.Percentage;
                                 exam.Score = examModel.Score;
                             }
                             else
                             {
                                 exam = new Exams();
+                                exam.Name = examModel.Name;
                                 exam.Percentage = examModel.Percentage;
                                 exam.Score = examModel.Score;
                                 exam.RegisterProfiles = dbProfiles;
@@ -147,12 +154,13 @@ namespace Services.Repositories
 
                             if (extraclass != null)
                             {
+                                extraclass.Name = extraclassModel.Name;
                                 extraclass.Percentage = extraclassModel.Percentage;
-
                             }
                             else
                             {
                                 extraclass = new ExtraclassWorks();
+                                extraclass.Name = extraclassModel.Name;
                                 extraclass.Percentage = extraclassModel.Percentage;
                                 extraclass.RegisterProfiles = dbProfiles;
 

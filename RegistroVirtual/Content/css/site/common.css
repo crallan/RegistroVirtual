@@ -33,3 +33,7 @@
     border: 1px solid #3c763d;
     margin-bottom: 15px;
 }
+
+span#user-in-content {
+    margin-left: 5px;
+}

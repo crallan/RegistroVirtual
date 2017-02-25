@@ -30,10 +30,10 @@
         @using (Html.BeginForm("Validate", "Login", FormMethod.Post))
         {
             <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
-            @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Username" })
+            @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Usuario" })
             @Html.PasswordFor(m => m.Password, new { required = "required", placeholder = "Password" })
             
-            <button type="submit" class="btn btn-primary btn-block btn-large">Let me in</button>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Autenticar</button>
         }
 
     </div>

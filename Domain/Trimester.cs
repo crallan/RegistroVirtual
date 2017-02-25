@@ -16,5 +16,10 @@ namespace Domain
             return new TrimesterRepository().GetTrimesters();
         }
 
+        public TrimesterModel Get(string id)
+        {
+            return new TrimesterRepository().Get(id);
+        }
+
     }
 }

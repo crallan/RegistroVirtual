@@ -14,14 +14,27 @@ namespace Services.Model
     
     public partial class Scores
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Scores()
+        {
+            this.ExamScores = new HashSet<ExamScores>();
+            this.ExtraclassWorksScores = new HashSet<ExtraclassWorksScores>();
+        }
+    
         public int Id { get; set; }
-        public Nullable<double> DailyWorkPercentage { get; set; }
-        public Nullable<double> ConceptPercentage { get; set; }
-        public Nullable<double> AssistancePercentage { get; set; }
-        public Nullable<int> Belated { get; set; }
-        public Nullable<int> Absences { get; set; }
+        public double DailyWorkPercentage { get; set; }
+        public double ConceptPercentage { get; set; }
+        public double AssistancePercentage { get; set; }
+        public int Belated { get; set; }
+        public int Absences { get; set; }
+        public int YearCreated { get; set; }
     
         public virtual RegisterProfiles RegisterProfiles { get; set; }
         public virtual Students Students { get; set; }
+        public virtual Classes Classes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamScores> ExamScores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExtraclassWorksScores> ExtraclassWorksScores { get; set; }
     }
 }

@@ -37,6 +37,10 @@ namespace RegistroVirtual.Controllers
             ClassModel @class = new ClassModel();
             List<SelectListItem> institutionsOptions = new List<SelectListItem>();
             List<InstitutionModel> institutions = new Institution().GetInstitutionsList().ToList();
+            List<SelectListItem> schoolYearsOptions = new List<SelectListItem>();
+            List<SchoolYearModel> schoolYears = new SchoolYear().GetSchoolYears().ToList();
+            List<SelectListItem> profileOptions = new List<SelectListItem>();
+            List<RegisterProfileModel> registerProfiles = new RegisterProfile().GetProfiles().ToList();
 
             foreach (InstitutionModel institution in institutions)
             {
@@ -47,6 +51,24 @@ namespace RegistroVirtual.Controllers
                 });
             }
 
+            foreach (SchoolYearModel schoolYear in schoolYears)
+            {
+                schoolYearsOptions.Add(new SelectListItem
+                {
+                    Text = schoolYear.Name,
+                    Value = schoolYear.Id.ToString()
+                });
+            }
+
+            foreach (RegisterProfileModel profile in registerProfiles)
+            {
+                profileOptions.Add(new SelectListItem
+                {
+                    Text = profile.Name,
+                    Value = profile.Id.ToString()
+                });
+            }
+
             if (!string.IsNullOrEmpty(id))
             {
                 Class classDomain = new Class();
@@ -54,6 +76,8 @@ namespace RegistroVirtual.Controllers
             }
 
             @class.Institutions = institutionsOptions;
+            @class.SchoolYears = schoolYearsOptions;
+            @class.RegisterProfiles = profileOptions;
 
             if (error)
             {
@@ -69,7 +93,7 @@ namespace RegistroVirtual.Controllers
 
             if (@class.Save(classModel))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { success = true });
             }
             else
             {

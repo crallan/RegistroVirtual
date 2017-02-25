@@ -140,6 +140,7 @@
     <Content Include="Content\css\sb-admin-rtl.css" />
     <Content Include="Content\css\sb-admin.css" />
     <Content Include="Content\css\site\common.css" />
+    <Content Include="Content\css\site\dashboard.css" />
     <Content Include="Content\css\site\grid.css" />
     <Content Include="Content\css\site\login.css" />
     <Content Include="Content\js\bootstrap.js" />
@@ -159,6 +160,7 @@
     <Content Include="Content\js\site\create-user.js" />
     <Content Include="Content\js\site\register-profile-extraclass.js" />
     <Content Include="Content\js\site\register-profile-exam.js" />
+    <Content Include="Content\js\site\score-actions.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -173,6 +175,7 @@
     <Compile Include="Controllers\InstitutionController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterProfileController.cs" />
+    <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +236,8 @@
     <Content Include="Views\RegisterProfile\LoadExtraclasses.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Score\Index.cshtml" />
+    <Content Include="Views\Score\LoadScores.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

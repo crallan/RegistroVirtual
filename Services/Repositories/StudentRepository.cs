@@ -48,7 +48,17 @@ namespace Services.Repositories
 
         public IEnumerable<StudentModel> GetListByClass(int classId)
         {
-            throw new NotImplementedException();
+            var students = from s in context.Students
+                           where s.Classes.Id.Equals(classId)
+                           select new StudentModel()
+                           {
+                               Id = s.Id,
+                               FirstName = s.FirstName,
+                               LastName = s.LastName,
+                               ClassId = s.Classes.Id
+                           };
+
+            return students;
         }
 
         public bool Import(ImportModel importModel)

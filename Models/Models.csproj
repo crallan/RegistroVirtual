@@ -49,6 +49,8 @@
     <Compile Include="ImportModel.cs" />
     <Compile Include="RegisterProfileModel.cs" />
     <Compile Include="SchoolYearModel.cs" />
+    <Compile Include="ScoreModel.cs" />
+    <Compile Include="ScoreViewModel.cs" />
     <Compile Include="TrimesterModel.cs" />
     <Compile Include="SubjectModel.cs" />
     <Compile Include="RoleModel.cs" />

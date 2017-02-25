@@ -10,6 +10,7 @@ namespace Models
     public class ExamModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public float Percentage { get; set; }
         public int Score { get; set; }
         public int RegisterProfileId { get; set; }
@@ -19,8 +20,9 @@ namespace Models
 
         }
 
-        public ExamModel(float Percentage, int Score)
+        public ExamModel(string Name, float Percentage, int Score)
         {
+            this.Name = Name;
             this.Percentage = Percentage;
             this.Score = Score;
         }

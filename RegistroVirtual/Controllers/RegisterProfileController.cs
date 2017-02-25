@@ -46,8 +46,10 @@ namespace RegistroVirtual.Controllers
 
             List<SelectListItem> trimesterOptions = new List<SelectListItem>();
             List<SelectListItem> schoolYearsOptions = new List<SelectListItem>();
+            List<SelectListItem> subjectOptions = new List<SelectListItem>();
             List<TrimesterModel> trimesters = new Trimester().GetTrimesters().ToList();
             List<SchoolYearModel> schoolYears = new SchoolYear().GetSchoolYears().ToList();
+            List<SubjectModel> subjects = new Subject().GetList().ToList();
             InitStaticVariables();
 
             if (!string.IsNullOrEmpty(id))
@@ -101,6 +103,17 @@ namespace RegistroVirtual.Controllers
 
             registerProfile.SchoolYears = schoolYearsOptions;
 
+            foreach (SubjectModel subject in subjects)
+            {
+                subjectOptions.Add(new SelectListItem
+                {
+                    Text = subject.Name,
+                    Value = subject.Id.ToString()
+                });
+            }
+
+            registerProfile.Subjects = subjectOptions;
+
             if (error) {
                 ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el registro.";
             }
@@ -113,13 +126,13 @@ namespace RegistroVirtual.Controllers
             return PartialView(Exams.OrderByDescending( x => x.Percentage));
         }
 
-        public ActionResult AddExam(string Id,  string Percentage, string Score)
+        public ActionResult AddExam(string Id, string Name,  string Percentage, string Score)
         {
             if (!Percentage.Equals("0") && !Score.Equals("0"))
             {
                 if (Id.Equals("0"))
                 {
-                    ExamModel newExam = new ExamModel(float.Parse(Percentage), Convert.ToInt32(Score));
+                    ExamModel newExam = new ExamModel(string.Empty, float.Parse(Percentage), Convert.ToInt32(Score));
                     newExam.Id = Exams.OrderBy(x => x.Id).Last().Id + 1000;
 
                     Exams.Add(newExam);
@@ -127,6 +140,7 @@ namespace RegistroVirtual.Controllers
                 else {
                     foreach (var item in Exams.Where(w => w.Id.Equals(Convert.ToInt32(Id))))
                     {
+                        item.Name = Name;
                         item.Percentage = float.Parse(Percentage);
                         item.Score = Convert.ToInt32(Score);
                     }
@@ -142,13 +156,13 @@ namespace RegistroVirtual.Controllers
             return PartialView(Extraclasses.OrderByDescending(x => x.Percentage));
         }
 
-        public ActionResult AddExtraclass(string Id, string Percentage)
+        public ActionResult AddExtraclass(string Id, string Name, string Percentage)
         {
             if (!Percentage.Equals("0"))
             {
                 if (Id.Equals("0"))
                 {
-                    ExtraclassWorkModel newExtraclass = new ExtraclassWorkModel(float.Parse(Percentage));
+                    ExtraclassWorkModel newExtraclass = new ExtraclassWorkModel(string.Empty, float.Parse(Percentage));
                     newExtraclass.Id = Exams.OrderBy(x => x.Id).Last().Id + 1;
 
                     Extraclasses.Add(newExtraclass);
@@ -156,6 +170,7 @@ namespace RegistroVirtual.Controllers
                 else {
                     foreach (var item in Extraclasses.Where(w => w.Id.Equals(Convert.ToInt32(Id))))
                     {
+                        item.Name = Name;
                         item.Percentage = float.Parse(Percentage);
                     }
                 }
@@ -174,7 +189,7 @@ namespace RegistroVirtual.Controllers
 
             if (registerProfile.Save(profileModel))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { success = true });
             }
             else
             {

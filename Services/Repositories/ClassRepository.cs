@@ -17,12 +17,16 @@ namespace Services.Repositories
         public ClassModel Get(string id)
         {
             var @class = from c in context.Classes
-                          where c.Id.ToString().Equals(id)
-                          select new ClassModel()
-                          {
-                              Id = c.Id,
-                              Name = c.Name
-                          };
+                         where c.Id.ToString().Equals(id)
+                         select new ClassModel()
+                         {
+                             Id = c.Id,
+                             Name = c.Name,
+                             SchoolYearId = c.SchoolYears.Id,
+                             FirstTrimesterProfileId = c.RegisterProfiles.Id,
+                             SecondTrimesterProfileId = c.RegisterProfiles.Id,
+                             ThirdTrimesterProfileId = c.RegisterProfiles.Id
+                         };
 
             return @class.FirstOrDefault();
         }
@@ -33,7 +37,11 @@ namespace Services.Repositories
                        select new ClassModel()
                        {
                            Id = c.Id,
-                           Name = c.Name
+                           Name = c.Name,
+                           SchoolYearId = c.SchoolYears.Id,
+                           FirstTrimesterProfileId = c.RegisterProfiles.Id,
+                           SecondTrimesterProfileId = c.RegisterProfiles.Id,
+                           ThirdTrimesterProfileId = c.RegisterProfiles.Id
                        };
 
             return classes;
@@ -52,6 +60,11 @@ namespace Services.Repositories
                 {
                     dbClass.Name = classModel.Name;
                     dbClass.Institution = context.Institution.Single(p => p.Id.Equals(classModel.InstitutionId));
+                    dbClass.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(classModel.SchoolYearId));
+                    dbClass.YearCreated = DateTime.Now.Year;
+                    dbClass.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.FirstTrimesterProfileId));
+                    dbClass.RegisterProfiles1 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.SecondTrimesterProfileId));
+                    dbClass.RegisterProfiles2 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.ThirdTrimesterProfileId));
 
                     context.Classes.Add(dbClass);
                     result = context.SaveChanges();
@@ -63,6 +76,11 @@ namespace Services.Repositories
 
                     // set new values
                     dbClass.Name = classModel.Name;
+                    dbClass.Institution = context.Institution.Single(p => p.Id.Equals(classModel.InstitutionId));
+                    dbClass.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(classModel.SchoolYearId));
+                    dbClass.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.FirstTrimesterProfileId));
+                    dbClass.RegisterProfiles1 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.SecondTrimesterProfileId));
+                    dbClass.RegisterProfiles2 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.ThirdTrimesterProfileId));
 
                     // save them back to the database
                     result = context.SaveChanges();

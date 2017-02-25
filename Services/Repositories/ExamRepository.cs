@@ -21,6 +21,7 @@ namespace Services.Repositories
                           select new ExamModel()
                           {
                               Id = e.Id,
+                              Name = e.Name,
                               Percentage = (float)e.Percentage,
                               Score = e.Score
                           };
@@ -36,6 +37,7 @@ namespace Services.Repositories
                         select new ExamModel()
                        {
                            Id = e.Id,
+                           Name = e.Name,
                            Percentage = (float)e.Percentage,
                            Score = e.Score
                        };
@@ -54,6 +56,7 @@ namespace Services.Repositories
                 //Add
                 if (examModel.Id.Equals(0))
                 {
+                    dbExam.Name = examModel.Name;
                     dbExam.Percentage = examModel.Percentage;
                     dbExam.Score = examModel.Score;
                     dbExam.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(examModel.RegisterProfileId));
@@ -67,6 +70,7 @@ namespace Services.Repositories
                     dbExam = context.Exams.Single(p => p.Id.Equals(examModel.Id));
 
                     // set new values
+                    dbExam.Name = examModel.Name;
                     dbExam.Percentage = examModel.Percentage;
                     dbExam.Score = examModel.Score;
 

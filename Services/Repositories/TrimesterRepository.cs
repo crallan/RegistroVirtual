@@ -32,9 +32,17 @@ namespace Services.Repositories
             throw new NotImplementedException();
         }
 
-        TrimesterModel IRepository<TrimesterModel, string>.Get(string id)
+        public TrimesterModel Get(string id)
         {
-            throw new NotImplementedException();
+            var trimesters = from t in context.Trimesters
+                             where t.Id.ToString().Equals(id)
+                             select new TrimesterModel()
+                             {
+                                 Id = t.Id,
+                                 Name = t.Name
+                             };
+
+            return trimesters.FirstOrDefault();
         }
     }
 }

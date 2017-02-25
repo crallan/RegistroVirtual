@@ -23,6 +23,7 @@
                         rowStyle: "webgrid-row-style",
                         mode: WebGridPagerModes.All,
                         columns: gridExtraclasses.Columns(
+                             gridExtraclasses.Column("Name", "Name", format: @<text>  <span class="display-mode"> <label id="lblName">@item.Name</label> </span> <input type="text" id="Name" value="@item.Name" class="edit-mode" /></text>, style: "col2Width"),
                              gridExtraclasses.Column("Percentage", "Percentage", format: @<text>  <span class="display-mode"> <label id="lblPercentage">@item.Percentage</label> </span> <input type="text" id="Percentage" value="@item.Percentage" class="edit-mode" /></text>, style: "col2Width"),
                              gridExtraclasses.Column("Action", style: "action col3Width", format: @<text>
                                 <a class="edit-extraclass display-mode edit-button fa fa-pencil"></a>

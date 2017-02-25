@@ -12,13 +12,11 @@ namespace Services.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Exams
+    public partial class ExtraclassWorksScores
     {
         public int Id { get; set; }
-        public double Percentage { get; set; }
-        public int Score { get; set; }
-        public string Name { get; set; }
+        public double ExtraclassWorkScore { get; set; }
     
-        public virtual RegisterProfiles RegisterProfiles { get; set; }
+        public virtual Scores Scores { get; set; }
     }
 }

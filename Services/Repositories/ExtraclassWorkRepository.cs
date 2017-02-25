@@ -21,6 +21,7 @@ namespace Services.Repositories
                           select new ExtraclassWorkModel()
                           {
                               Id = e.Id,
+                              Name = e.Name,
                               Percentage = (float)e.Percentage
                           };
 
@@ -35,6 +36,7 @@ namespace Services.Repositories
                                select new ExtraclassWorkModel()
                                {
                                    Id = e.Id,
+                                   Name = e.Name,
                                    Percentage = (float)e.Percentage
                                };
 
@@ -52,6 +54,7 @@ namespace Services.Repositories
                 //Add
                 if (extraclassModel.Id.Equals(0))
                 {
+                    dbExtraclass.Name = extraclassModel.Name;
                     dbExtraclass.Percentage = extraclassModel.Percentage;
                     dbExtraclass.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(extraclassModel.RegisterProfileId));
 
@@ -64,6 +67,7 @@ namespace Services.Repositories
                     dbExtraclass = context.ExtraclassWorks.Single(p => p.Id.Equals(extraclassModel.Id));
 
                     // set new values
+                    dbExtraclass.Name = extraclassModel.Name;
                     dbExtraclass.Percentage = extraclassModel.Percentage;
 
                     // save them back to the database

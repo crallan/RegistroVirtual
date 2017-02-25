@@ -10,6 +10,7 @@ namespace Models
     public class ExtraclassWorkModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public float Percentage { get; set; }
         public int RegisterProfileId { get; set; }
 
@@ -18,8 +19,9 @@ namespace Models
 
         }
 
-        public ExtraclassWorkModel(float Percentage)
+        public ExtraclassWorkModel(string Name, float Percentage)
         {
+            this.Name = Name;
             this.Percentage = Percentage;
         }
 

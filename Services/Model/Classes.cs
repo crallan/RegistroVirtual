@@ -18,13 +18,21 @@ namespace Services.Model
         public Classes()
         {
             this.Students = new HashSet<Students>();
+            this.Scores = new HashSet<Scores>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> YearCreated { get; set; }
     
         public virtual Institution Institution { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Students> Students { get; set; }
+        public virtual SchoolYears SchoolYears { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Scores> Scores { get; set; }
+        public virtual RegisterProfiles RegisterProfiles { get; set; }
+        public virtual RegisterProfiles RegisterProfiles1 { get; set; }
+        public virtual RegisterProfiles RegisterProfiles2 { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Services.Model
         public SchoolYears()
         {
             this.RegisterProfiles = new HashSet<RegisterProfiles>();
+            this.Classes = new HashSet<Classes>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace Services.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegisterProfiles> RegisterProfiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Classes> Classes { get; set; }
     }
 }

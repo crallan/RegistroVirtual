@@ -26,6 +26,11 @@ namespace Domain
             return new StudentRepository().GetList();
         }
 
+        public IEnumerable<StudentModel> GetListByClass(int classId)
+        {
+            return new StudentRepository().GetListByClass(classId);
+        }
+
         public StudentModel Get(string id)
         {
             return new StudentRepository().Get(id);

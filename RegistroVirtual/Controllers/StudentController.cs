@@ -102,7 +102,7 @@ namespace RegistroVirtual.Controllers
 
             if (student.Save(studentModel))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { success = true });
             }
             else
             {

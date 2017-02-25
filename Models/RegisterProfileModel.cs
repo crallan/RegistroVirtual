@@ -16,9 +16,11 @@ namespace Models
         public float AssistancePercentage { get; set; }
         public int TrimesterId { get; set; }
         public int SchoolYearId { get; set; }
+        public int SubjectId { get; set; }
         public int UserId { get; set; }
         public List<SelectListItem> Trimesters { get; set; }
         public List<SelectListItem> SchoolYears { get; set; }
+        public List<SelectListItem> Subjects { get; set; }
 
         public List<ExamModel> Exams { get; set; }
         public List<ExtraclassWorkModel> ExtraclassWorks { get; set; }

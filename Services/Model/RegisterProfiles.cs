@@ -20,6 +20,9 @@ namespace Services.Model
             this.ExtraclassWorks = new HashSet<ExtraclassWorks>();
             this.Exams = new HashSet<Exams>();
             this.Scores = new HashSet<Scores>();
+            this.Classes = new HashSet<Classes>();
+            this.Classes1 = new HashSet<Classes>();
+            this.Classes2 = new HashSet<Classes>();
         }
     
         public int Id { get; set; }
@@ -27,6 +30,7 @@ namespace Services.Model
         public double DailyWorkPercentage { get; set; }
         public double ConceptPercentage { get; set; }
         public double AssistancePercentage { get; set; }
+        public Nullable<int> YearCreated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraclassWorks> ExtraclassWorks { get; set; }
@@ -38,5 +42,11 @@ namespace Services.Model
         public virtual Subjects Subjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scores> Scores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Classes> Classes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Classes> Classes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Classes> Classes2 { get; set; }
     }
 }

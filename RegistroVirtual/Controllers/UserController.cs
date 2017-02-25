@@ -69,7 +69,7 @@ namespace RegistroVirtual.Controllers
 
             if (user.Save(userModel))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { success = true });
             }
             else {
                 if (!userModel.Id.Equals(0))

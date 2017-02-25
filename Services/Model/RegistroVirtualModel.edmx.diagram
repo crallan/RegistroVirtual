@@ -30,6 +30,15 @@
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Subjects" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Scores_RegisterProfiles" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Scores_Students" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Classes_SchoolYears" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Scores_Classes" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Classes_RegisterProfiles" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Classes_RegisterProfiles1" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_Classes_RegisterProfiles2" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.ExamScores" Width="1.5" PointX="13.375" PointY="4" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorksScores" Width="1.5" PointX="13.375" PointY="6.25" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ExamScores_Scores" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
