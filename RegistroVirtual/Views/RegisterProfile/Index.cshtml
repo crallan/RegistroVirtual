@@ -76,6 +76,7 @@
                 grid.Column("DailyWorkPercentage", "Daily Work Percentage"),
                 grid.Column("ConceptPercentage", "Concept Percentage"),
                 grid.Column("AssistancePercentage", "Assistance Percentage"),
+                grid.Column("NumberOfLessons", "Number Of Lessons"),
                 grid.Column("Exams", format: (item) => item.Exams.Count),
                 grid.Column("Extraclasses", format: (item) => item.ExtraclassWorks.Count),
                 grid.Column(columnName: "Action", style: "action", format: (item) => Html.ActionLink(" ", "Create", new { id = item.id }, new { @class = "fa fa-pencil edit-button" }))

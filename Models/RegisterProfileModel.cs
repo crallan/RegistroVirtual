@@ -18,6 +18,7 @@ namespace Models
         public int SchoolYearId { get; set; }
         public int SubjectId { get; set; }
         public int UserId { get; set; }
+        public int NumberOfLessons { get; set; }
         public List<SelectListItem> Trimesters { get; set; }
         public List<SelectListItem> SchoolYears { get; set; }
         public List<SelectListItem> Subjects { get; set; }
@@ -34,7 +35,7 @@ namespace Models
             ExtraclassWorks = new List<ExtraclassWorkModel>();
         }
 
-        public RegisterProfileModel(string Name, float DailyWorkPercentage, float ConceptPercentage, float AssistancePercentage, int TrimesterId, int SchoolYearId)
+        public RegisterProfileModel(string Name, float DailyWorkPercentage, float ConceptPercentage, float AssistancePercentage, int TrimesterId, int SchoolYearId, int NumberOfLessons)
         {
             Trimesters = new List<SelectListItem>();
             SchoolYears = new List<SelectListItem>();
@@ -48,6 +49,7 @@ namespace Models
             this.AssistancePercentage = AssistancePercentage;
             this.TrimesterId = TrimesterId;
             this.SchoolYearId = SchoolYearId;
+            this.NumberOfLessons = NumberOfLessons;
         }
 
     }

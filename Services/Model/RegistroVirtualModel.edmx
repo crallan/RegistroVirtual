@@ -32,9 +32,11 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ScoreRegisterId" Type="int" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
           <Property Name="ExamScore" Type="float" Nullable="false" />
+          <Property Name="ExamPercentage" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="ExtraclassWorks">
           <Key>
@@ -49,9 +51,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ScoreRegisterId" Type="int" Nullable="false" />
-          <Property Name="ExtraclassWorkScore" Type="float" Nullable="false" />
+          <Property Name="ExtraclassWorkId" Type="int" Nullable="false" />
+          <Property Name="ExtraclassWorkPercentage" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Institution">
           <Key>
@@ -73,6 +76,7 @@
           <Property Name="DailyWorkPercentage" Type="float" Nullable="false" />
           <Property Name="ConceptPercentage" Type="float" Nullable="false" />
           <Property Name="AssistancePercentage" Type="float" Nullable="false" />
+          <Property Name="NumberOfLessons" Type="int" Nullable="false" />
           <Property Name="YearCreated" Type="int" />
         </EntityType>
         <EntityType Name="Roles">
@@ -220,6 +224,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ExamScores_Exams">
+          <End Role="Exams" Type="Self.Exams" Multiplicity="1" />
+          <End Role="ExamScores" Type="Self.ExamScores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExamScores">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ExamScores_Scores">
           <End Role="Scores" Type="Self.Scores" Multiplicity="1" />
           <End Role="ExamScores" Type="Self.ExamScores" Multiplicity="*" />
@@ -241,6 +257,18 @@
             </Principal>
             <Dependent Role="ExtraclassWorks">
               <PropertyRef Name="RegisterProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExtraclassWorksScores_ExtraclassWorks">
+          <End Role="ExtraclassWorks" Type="Self.ExtraclassWorks" Multiplicity="1" />
+          <End Role="ExtraclassWorksScores" Type="Self.ExtraclassWorksScores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExtraclassWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExtraclassWorksScores">
+              <PropertyRef Name="ExtraclassWorkId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -440,6 +468,10 @@
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
             <End Role="Exams" EntitySet="Exams" />
           </AssociationSet>
+          <AssociationSet Name="FK_ExamScores_Exams" Association="Self.FK_ExamScores_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="ExamScores" EntitySet="ExamScores" />
+          </AssociationSet>
           <AssociationSet Name="FK_ExamScores_Scores" Association="Self.FK_ExamScores_Scores">
             <End Role="Scores" EntitySet="Scores" />
             <End Role="ExamScores" EntitySet="ExamScores" />
@@ -447,6 +479,10 @@
           <AssociationSet Name="FK_ExtraclassWorks_RegisterProfiles" Association="Self.FK_ExtraclassWorks_RegisterProfiles">
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
             <End Role="ExtraclassWorks" EntitySet="ExtraclassWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExtraclassWorksScores_ExtraclassWorks" Association="Self.FK_ExtraclassWorksScores_ExtraclassWorks">
+            <End Role="ExtraclassWorks" EntitySet="ExtraclassWorks" />
+            <End Role="ExtraclassWorksScores" EntitySet="ExtraclassWorksScores" />
           </AssociationSet>
           <AssociationSet Name="FK_ExtraclassWorksScores_Scores" Association="Self.FK_ExtraclassWorksScores_Scores">
             <End Role="Scores" EntitySet="Scores" />
@@ -614,10 +650,18 @@
             <End Role="Classes" EntitySet="Classes" />
           </AssociationSet>
           <EntitySet Name="ExamScores" EntityType="RegistroVirtualDb.ExamScores" />
-          <EntitySet Name="ExtraclassWorksScores" EntityType="RegistroVirtualDb.ExtraclassWorksScores" />
           <AssociationSet Name="FK_ExamScores_Scores" Association="RegistroVirtualDb.FK_ExamScores_Scores">
             <End Role="Scores" EntitySet="Scores" />
             <End Role="ExamScores" EntitySet="ExamScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamScores_Exams" Association="RegistroVirtualDb.FK_ExamScores_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="ExamScores" EntitySet="ExamScores" />
+          </AssociationSet>
+          <EntitySet Name="ExtraclassWorksScores" EntityType="RegistroVirtualDb.ExtraclassWorksScores" />
+          <AssociationSet Name="FK_ExtraclassWorksScores_ExtraclassWorks" Association="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks">
+            <End Role="ExtraclassWorks" EntitySet="ExtraclassWorks" />
+            <End Role="ExtraclassWorksScores" EntitySet="ExtraclassWorksScores" />
           </AssociationSet>
           <AssociationSet Name="FK_ExtraclassWorksScores_Scores" Association="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores">
             <End Role="Scores" EntitySet="Scores" />
@@ -694,6 +738,7 @@
           <Property Name="Percentage" Type="Double" Nullable="false" />
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_ExtraclassWorks_RegisterProfiles" FromRole="ExtraclassWorks" ToRole="RegisterProfiles" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExtraclassWorksScores" Relationship="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" FromRole="ExtraclassWorks" ToRole="ExtraclassWorksScores" />
         </EntityType>
         <EntityType Name="RegisterProfiles">
           <Key>
@@ -715,6 +760,7 @@
           <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles" FromRole="RegisterProfiles" ToRole="Classes" />
           <NavigationProperty Name="Classes1" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles1" FromRole="RegisterProfiles" ToRole="Classes" />
           <NavigationProperty Name="Classes2" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles2" FromRole="RegisterProfiles" ToRole="Classes" />
+          <Property Name="NumberOfLessons" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SchoolYears">
           <Key>
@@ -759,6 +805,7 @@
           <Property Name="Score" Type="Int32" Nullable="false" />
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_Exams_RegisterProfiles" FromRole="Exams" ToRole="RegisterProfiles" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExamScores" Relationship="RegistroVirtualDb.FK_ExamScores_Exams" FromRole="Exams" ToRole="ExamScores" />
         </EntityType>
         <Association Name="FK_Exams_RegisterProfiles">
           <End Type="RegistroVirtualDb.RegisterProfiles" Role="RegisterProfiles" Multiplicity="1" />
@@ -820,18 +867,29 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="ExamScore" Type="Double" Nullable="false" />
           <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_ExamScores_Scores" FromRole="ExamScores" ToRole="Scores" />
+          <NavigationProperty Name="Exams" Relationship="RegistroVirtualDb.FK_ExamScores_Exams" FromRole="ExamScores" ToRole="Exams" />
+          <Property Name="ExamPercentage" Type="Double" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ExamScores_Scores">
+          <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ExamScores" Role="ExamScores" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_ExamScores_Exams">
+          <End Type="RegistroVirtualDb.Exams" Role="Exams" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ExamScores" Role="ExamScores" Multiplicity="*" />
+        </Association>
         <EntityType Name="ExtraclassWorksScores">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ExtraclassWorkScore" Type="Double" Nullable="false" />
+          <Property Name="ExtraclassWorkPercentage" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ExtraclassWorks" Relationship="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" FromRole="ExtraclassWorksScores" ToRole="ExtraclassWorks" />
           <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" FromRole="ExtraclassWorksScores" ToRole="Scores" />
         </EntityType>
-        <Association Name="FK_ExamScores_Scores">
-          <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="1" />
-          <End Type="RegistroVirtualDb.ExamScores" Role="ExamScores" Multiplicity="*" />
+        <Association Name="FK_ExtraclassWorksScores_ExtraclassWorks">
+          <End Type="RegistroVirtualDb.ExtraclassWorks" Role="ExtraclassWorks" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ExtraclassWorksScores" Role="ExtraclassWorksScores" Multiplicity="*" />
         </Association>
         <Association Name="FK_ExtraclassWorksScores_Scores">
           <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="1" />
@@ -951,6 +1009,7 @@
           <EntitySetMapping Name="RegisterProfiles">
             <EntityTypeMapping TypeName="RegistroVirtualDb.RegisterProfiles">
               <MappingFragment StoreEntitySet="RegisterProfiles">
+                <ScalarProperty Name="NumberOfLessons" ColumnName="NumberOfLessons" />
                 <ScalarProperty Name="YearCreated" ColumnName="YearCreated" />
                 <ScalarProperty Name="AssistancePercentage" ColumnName="AssistancePercentage" />
                 <ScalarProperty Name="ConceptPercentage" ColumnName="ConceptPercentage" />
@@ -1110,15 +1169,8 @@
           <EntitySetMapping Name="ExamScores">
             <EntityTypeMapping TypeName="RegistroVirtualDb.ExamScores">
               <MappingFragment StoreEntitySet="ExamScores">
+                <ScalarProperty Name="ExamPercentage" ColumnName="ExamPercentage" />
                 <ScalarProperty Name="ExamScore" ColumnName="ExamScore" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExtraclassWorksScores">
-            <EntityTypeMapping TypeName="RegistroVirtualDb.ExtraclassWorksScores">
-              <MappingFragment StoreEntitySet="ExtraclassWorksScores">
-                <ScalarProperty Name="ExtraclassWorkScore" ColumnName="ExtraclassWorkScore" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1129,6 +1181,30 @@
             </EndProperty>
             <EndProperty Name="Scores">
               <ScalarProperty Name="Id" ColumnName="ScoreRegisterId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_ExamScores_Exams" TypeName="RegistroVirtualDb.FK_ExamScores_Exams" StoreEntitySet="ExamScores">
+            <EndProperty Name="ExamScores">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Exams">
+              <ScalarProperty Name="Id" ColumnName="ExamId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ExtraclassWorksScores">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.ExtraclassWorksScores">
+              <MappingFragment StoreEntitySet="ExtraclassWorksScores">
+                <ScalarProperty Name="ExtraclassWorkPercentage" ColumnName="ExtraclassWorkPercentage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_ExtraclassWorksScores_ExtraclassWorks" TypeName="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" StoreEntitySet="ExtraclassWorksScores">
+            <EndProperty Name="ExtraclassWorksScores">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="ExtraclassWorks">
+              <ScalarProperty Name="Id" ColumnName="ExtraclassWorkId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="FK_ExtraclassWorksScores_Scores" TypeName="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" StoreEntitySet="ExtraclassWorksScores">

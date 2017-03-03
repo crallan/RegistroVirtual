@@ -34,6 +34,7 @@ namespace Services.Repositories
             var exams = from e in context.Exams
                         join r in context.RegisterProfiles on e.RegisterProfiles.Id equals r.Id
                         where r.Id.Equals(registerId)
+                        orderby e.Id descending
                         select new ExamModel()
                        {
                            Id = e.Id,

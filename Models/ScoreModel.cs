@@ -19,5 +19,13 @@ namespace Models
         public int Belated { get; set; }
         public int Absebces { get; set; }
         public int YearCreated { get; set; }
+        public IEnumerable<ExamScoreModel> ExamResults { get; set; }
+        public IEnumerable<ExtrasclassWorkScoreModel> ExtraclasWorkResults { get; set; }
+
+        public ScoreModel()
+        {
+            ExamResults = new List<ExamScoreModel>();
+            ExtraclasWorkResults = new List<ExtrasclassWorkScoreModel>();
+        }
     }
 }

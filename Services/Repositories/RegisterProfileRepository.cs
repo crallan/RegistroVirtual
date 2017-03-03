@@ -27,7 +27,8 @@ namespace Services.Repositories
                               ConceptPercentage = (float)r.ConceptPercentage,
                               AssistancePercentage = (float)r.AssistancePercentage,
                               TrimesterId = r.Trimesters.Id,
-                              SchoolYearId = r.SchoolYears.Id
+                              SchoolYearId = r.SchoolYears.Id,
+                              NumberOfLessons = r.NumberOfLessons
                           };
 
             return profile.FirstOrDefault();
@@ -44,7 +45,8 @@ namespace Services.Repositories
                                ConceptPercentage = (float)r.ConceptPercentage,
                                AssistancePercentage = (float)r.AssistancePercentage,
                                TrimesterId = r.Trimesters.Id,
-                               SchoolYearId = r.SchoolYears.Id
+                               SchoolYearId = r.SchoolYears.Id,
+                               NumberOfLessons = r.NumberOfLessons
                            };
 
             return profiles;
@@ -72,6 +74,7 @@ namespace Services.Repositories
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
                         dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
                         dbProfiles.YearCreated = DateTime.Now.Year;
+                        dbProfiles.NumberOfLessons = profileModel.NumberOfLessons;
 
                         context.RegisterProfiles.Add(dbProfiles);
                         result = context.SaveChanges();
@@ -124,6 +127,7 @@ namespace Services.Repositories
                         dbProfiles.Trimesters = context.Trimesters.Single(p => p.Id.Equals(profileModel.TrimesterId));
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
                         dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
+                        dbProfiles.NumberOfLessons = profileModel.NumberOfLessons;
 
                         foreach (ExamModel examModel in profileModel.Exams)
                         {

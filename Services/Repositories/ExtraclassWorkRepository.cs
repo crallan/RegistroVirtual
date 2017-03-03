@@ -33,6 +33,7 @@ namespace Services.Repositories
             var extraclasses = from e in context.ExtraclassWorks
                                join r in context.RegisterProfiles on e.RegisterProfiles.Id equals r.Id
                                where r.Id.Equals(registerId)
+                               orderby e.Id descending
                                select new ExtraclassWorkModel()
                                {
                                    Id = e.Id,

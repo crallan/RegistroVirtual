@@ -8,17 +8,25 @@
 
 <link href="~/Content/css/site/grid.css" rel="stylesheet" />
 
+<div class="col-md-6">
+    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-search" aria-hidden="true"></i> Save</button>
+</div>
+
 <div class="row grid-container">
     <div class="col-lg-10">
         @gridScores.GetHtml(tableStyle: "table table-responsive webGrid",
                         footerStyle: "footer",
                         headerStyle: "header",
-                        alternatingRowStyle: "alt",
+                        alternatingRowStyle: "alt score-item",
                         selectedRowStyle: "select",
-                        rowStyle: "webgrid-row-style",
+                        rowStyle: "webgrid-row-style score-item",
                         mode: WebGridPagerModes.All,
                         columns: ViewBag.Columns
                         )
     </div>
+</div>
+
+<div class="col-md-6">
+    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-search" aria-hidden="true"></i> Save</button>
 </div>
 

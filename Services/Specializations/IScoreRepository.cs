@@ -10,6 +10,7 @@ namespace Services.Specializations
 {
     public interface IScoreRepository : IRepository<ScoreModel, string>
     {
-        IEnumerable<ScoreModel> GetScores(int classId, int year);
+        IEnumerable<ScoreModel> GetScores(int classId, int year, int trimester);
+        bool SaveScores(List<ScoreModel> scores);
     }
 }

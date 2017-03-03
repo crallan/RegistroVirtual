@@ -31,6 +31,7 @@ namespace Services.Model
         public double ConceptPercentage { get; set; }
         public double AssistancePercentage { get; set; }
         public Nullable<int> YearCreated { get; set; }
+        public int NumberOfLessons { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraclassWorks> ExtraclassWorks { get; set; }

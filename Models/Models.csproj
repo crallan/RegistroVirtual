@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtrasclassWorkScoreModel.cs" />
+    <Compile Include="ExamScoreModel.cs" />
     <Compile Include="ExtraclassWorkModel.cs" />
     <Compile Include="ExamModel.cs" />
     <Compile Include="ClassModel.cs" />
