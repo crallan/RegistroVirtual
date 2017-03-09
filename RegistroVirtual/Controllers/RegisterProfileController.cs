@@ -49,7 +49,8 @@ namespace RegistroVirtual.Controllers
             List<SelectListItem> subjectOptions = new List<SelectListItem>();
             List<TrimesterModel> trimesters = new Trimester().GetTrimesters().ToList();
             List<SchoolYearModel> schoolYears = new SchoolYear().GetSchoolYears().ToList();
-            List<SubjectModel> subjects = new Subject().GetList().ToList();
+            UserModel contextUser = new User().GetUserByUsername(((UserModel)Session["User"]).Username);
+            List<SubjectModel> subjects = new Subject().GetList().ToList().Where( x => contextUser.SelectedSubjects.Contains( x.Id)).ToList();
             InitStaticVariables();
 
             if (!string.IsNullOrEmpty(id))

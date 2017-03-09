@@ -26,7 +26,7 @@
         });
     }
 
-    function CalculateExamPercentage() {
+    function ScoreToCalculateExamCalifications() {
         var studentScores = $(".score-item");
 
         studentScores.each(function () {
@@ -36,10 +36,12 @@
             examScoreFields.each(function () {
                 var examId = $(this).attr('data-exam-id');
                 var examScore = $(this).val();
+                var examPointsField = studentScore.find("input.exam-points[data-exam-id='" + examId + "']");
                 var examPercentageField = studentScore.find("input.exam-percentage[data-exam-id='" + examId + "']");
 
                 if (examPercentageField != null && examPercentageField != undefined) {
                     var examMaxPercentage = examPercentageField.attr('max');
+
                     examPercentageField.val((examScore * examMaxPercentage) / 100);
                 }
             });

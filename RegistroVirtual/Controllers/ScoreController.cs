@@ -114,7 +114,7 @@ namespace RegistroVirtual.Controllers
                     columns.Add(new WebGridColumn()
                     {
                         Header = string.Format("{0} - {1}pts", exam.Name, exam.Percentage),
-                        Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 class='exam-points {0}' value={1} max={2} data-exam-id={3} />", examPointsFieldId,
+                        Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 class='exam-points' id={0} value={1} max={2} data-exam-id={3} />", examPointsFieldId,
                             currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExamResults.Where(t => t.ExamId.Equals(exam.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExamResults.Where(t => t.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPoints : 0, 
                             exam.Score, exam.Id)); },
                         Style = "col1Width"
@@ -122,7 +122,7 @@ namespace RegistroVirtual.Controllers
 
                     columns.Add(new WebGridColumn() {
                         Header = string.Format("{0} - {1}%", exam.Name, exam.Percentage),
-                        Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 class='exam-percentage {0}' value={1} max={2} data-exam-id={3} readonly />", examPercentageFieldId,
+                        Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 class='exam-percentage' id={0} value={1} max={2} data-exam-id={3} readonly />", examPercentageFieldId,
                             currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExamResults.Where(t => t.ExamId.Equals(exam.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExamResults.Where(t => t.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPercentage : 0,
                             exam.Percentage, exam.Id )); },
                         Style = "col1Width" });
