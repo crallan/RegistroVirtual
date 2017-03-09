@@ -42,42 +42,38 @@
         }
     }
 
-    function CalculateAssitance() {
-        var studentScores = $(".score-item");
-
-        studentScores.each(function () {
-            var studentEntry = $(this);
-            var Belated = studentEntry.find("#Belated").val();
-            var Absences = studentEntry.find("#Absences").val();
-            var AssistanceField = studentEntry.find("#AssistancePercentage");
-            var NumberOfLessons = studentEntry.find("#NumberOfLessons").val();
+    function CalculateAssitance(assistanceRelatedField) {
+        var studentEntry = assistanceRelatedField.parent().parent();
+        var Belated = studentEntry.find("#Belated").val();
+        var Absences = studentEntry.find("#Absences").val();
+        var AssistanceField = studentEntry.find("#AssistancePercentage");
+        var NumberOfLessons = studentEntry.find("#NumberOfLessons").val();
             
-            var percentage = ((parseInt(Absences) + (parseInt(Belated) * 3)) * 100) / parseInt(NumberOfLessons);
-            var assistancePercentage = 0;
+        var percentage = ((parseInt(Absences) + (parseInt(Belated) / 3)) * 100) / parseInt(NumberOfLessons);
+        var assistancePercentage = 0;
 
-            if (percentage === 0)
-            {
-                assistancePercentage = 5;
-            }
-            else if (percentage >= 1 && percentage <= 12)
-            {
-                assistancePercentage = 4;
-            }
-            else if (percentage >= 13 && percentage <= 25)
-            {
-                assistancePercentage = 3;
-            }
-            else if (percentage >= 26 && percentage <= 38)
-            {
-                assistancePercentage = 2;
-            }
-            else if (percentage >= 39 && percentage <= 50)
-            {
-                assistancePercentage = 1;
-            }
+        if (percentage === 0)
+        {
+            assistancePercentage = 5;
+        }
+        else if (percentage >= 1 && percentage <= 12)
+        {
+            assistancePercentage = 4;
+        }
+        else if (percentage >= 13 && percentage <= 25)
+        {
+            assistancePercentage = 3;
+        }
+        else if (percentage >= 26 && percentage <= 38)
+        {
+            assistancePercentage = 2;
+        }
+        else if (percentage >= 39 && percentage <= 50)
+        {
+            assistancePercentage = 1;
+        }
 
-            AssistanceField.val(assistancePercentage);
-        });
+        AssistanceField.val(assistancePercentage);
     }
 
     function UpdateZeroAsistanceFields() {
@@ -97,7 +93,7 @@
     function bindScoreGridEvents() {
 
         $(".assistance-related-field").on('change', function () {
-            CalculateAssitance();
+            CalculateAssitance($(this));
         });
 
         $(".exam-points").on('change', function () {
