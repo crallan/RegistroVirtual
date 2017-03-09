@@ -42,6 +42,24 @@
         }
     }
 
+    function ScoreToCalculateExamPercentageAndPoints(examScoreField) {
+        var studentEntry = examScoreField.parent().parent();
+        var examId = examScoreField.attr('data-exam-id');
+        var examPercentageField = studentEntry.find("input.exam-percentage[data-exam-id='" + examId + "']");
+        var examPointsField = studentEntry.find("input.exam-points[data-exam-id='" + examId + "']");
+
+        if (examPercentageField != null && examPercentageField != undefined) {
+            var examMaxPercentage = examPercentageField.attr('max');
+            var examMaxPoints = examPointsField.attr('max');
+
+            var points = Math.round(((parseInt(examScoreField.val()) * parseInt(examMaxPoints)) / 100) * 10) / 10;
+            var percentage = Math.round((examScoreField.val() * ((parseInt(examMaxPercentage) / 100))) * 10) / 10;
+
+            examPointsField.val(points);
+            examPercentageField.val(percentage);
+        }
+    }
+
     function CalculateAssitance(assistanceRelatedField) {
         var studentEntry = assistanceRelatedField.parent().parent();
         var Belated = studentEntry.find("#Belated").val();
@@ -98,6 +116,10 @@
 
         $(".exam-points").on('change', function () {
             PointsToCalculateExamPercentageAndScore($(this));
+        });
+
+        $(".exam-score").on('change', function () {
+            ScoreToCalculateExamPercentageAndPoints($(this));
         });
 
         $('.scores-save-button').on('click', function () {
