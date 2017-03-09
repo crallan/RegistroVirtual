@@ -49,7 +49,8 @@ namespace Services.Repositories
                            Username = u.Username,
                            FirstName = u.FirstName,
                            LastName = u.LastName,
-                           Password = u.Password
+                           Password = u.Password,
+                           SelectedSubjects = u.Subjects.Select(s => s.Id).ToList()
                        };
 
             return user.FirstOrDefault();
@@ -65,7 +66,8 @@ namespace Services.Repositories
                            Username = u.Username,
                            FirstName = u.FirstName,
                            LastName = u.LastName,
-                           Password = u.Password
+                           Password = u.Password,
+                           SelectedSubjects = u.Subjects.Select(s => s.Id).ToList()
                        };
 
             return user.FirstOrDefault();
@@ -74,7 +76,7 @@ namespace Services.Repositories
         public bool Save(UserModel user)
         {
             Users dbUser = new Users();
-
+            
             int result;
 
             try
@@ -82,19 +84,14 @@ namespace Services.Repositories
                 //Add
                 if (user.Id.Equals(0))
                 {
-                    using (TransactionScope transactionScope = new TransactionScope())
-                    {
-                        dbUser.FirstName = user.FirstName;
-                        dbUser.LastName = user.LastName;
-                        dbUser.Username = user.Username;
-                        dbUser.Password = user.Password;
-                        dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
+                    dbUser.FirstName = user.FirstName;
+                    dbUser.LastName = user.LastName;
+                    dbUser.Username = user.Username;
+                    dbUser.Password = user.Password;
+                    dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
 
-                        context.Users.Add(dbUser);
-                        result = context.SaveChanges();
-
-                        transactionScope.Complete();
-                    }
+                    context.Users.Add(dbUser);
+                    result = context.SaveChanges();
                 }
                 else
                 {
@@ -106,6 +103,10 @@ namespace Services.Repositories
                     dbUser.LastName = user.LastName;
                     dbUser.Username = user.Username;
                     dbUser.Password = user.Password;
+                    dbUser.Subjects.Clear();
+
+                    result = context.SaveChanges();
+
                     dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
 
                     // save them back to the database

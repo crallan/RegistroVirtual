@@ -46,9 +46,12 @@ namespace RegistroVirtual.Controllers
             {
                 User userDomain = new User();
                 user = userDomain.Get(id);
-            }
 
-            user.Subjects = new MultiSelectList(subjects, "Id", "Name");
+                user.Subjects = new MultiSelectList(subjects, "Id", "Name", user.SelectedSubjects.ToArray());
+            }
+            else {
+                user.Subjects = new MultiSelectList(subjects, "Id", "Name");
+            }
 
             if (error)
             {
@@ -82,6 +85,5 @@ namespace RegistroVirtual.Controllers
                 }
             } 
         }
-
     }
 }
