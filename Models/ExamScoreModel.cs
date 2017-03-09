@@ -12,14 +12,16 @@ namespace Models
         public int ScoreRegisterId { get; set; }
         public int ExamId { get; set; }
         public float ExamScore { get; set; }
+        public float ExamPoints { get; set; }
         public float ExamPercentage { get; set; }
 
-        public ExamScoreModel(int Id, int ScoreRegisterId, int ExamId, float ExamScore, float ExamPercentage)
+        public ExamScoreModel(int Id, int ScoreRegisterId, int ExamId, float ExamScore, float ExamPoints, float ExamPercentage)
         {
             this.Id = Id;
             this.ScoreRegisterId = ScoreRegisterId;
             this.ExamId = ExamId;
             this.ExamScore = ExamScore;
+            this.ExamPoints = ExamPoints;
             this.ExamPercentage = ExamPercentage;
         }
 

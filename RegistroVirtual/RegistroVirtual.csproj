@@ -143,6 +143,8 @@
     <Content Include="Content\css\site\dashboard.css" />
     <Content Include="Content\css\site\grid.css" />
     <Content Include="Content\css\site\login.css" />
+    <Content Include="Content\css\site\score-grid.css" />
+    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jquery.js" />

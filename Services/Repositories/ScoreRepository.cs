@@ -31,7 +31,7 @@ namespace Services.Repositories
                             DailyWorkPercentage = (float)s.DailyWorkPercentage,
                             ConceptPercentage = (float)s.ConceptPercentage,
                             AssistancePercentage = (float)s.AssistancePercentage,
-                            Absebces = s.Absences,
+                            Absences = s.Absences,
                             Belated = s.Belated,
                             RegisterProfileId = s.RegisterProfiles.Id,
                             StudentId = s.Students.Id,
@@ -42,6 +42,7 @@ namespace Services.Repositories
                                                 ExamId = ex.Exams.Id,
                                                 ScoreRegisterId = ex.Scores.Id,
                                                 ExamScore = (float)ex.ExamScore,
+                                                ExamPoints = (float)ex.ExamPoints,
                                                 ExamPercentage = (float)ex.ExamPercentage
                                             }).ToList(),
                              ExtraclasWorkResults = (from et in context.ExtraclassWorksScores
@@ -65,26 +66,118 @@ namespace Services.Repositories
 
         public bool SaveScores(List<ScoreModel> scoreList)
         {
-            Scores scores = new Scores();
+            int result;
 
             try
             {
                 foreach (ScoreModel scoreEntry in scoreList)
                 {
+                    Scores dbScores = new Scores();
+
                     //Add
                     if (scoreEntry.Id.Equals(0))
                     {
-                        using (TransactionScope transactionScope = new TransactionScope())
-                        {
+                        dbScores.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(scoreEntry.RegisterProfileId));
+                        dbScores.Classes = context.Classes.Single(p => p.Id.Equals(scoreEntry.ClassId));
+                        dbScores.Students = context.Students.Single(p => p.Id.Equals(scoreEntry.StudentId));
+                        dbScores.Absences = scoreEntry.Absences;
+                        dbScores.Belated = scoreEntry.Belated;
+                        dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
+                        dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
+                        dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
+                        dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
+                        dbScores.YearCreated = scoreEntry.YearCreated;
 
+                        context.Scores.Add(dbScores);
+                        result = context.SaveChanges();
+
+                        int scoreId = dbScores.Id;
+
+                        if (!scoreId.Equals(0))
+                        {
+                            foreach (ExamScoreModel examModel in scoreEntry.ExamResults)
+                            {
+                                ExamScores exam = new ExamScores();
+                                exam.Scores = dbScores;
+                                exam.ExamScore = examModel.ExamScore;
+                                exam.ExamPoints = examModel.ExamPoints;
+                                exam.ExamPercentage = examModel.ExamPercentage;
+                                exam.Exams = context.Exams.Single(p => p.Id.Equals(examModel.ExamId));
+
+                                context.ExamScores.Add(exam);
+                            }
+
+                            foreach (ExtrasclassWorkScoreModel extraclassModel in scoreEntry.ExtraclasWorkResults)
+                            {
+                                ExtraclassWorksScores extraclass = new ExtraclassWorksScores();
+                                extraclass.Scores = dbScores;
+                                extraclass.ExtraclassWorks = context.ExtraclassWorks.Single(p => p.Id.Equals(extraclassModel.ExtraclassWorkId));
+                                extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+
+                                context.ExtraclassWorksScores.Add(extraclass);
+                            }
+
+                            result = context.SaveChanges();
                         }
+
                     }
                     else
                     {
-                        using (TransactionScope transactionScope = new TransactionScope())
+                        // get the record
+                        dbScores = context.Scores.Single(p => p.Id.Equals(scoreEntry.Id));
+
+                        // set new values
+                        dbScores.Absences = scoreEntry.Absences;
+                        dbScores.Belated = scoreEntry.Belated;
+                        dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
+                        dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
+                        dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
+
+                        foreach (ExamScoreModel examModel in scoreEntry.ExamResults)
+                        {
+                            ExamScores exam = dbScores.ExamScores.FirstOrDefault(p => p.Exams.Id.Equals(examModel.ExamId));
+
+                            if (exam != null)
+                            {
+                                exam.ExamScore = examModel.ExamScore;
+                                exam.ExamPoints = examModel.ExamPoints;
+                                exam.ExamPercentage = examModel.ExamPercentage;
+                            }
+                            else
+                            {
+                                exam = new ExamScores();
+                                exam.Scores = dbScores;
+                                exam.ExamScore = examModel.ExamScore;
+                                exam.ExamPoints = examModel.ExamPoints;
+                                exam.Exams = context.Exams.Single(p => p.Id.Equals(examModel.ExamId));
+                                exam.ExamPercentage = examModel.ExamPercentage;
+
+                                context.ExamScores.Add(exam);
+                            }
+                        }
+
+                        foreach (ExtrasclassWorkScoreModel extraclassModel in scoreEntry.ExtraclasWorkResults)
                         {
 
+                            ExtraclassWorksScores extraclass = dbScores.ExtraclassWorksScores.FirstOrDefault(p => p.ExtraclassWorks.Id.Equals(extraclassModel.ExtraclassWorkId));
+
+                            if (extraclass != null)
+                            {
+                                extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+                            }
+                            else
+                            {
+                                extraclass = new ExtraclassWorksScores();
+                                extraclass.Scores = dbScores;
+                                extraclass.ExtraclassWorks = context.ExtraclassWorks.Single(p => p.Id.Equals(extraclassModel.ExtraclassWorkId));
+                                extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+
+                                context.ExtraclassWorksScores.Add(extraclass);
+                            }
                         }
+
+                        // save them back to the database
+                        result = context.SaveChanges();
                     }
                 }
             }

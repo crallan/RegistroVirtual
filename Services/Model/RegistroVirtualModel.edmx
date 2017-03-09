@@ -36,6 +36,7 @@
           <Property Name="ScoreRegisterId" Type="int" Nullable="false" />
           <Property Name="ExamId" Type="int" Nullable="false" />
           <Property Name="ExamScore" Type="float" Nullable="false" />
+          <Property Name="ExamPoints" Type="float" Nullable="false" />
           <Property Name="ExamPercentage" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="ExtraclassWorks">
@@ -869,6 +870,7 @@
           <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_ExamScores_Scores" FromRole="ExamScores" ToRole="Scores" />
           <NavigationProperty Name="Exams" Relationship="RegistroVirtualDb.FK_ExamScores_Exams" FromRole="ExamScores" ToRole="Exams" />
           <Property Name="ExamPercentage" Type="Double" Nullable="false" />
+          <Property Name="ExamPoints" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_ExamScores_Scores">
           <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="1" />
@@ -1169,6 +1171,7 @@
           <EntitySetMapping Name="ExamScores">
             <EntityTypeMapping TypeName="RegistroVirtualDb.ExamScores">
               <MappingFragment StoreEntitySet="ExamScores">
+                <ScalarProperty Name="ExamPoints" ColumnName="ExamPoints" />
                 <ScalarProperty Name="ExamPercentage" ColumnName="ExamPercentage" />
                 <ScalarProperty Name="ExamScore" ColumnName="ExamScore" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

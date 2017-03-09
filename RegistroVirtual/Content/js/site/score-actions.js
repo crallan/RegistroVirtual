@@ -1,5 +1,16 @@
 ﻿$(function () {
+
+    $body = $("body");
+    $(document).on({
+        ajaxStart: function () { $body.addClass("loading"); },
+        ajaxStop: function () { $body.removeClass("loading"); }
+    });
+
     $("#score-search-button").click(function () {
+        LoadGridScores();
+    });
+
+    function LoadGridScores() {
         var selectedClass = $("#selected-class").val();
         var selectedYear = $("#selected-year").val();
         var selectedTrimester = $("#selected-trimester").val();
@@ -10,11 +21,10 @@
             data: { selectedClass: selectedClass, selectedYear: selectedYear, selectedTrimester: selectedTrimester }
         }).done(function (response) {
             $("#scores-container").empty().html(response);
-            CalculateExamPercentage();
-            CalculateAssitance();
+            UpdateZeroAsistanceFields();
             bindScoreGridEvents();
         });
-    });
+    }
 
     function CalculateExamPercentage() {
         var studentScores = $(".score-item");
@@ -42,10 +52,49 @@
         studentScores.each(function () {
             var studentEntry = $(this);
             var Belated = studentEntry.find("#Belated").val();
-            var Absebces = studentEntry.find("#Absebces").val();
+            var Absences = studentEntry.find("#Absences").val();
             var AssistanceField = studentEntry.find("#AssistancePercentage");
+            var NumberOfLessons = studentEntry.find("#NumberOfLessons").val();
+            
+            var percentage = ((parseInt(Absences) + (parseInt(Belated) * 3)) * 100) / parseInt(NumberOfLessons);
+            var assistancePercentage = 0;
 
-            AssistanceField.val(parseInt(Absebces) + (parseInt(Belated) * 3));
+            if (percentage === 0)
+            {
+                assistancePercentage = 5;
+            }
+            else if (percentage >= 1 && percentage <= 12)
+            {
+                assistancePercentage = 4;
+            }
+            else if (percentage >= 13 && percentage <= 25)
+            {
+                assistancePercentage = 3;
+            }
+            else if (percentage >= 26 && percentage <= 38)
+            {
+                assistancePercentage = 2;
+            }
+            else if (percentage >= 39 && percentage <= 50)
+            {
+                assistancePercentage = 1;
+            }
+
+            AssistanceField.val(assistancePercentage);
+        });
+    }
+
+    function UpdateZeroAsistanceFields() {
+        var studentScores = $(".score-item");
+
+        studentScores.each(function () {
+            var studentEntry = $(this);
+            var AssistanceField = studentEntry.find("#AssistancePercentage");
+            var MaxAssistancePercentage = AssistanceField.attr('max');
+
+            if (AssistanceField.val() === '0' && MaxAssistancePercentage != null) {
+                AssistanceField.val(MaxAssistancePercentage);
+            }
         });
     }
 
@@ -63,8 +112,13 @@
             studentScores.each(function () {
                 var studentEntry = $(this);
                 var StudentId = studentEntry.find("#StudentId").val();
+                var ScoreId = studentEntry.find("#ScoreId").val();
+                var ClassId = $("#selected-class").val();
+                var YearCreated = $("#selected-year").val();
                 var RegisterProfileId = studentEntry.find("#RegisterProfileId").val();
                 var DailyWorkPercentage = studentEntry.find("#DailyWorkPercentage").val();
+                var Absences = studentEntry.find("#Absences").val();
+                var Belated = studentEntry.find("#Belated").val();
                 var AssistancePercentage = studentEntry.find("#AssistancePercentage").val();
                 var ConceptPercentage = studentEntry.find("#ConceptPercentage").val();
 
@@ -78,8 +132,9 @@
 
                     var Exam =
                     {
-                       "ExamId": examId,
-                       "ExamScore": examPercentageField.val(),
+                        "ExamId": examId,
+                        "ExamScore": examScore,
+                        "ExamPercentage": examPercentageField.val(),
                     };
 
                     ExamResults.push(Exam);
@@ -104,9 +159,14 @@
 
                 var ScoreModel =
                 {
+                    "Id": ScoreId,
                     "StudentId": StudentId,
+                    "ClassId": ClassId,
+                    "YearCreated": YearCreated,
                     "RegisterProfileId": RegisterProfileId,
                     "DailyWorkPercentage": DailyWorkPercentage,
+                    "Absences": Absences,
+                    "Belated": Belated,
                     "AssistancePercentage": AssistancePercentage,
                     "ConceptPercentage": ConceptPercentage,
                     "ExamResults": ExamResults,
@@ -123,10 +183,7 @@
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    alert("saved!!");
-                    //$("#scores-container").empty().html(response);
-                    //CalculateExamPercentage();
-                    //bindSaveEvent();
+                    LoadGridScores();
                 }
             });
 
