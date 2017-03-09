@@ -70,11 +70,27 @@ namespace RegistroVirtual.Controllers
         {
             User user = new User();
 
-            if (user.Save(userModel))
+            if (userModel.Password.Equals(userModel.ConfirmPassword))
             {
-                return RedirectToAction("Index", new { success = true });
+
+                if (user.Save(userModel))
+                {
+                    return RedirectToAction("Index", new { success = true });
+                }
+                else
+                {
+                    if (!userModel.Id.Equals(0))
+                    {
+                        return RedirectToAction("Create", new { id = userModel.Id, error = true });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Create", new { error = true });
+                    }
+                }
             }
-            else {
+            else
+            {
                 if (!userModel.Id.Equals(0))
                 {
                     return RedirectToAction("Create", new { id = userModel.Id, error = true });
@@ -83,7 +99,7 @@ namespace RegistroVirtual.Controllers
                 {
                     return RedirectToAction("Create", new { error = true });
                 }
-            } 
+            }
         }
     }
 }
