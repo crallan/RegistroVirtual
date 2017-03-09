@@ -147,11 +147,13 @@
                     var examId = $(this).attr('data-exam-id');
                     var examScore = $(this).val();
                     var examPercentageField = studentEntry.find("input.exam-percentage[data-exam-id='" + examId + "']");
+                    var examPointsField = studentEntry.find("input.exam-points[data-exam-id='" + examId + "']");
 
                     var Exam =
                     {
                         "ExamId": examId,
                         "ExamScore": examScore,
+                        "ExamPoints": examPointsField.val(),
                         "ExamPercentage": examPercentageField.val(),
                     };
 
