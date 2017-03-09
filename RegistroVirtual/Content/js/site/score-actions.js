@@ -26,26 +26,20 @@
         });
     }
 
-    function ScoreToCalculateExamCalifications() {
-        var studentScores = $(".score-item");
+    function PointsToCalculateExamPercentageAndScore(examPointsField) {
+        var studentEntry = examPointsField.parent().parent();
+        var examId = examPointsField.attr('data-exam-id');
+        var examPercentageField = studentEntry.find("input.exam-percentage[data-exam-id='" + examId + "']");
+        var examScoreField = studentEntry.find("input.exam-score[data-exam-id='" + examId + "']");
 
-        studentScores.each(function () {
-            var studentScore = $(this);
-            var examScoreFields = studentScore.find(".exam-score");
-
-            examScoreFields.each(function () {
-                var examId = $(this).attr('data-exam-id');
-                var examScore = $(this).val();
-                var examPointsField = studentScore.find("input.exam-points[data-exam-id='" + examId + "']");
-                var examPercentageField = studentScore.find("input.exam-percentage[data-exam-id='" + examId + "']");
-
-                if (examPercentageField != null && examPercentageField != undefined) {
-                    var examMaxPercentage = examPercentageField.attr('max');
-
-                    examPercentageField.val((examScore * examMaxPercentage) / 100);
-                }
-            });
-        });
+        if (examPercentageField != null && examPercentageField != undefined) {
+            var examMaxPercentage = examPercentageField.attr('max');
+            var examMaxPoints = examPointsField.attr('max');
+            var score = Math.round(((parseInt(examPointsField.val()) * 100) / parseInt(examMaxPoints)) * 10) / 10;
+            var percentage = Math.round((score * ((parseInt(examMaxPercentage) / 100))) * 10) / 10;
+            examScoreField.val(score);
+            examPercentageField.val(percentage);
+        }
     }
 
     function CalculateAssitance() {
@@ -104,6 +98,10 @@
 
         $(".assistance-related-field").on('change', function () {
             CalculateAssitance();
+        });
+
+        $(".exam-points").on('change', function () {
+            PointsToCalculateExamPercentageAndScore($(this));
         });
 
         $('.scores-save-button').on('click', function () {
