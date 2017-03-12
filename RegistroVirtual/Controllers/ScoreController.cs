@@ -105,20 +105,20 @@ namespace RegistroVirtual.Controllers
                     string examPercentageFieldId = string.Format("exam-percentage-{0}", examIndex);
                     string examScoreFieldId = string.Format("exam-score-{0}", examIndex);
 
+                    columns.Add(new WebGridColumn()
+                    {
+                        Header = string.Format("{0} - {1}pts", exam.Name, exam.Score),
+                        Format = (item) => {return new HtmlString(string.Format("<input type='number' min=0 class='exam-points' id={0} value={1} max={2} data-exam-id={3} />", examPointsFieldId,
+                           currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExamResults.Where(t => t.ExamId.Equals(exam.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExamResults.Where(t => t.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPoints : 0,
+                           exam.Score, exam.Id));
+                        },
+                        Style = "col1Width"});
+
                     columns.Add(new WebGridColumn() {
                         Header = string.Format("{0} Nota Obt.", exam.Name),
                         Format = (item) => { return new HtmlString(string.Format("<input type='number' class='exam-score' min=0 max=100 id={0} value={1} data-exam-id={2} />", examScoreFieldId, 
                             currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExamResults.Where(t => t.ExamId.Equals(exam.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExamResults.Where(t => t.ExamId.Equals(exam.Id)).FirstOrDefault().ExamScore : 0, exam.Id)); },
                         Style = "col1Width" });
-
-                    columns.Add(new WebGridColumn()
-                    {
-                        Header = string.Format("{0} - {1}pts", exam.Name, exam.Score),
-                        Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 class='exam-points' id={0} value={1} max={2} data-exam-id={3} />", examPointsFieldId,
-                            currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExamResults.Where(t => t.ExamId.Equals(exam.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExamResults.Where(t => t.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPoints : 0, 
-                            exam.Score, exam.Id)); },
-                        Style = "col1Width"
-                    });
 
                     columns.Add(new WebGridColumn() {
                         Header = string.Format("{0} - {1}%", exam.Name, exam.Percentage),
@@ -150,6 +150,7 @@ namespace RegistroVirtual.Controllers
                 columns.Add(new WebGridColumn() { ColumnName = "Absences", Header = "Ausencias", Format = (item) => { return new HtmlString(string.Format("<input class='assistance-related-field' type='number' id='Absences' min=0 value='{0}' />", currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).Absences : 0)); }, Style = "col1Width" });
                 columns.Add(new WebGridColumn() { ColumnName = "AssistancePercentage", Header = "Asistencia", Format = (item) => { return new HtmlString(string.Format("<input type=hidden id='NumberOfLessons' value={0} /> <input type='number' id='AssistancePercentage' readonly max={1} value='{2}' />", selectedRegisterProfile.NumberOfLessons, selectedRegisterProfile.AssistancePercentage, currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).AssistancePercentage : selectedRegisterProfile.AssistancePercentage)); }, Style = "col1Width" });
                 columns.Add(new WebGridColumn() { ColumnName = "ConceptPercentage", Header = "Concepto", Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 max={0} id='ConceptPercentage' value='{1}' />", selectedRegisterProfile.ConceptPercentage, currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).ConceptPercentage : 0)); }, Style = "col1Width" });
+                columns.Add(new WebGridColumn() { ColumnName = "Average", Header = "Promedio", Format = (item) => { return new HtmlString("<input type='number' id='Average' readonly value=0 />");}, Style = "col1Width" });
 
                 ViewBag.Columns = columns;
             }

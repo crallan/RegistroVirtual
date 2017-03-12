@@ -22,6 +22,7 @@
         }).done(function (response) {
             $("#scores-container").empty().html(response);
             UpdateZeroAsistanceFields();
+            CalculateAllAverage();
             bindScoreGridEvents();
         });
     }
@@ -58,6 +59,36 @@
             examPointsField.val(points);
             examPercentageField.val(percentage);
         }
+    }
+
+    function CalculateAverage(studentEntry) {
+        var average = 0;
+        
+        var examPercentageFields = studentEntry.find("input.exam-percentage");
+        examPercentageFields.each(function () {
+            average += parseFloat($(this).val());
+        });
+
+        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
+        extraclassPercentageFields.each(function () {
+            average += parseFloat($(this).val());
+        });
+
+        average += parseFloat(studentEntry.find("#DailyWorkPercentage").val());
+        average += parseFloat(studentEntry.find("#ConceptPercentage").val());
+        average += parseFloat(studentEntry.find("#AssistancePercentage").val());
+
+        return Math.round(average);
+    }
+
+    function CalculateAllAverage()
+    {
+        var studentScores = $(".score-item");
+
+        studentScores.each(function () {
+            var average = CalculateAverage($(this));
+            $(this).find("#Average").val(average);
+        });
     }
 
     function CalculateAssitance(assistanceRelatedField) {
@@ -120,6 +151,12 @@
 
         $(".exam-score").on('change', function () {
             ScoreToCalculateExamPercentageAndPoints($(this));
+        });
+
+        $(".exam-score, .exam-points, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage, #ConceptPercentage").on('change', function () {
+            var studentEntry = $(this).parent().parent();
+            var average = CalculateAverage(studentEntry);
+            studentEntry.find("#Average").val(average);
         });
 
         $('.scores-save-button').on('click', function () {
