@@ -4,9 +4,30 @@
 
     function bindExamEvents() {
         $('.edit-mode').hide();
+
         $('.edit-exam, .cancel-exam').on('click', function () {
             var tr = $(this).parents('tr:first');
             tr.find('.edit-mode, .display-mode').toggle();
+        });
+
+        $('.remove-exam').on('click', function () {
+            var ExamId = $(this).attr("data-exam-id");
+            var ExamModel =
+            {
+                "Id": ExamId
+            };
+
+            $.ajax({
+                url: '/RegisterProfile/RemoveExam/',
+                data: JSON.stringify(ExamModel),
+                type: 'POST',
+                dataType: "html",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#exams-container").empty().html(data);
+                    bindExamEvents();
+                }
+            });
         });
 
         $('.save-exam').on('click', function () {

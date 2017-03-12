@@ -168,6 +168,7 @@ namespace Services.Repositories
                     // set new values
                     dbStudent.FirstName = student.FirstName;
                     dbStudent.LastName = student.LastName;
+                    dbStudent.Classes = context.Classes.Single(p => p.Id.Equals(student.ClassId));
 
                     // save them back to the database
                     result = context.SaveChanges();

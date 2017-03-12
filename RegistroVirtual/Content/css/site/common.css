@@ -14,7 +14,7 @@
     margin-bottom: 3%;
 }
 
-.new-button, .edit-button, .save-button, .cancel-button {
+.new-button, .edit-button, .save-button, .cancel-button, .remove-button {
     font-size: 22px;
 }
 

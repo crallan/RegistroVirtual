@@ -129,46 +129,66 @@ namespace Services.Repositories
                         dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
                         dbProfiles.NumberOfLessons = profileModel.NumberOfLessons;
 
+                        
                         foreach (ExamModel examModel in profileModel.Exams)
                         {
                             Exams exam = context.Exams.FirstOrDefault(p => p.Id.Equals(examModel.Id));
 
                             if (exam != null)
                             {
-                                exam.Name = examModel.Name;
-                                exam.Percentage = examModel.Percentage;
-                                exam.Score = examModel.Score;
+                                if (examModel.Percentage.Equals(-1) && examModel.Name.Equals("Remove"))
+                                {
+                                    context.Exams.Remove(exam);
+                                }
+                                else
+                                {
+                                    exam.Name = examModel.Name;
+                                    exam.Percentage = examModel.Percentage;
+                                    exam.Score = examModel.Score;
+                                }
                             }
                             else
                             {
-                                exam = new Exams();
-                                exam.Name = examModel.Name;
-                                exam.Percentage = examModel.Percentage;
-                                exam.Score = examModel.Score;
-                                exam.RegisterProfiles = dbProfiles;
+                                if (!examModel.Percentage.Equals(-1) && !examModel.Name.Equals("Remove"))
+                                {
+                                    exam = new Exams();
+                                    exam.Name = examModel.Name;
+                                    exam.Percentage = examModel.Percentage;
+                                    exam.Score = examModel.Score;
+                                    exam.RegisterProfiles = dbProfiles;
 
-                                context.Exams.Add(exam);
+                                    context.Exams.Add(exam);
+                                }
                             }
                         }
 
                         foreach (ExtraclassWorkModel extraclassModel in profileModel.ExtraclassWorks)
                         {
-
                             ExtraclassWorks extraclass = context.ExtraclassWorks.FirstOrDefault(p => p.Id.Equals(extraclassModel.Id));
 
                             if (extraclass != null)
                             {
-                                extraclass.Name = extraclassModel.Name;
-                                extraclass.Percentage = extraclassModel.Percentage;
+                                if (extraclassModel.Percentage.Equals(-1) && extraclassModel.Name.Equals("Remove"))
+                                {
+                                    context.ExtraclassWorks.Remove(extraclass);
+                                }
+                                else
+                                {
+                                    extraclass.Name = extraclassModel.Name;
+                                    extraclass.Percentage = extraclassModel.Percentage;
+                                }
                             }
                             else
                             {
-                                extraclass = new ExtraclassWorks();
-                                extraclass.Name = extraclassModel.Name;
-                                extraclass.Percentage = extraclassModel.Percentage;
-                                extraclass.RegisterProfiles = dbProfiles;
+                                if (!extraclassModel.Percentage.Equals(-1) && !extraclassModel.Name.Equals("Remove"))
+                                {
+                                    extraclass = new ExtraclassWorks();
+                                    extraclass.Name = extraclassModel.Name;
+                                    extraclass.Percentage = extraclassModel.Percentage;
+                                    extraclass.RegisterProfiles = dbProfiles;
 
-                                context.ExtraclassWorks.Add(extraclass);
+                                    context.ExtraclassWorks.Add(extraclass);
+                                }
                             }
                         }
 

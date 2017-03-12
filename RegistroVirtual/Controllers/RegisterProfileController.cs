@@ -124,16 +124,16 @@ namespace RegistroVirtual.Controllers
 
         public PartialViewResult LoadExams()
         {
-            return PartialView(Exams.OrderByDescending( x => x.Percentage));
+            return PartialView(Exams.Where( x => !x.Percentage.Equals(-1)).OrderByDescending( x => x.Percentage));
         }
 
         public ActionResult AddExam(string Id, string Name,  string Percentage, string Score)
         {
-            if (!Percentage.Equals("0") && !Score.Equals("0"))
+            if (!Percentage.Equals("0") && !Score.Equals("0") && !string.IsNullOrEmpty(Name))
             {
                 if (Id.Equals("0"))
                 {
-                    ExamModel newExam = new ExamModel(string.Empty, float.Parse(Percentage), Convert.ToInt32(Score));
+                    ExamModel newExam = new ExamModel(Name, float.Parse(Percentage), Convert.ToInt32(Score));
                     newExam.Id = Exams.OrderBy(x => x.Id).Last().Id + 1000;
 
                     Exams.Add(newExam);
@@ -142,8 +142,16 @@ namespace RegistroVirtual.Controllers
                     foreach (var item in Exams.Where(w => w.Id.Equals(Convert.ToInt32(Id))))
                     {
                         item.Name = Name;
-                        item.Percentage = float.Parse(Percentage);
-                        item.Score = Convert.ToInt32(Score);
+
+                        if (!string.IsNullOrEmpty(Percentage))
+                        {
+                            item.Percentage = float.Parse(Percentage);
+                        }
+
+                        if (!string.IsNullOrEmpty(Score))
+                        {
+                            item.Score = Convert.ToInt32(Score);
+                        }
                     }
                 }
                 
@@ -152,18 +160,51 @@ namespace RegistroVirtual.Controllers
             return RedirectToAction("LoadExams");
         }
 
+        public ActionResult RemoveExam(string Id)
+        {
+            if (!Id.Equals("0"))
+            {
+                var itemToRemove = Exams.Where(r => r.Id.ToString().Equals(Id)).FirstOrDefault();
+
+                if (itemToRemove != null)
+                {
+                    itemToRemove.Name = "Remove";
+                    itemToRemove.Percentage = -1;
+                    itemToRemove.Score = -1;
+                }
+            }
+
+            return RedirectToAction("LoadExams");
+        }
+
+        public ActionResult RemoveExtraclass(string Id)
+        {
+            if (!Id.Equals("0"))
+            {
+                var itemToRemove = Extraclasses.Where(r => r.Id.ToString().Equals(Id)).FirstOrDefault();
+
+                if (itemToRemove != null)
+                {
+                    itemToRemove.Name = "Remove";
+                    itemToRemove.Percentage = -1;
+                }
+            }
+
+            return RedirectToAction("LoadExtraclasses");
+        }
+
         public PartialViewResult LoadExtraclasses()
         {
-            return PartialView(Extraclasses.OrderByDescending(x => x.Percentage));
+            return PartialView(Extraclasses.Where(x => !x.Percentage.Equals(-1)).OrderByDescending(x => x.Percentage));
         }
 
         public ActionResult AddExtraclass(string Id, string Name, string Percentage)
         {
-            if (!Percentage.Equals("0"))
+            if (!Percentage.Equals("0") && !string.IsNullOrEmpty(Name))
             {
                 if (Id.Equals("0"))
                 {
-                    ExtraclassWorkModel newExtraclass = new ExtraclassWorkModel(string.Empty, float.Parse(Percentage));
+                    ExtraclassWorkModel newExtraclass = new ExtraclassWorkModel(Name, float.Parse(Percentage));
                     newExtraclass.Id = Exams.OrderBy(x => x.Id).Last().Id + 1;
 
                     Extraclasses.Add(newExtraclass);
@@ -172,7 +213,11 @@ namespace RegistroVirtual.Controllers
                     foreach (var item in Extraclasses.Where(w => w.Id.Equals(Convert.ToInt32(Id))))
                     {
                         item.Name = Name;
-                        item.Percentage = float.Parse(Percentage);
+
+                        if (!string.IsNullOrEmpty(Percentage))
+                        {
+                            item.Percentage = float.Parse(Percentage);
+                        }
                     }
                 }
             }

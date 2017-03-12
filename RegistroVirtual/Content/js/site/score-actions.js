@@ -153,7 +153,7 @@
             ScoreToCalculateExamPercentageAndPoints($(this));
         });
 
-        $(".exam-score, .exam-points, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage, #ConceptPercentage").on('change', function () {
+        $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage, #ConceptPercentage").on('change', function () {
             var studentEntry = $(this).parent().parent();
             var average = CalculateAverage(studentEntry);
             studentEntry.find("#Average").val(average);
