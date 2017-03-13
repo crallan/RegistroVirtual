@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <label class="navbar-brand" href="index.html">Registro Virtual</label>
+                <label class="navbar-brand" href="/Dashboard">Registro Virtual</label>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -41,7 +41,7 @@
                             <a href="@( "/User/Create/" + ((Models.UserModel)HttpContext.Current.Session["User"]).Id)"><i class="fa fa-fw fa-user"></i> Perfil</a>
                         </li>
                         <li>
-                            <a href="/Login/Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="/Login/Logout"><i class="fa fa-fw fa-power-off"></i> Cerras Sesión</a>
                         </li>
                     </ul>
                 </li>
@@ -50,13 +50,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="/Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="/Dashboard"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                     </li>
                     <li>
-                        <a href="/RegisterProfile"><i class="fa fa-fw fa-bar-chart-o"></i> Rubricas</a>
+                        <a href="/RegisterProfile"><i class="fa fa-fw fa-bar-chart-o"></i> Rúbricas</a>
                     </li>
                     <li>
-                        <a href="/Score"><i class="fa fa-fw fa-table"></i> Registro</a>
+                        <a href="/Score"><i class="fa fa-fw fa-table"></i> Calificaciones</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-gears"></i> Mantenimiento <i class="fa fa-fw fa-caret-down"></i></a>

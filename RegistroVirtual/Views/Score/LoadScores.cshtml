@@ -7,10 +7,12 @@
 }
 
 <link href="~/Content/css/site/grid.css" rel="stylesheet" />
-<link href="~/Content/css/site/score-grid.css" rel="stylesheet" />
+<link href="~/Content/css/site/grids/score-grid.css" rel="stylesheet" />
+
+<hr class="score-grid-divider">
 
 <div class="col-md-6">
-    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-search" aria-hidden="true"></i> Save</button>
+    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 </div>
 
 <div class="col-lg-11">
@@ -20,13 +22,13 @@
                         headerStyle: "header",
                         alternatingRowStyle: "alt score-item",
                         selectedRowStyle: "select",
-                        rowStyle: "webgrid-row-style score-item",
+                        rowStyle: "score-item",
                         mode: WebGridPagerModes.All,
                         columns: ViewBag.Columns
                         )
     </div>
 </div>
 <div class="col-md-6">
-    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-search" aria-hidden="true"></i> Save</button>
+    <button type="button" class="btn btn-primary btn-block btn-large scores-save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 </div>
 

@@ -10,22 +10,21 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-subtitle">
-                Extraclasses
+                Extraclases
             </h3>
         </div>
     </div>
     <div class="col-lg-8">
-        @gridExtraclasses.GetHtml(tableStyle: "webGrid",
+        @gridExtraclasses.GetHtml(tableStyle: "table table-responsive webGrid profile-extraclasses-grid",
                         footerStyle: "footer",
                         headerStyle: "header",
                         alternatingRowStyle: "alt",
                         selectedRowStyle: "select",
-                        rowStyle: "webgrid-row-style",
                         mode: WebGridPagerModes.All,
                         columns: gridExtraclasses.Columns(
-                             gridExtraclasses.Column("Name", "Name", format: @<text>  <span class="display-mode"> <label id="lblName">@item.Name</label> </span> <input type="text" id="Name" value="@item.Name" class="edit-mode" /></text>, style: "col2Width"),
-                             gridExtraclasses.Column("Percentage", "Percentage", format: @<text>  <span class="display-mode"> <label id="lblPercentage">@item.Percentage</label> </span> <input type="number" min="0" id="Percentage" value="@item.Percentage" class="edit-mode" /></text>, style: "col2Width"),
-                             gridExtraclasses.Column("Action", style: "action col3Width", format: @<text>
+                             gridExtraclasses.Column("Name", "Nombre", format: @<text>  <span class="display-mode"> <label id="lblName">@item.Name</label> </span> <input type="text" id="Name" value="@item.Name" class="edit-mode" /></text>, style: "col2Width"),
+                             gridExtraclasses.Column("Percentage", "Porcentaje", format: @<text>  <span class="display-mode"> <label id="lblPercentage">@item.Percentage</label> </span> <input type="number" min="0" id="Percentage" value="@item.Percentage" class="edit-mode" /></text>, style: "col2Width"),
+                             gridExtraclasses.Column("Acciones", style: "action col3Width", format: @<text>
                                 <a class="edit-extraclass display-mode edit-button fa fa-pencil"></a>
                                 <a class="save-extraclass edit-mode save-button fa fa-floppy-o" data-extraclass-id="@item.Id"></a>
                                 <a class="cancel-extraclass edit-mode cancel-button fa fa-ban"></a>

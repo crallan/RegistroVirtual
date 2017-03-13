@@ -1,11 +1,12 @@
 ﻿@model Models.RegisterProfileModel
 
 @{
-    ViewBag.Title = "Register Profile";
+    ViewBag.Title = "Rúbrica";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
 <link href="~/Content/css/site/grid.css" rel="stylesheet" />
+<link href="~/Content/css/site/grids/register-profile-grid.css" rel="stylesheet" />
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -14,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Register Profile
+                    Rúbrica
                 </h1>
             </div>
         </div>
@@ -37,35 +38,35 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Name:</label>
-                        @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Name", @class = "form-control" })
+                        <label>Nombre:</label>
+                        @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Nombre", @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Trimester:</label>
+                        <label>Trimestre:</label>
                         @Html.DropDownListFor(m => m.TrimesterId, Model.Trimesters, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>School Year:</label>
+                        <label>Año Escolar:</label>
                         @Html.DropDownListFor(m => m.SchoolYearId, Model.SchoolYears, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Subject:</label>
+                        <label>Asignatura:</label>
                         @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Number of Lessons:</label>
+                        <label>Número de Lecciones:</label>
                         @Html.TextBoxFor(m => m.NumberOfLessons, new { required = "required", placeholder = "Number Of Lessons", @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Daily Work Percentage:</label>
+                        <label>Porcentaje de Trabajo Cotidiano:</label>
                         @Html.TextBoxFor(m => m.DailyWorkPercentage, new { required = "required", @class = "form-control", @type = "number", min = "1", max = "25" })
                     </div>
                     <div class="form-group">
-                        <label>Concept Percentage:</label>
+                        <label>Porcentaje de Concepto:</label>
                         @Html.TextBoxFor(m => m.ConceptPercentage, new { required = "required", @class = "form-control", @type = "number", min = "1", max = "25" })
                     </div>
                     <div class="form-group">
-                        <label>Assistance Percentage:</label>
+                        <label>Porcentaje de Asistencia:</label>
                         @Html.TextBoxFor(m => m.AssistancePercentage, new { required = "required", @class = "form-control", @type = "number", min = "1", max = "25" })
                     </div>
                 </div>
@@ -78,7 +79,7 @@
                     @{Html.RenderAction("LoadExtraclasses");}
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary btn-block btn-large btn-submit">Save</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-large btn-submit">Guardar</button>
                 </div>
             }
         </div>

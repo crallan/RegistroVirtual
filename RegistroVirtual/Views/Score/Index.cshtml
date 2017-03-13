@@ -1,10 +1,11 @@
 ﻿@model Models.ScoreViewModel
 
 @{
-    ViewBag.Title = "Scores";
+    ViewBag.Title = "Calificaciones";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
+<link href="~/Content/css/site/pages/scores.css" rel="stylesheet" />
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -13,7 +14,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Scores
+                    Calificaciones
                 </h1>
             </div>
         </div>
@@ -43,26 +44,24 @@
 
             <div class="col-lg-12">
                 <h3>
-                    Filter
+                    Filtros
                 </h3>
             </div>
 
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Seccion:</label>
+                    <label>Sección:</label>
                     @Html.DropDownList("selectedClass", Model.Classes, new { @class = "form-control", id="selected-class" })
                 </div>
                 <div class="form-group">
-                    <label>A;o:</label>
+                    <label>Año:</label>
                     @Html.DropDownList("selectedYear", Model.Years, new { @class = "form-control", id = "selected-year" })
                 </div>
                 <div class="form-group">
                     <label>Trimestre:</label>
                     @Html.DropDownList("selectedTrimester", Model.Trimesters, new { @class = "form-control", id = "selected-trimester" })
                 </div>
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-primary btn-block btn-large" id="score-search-button"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
-                </div>
+                <button type="button" class="btn btn-primary btn-block btn-large" id="score-search-button"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
             </div>
         </div>
 

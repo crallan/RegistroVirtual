@@ -1,7 +1,7 @@
 ﻿@model Models.StudentModel
 
 @{
-    ViewBag.Title = "Student";
+    ViewBag.Title = "Estudiante";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Student 
+                    Estudiante 
                 </h1>
             </div>
         </div>
@@ -34,19 +34,19 @@
                 @Html.HiddenFor(m => m.Id)
 
                 <div class="form-group">
-                    <label>First Name:</label>
-                    @Html.TextBoxFor(m => m.FirstName, new { required = "required", placeholder = "First Name", @class = "form-control" })
+                    <label>Nombre:</label>
+                    @Html.TextBoxFor(m => m.FirstName, new { required = "required", placeholder = "Nombre", @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label>Last Name:</label>
-                    @Html.TextBoxFor(m => m.LastName, new { required = "required", placeholder = "Last Name", @class = "form-control" })
+                    <label>Apellidos:</label>
+                    @Html.TextBoxFor(m => m.LastName, new { required = "required", placeholder = "Apellidos", @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label>Class:</label>
+                    <label>Sección:</label>
                     @Html.DropDownListFor(m => m.ClassId, Model.Classes, new { @class = "form-control" })
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block btn-large">Save</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large">Guardar</button>
             }
         </div>
     </div>

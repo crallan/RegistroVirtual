@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Models.RegisterProfileModel>
 
 @{
-    ViewBag.Title = "Register Profiles";
+    ViewBag.Title = "Rúbricas";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Register Profiles
+                    Rúbricas
                 </h1>
             </div>
         </div>
@@ -39,7 +39,7 @@
 
             <div class="col-lg-12">
                 <h3>
-                    Filter
+                    Filtros
                 </h3>
             </div>
 
@@ -47,12 +47,12 @@
                 @using (Html.BeginForm("Index", "RegisterProfile", FormMethod.Get))
                 {
                     <div class="form-group col-md-7">
-                        <label>Name:</label>
-                        @Html.TextBox("NameFilter", string.Empty, new { placeholder = "Name", @class = "form-control" })
+                        <label>Nombre:</label>
+                        @Html.TextBox("NameFilter", string.Empty, new { placeholder = "Nombre", @class = "form-control" })
                     </div>
 
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary btn-block btn-large"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-large"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
                     </div>
                 }
             </div>
@@ -66,20 +66,20 @@
         </div>
         <div class="row grid-container">
             <div class="col-lg-8">
-                @grid.GetHtml(tableStyle: "webGrid",
+                @grid.GetHtml(tableStyle: "table table-responsive webGrid",
                 footerStyle: "footer",
                 headerStyle: "header",
                 alternatingRowStyle: "alt",
                 selectedRowStyle: "select",
                 columns: grid.Columns(
-                grid.Column("Name", "Name"),
-                grid.Column("DailyWorkPercentage", "Daily Work Percentage"),
-                grid.Column("ConceptPercentage", "Concept Percentage"),
-                grid.Column("AssistancePercentage", "Assistance Percentage"),
-                grid.Column("NumberOfLessons", "Number Of Lessons"),
-                grid.Column("Exams", format: (item) => item.Exams.Count),
-                grid.Column("Extraclasses", format: (item) => item.ExtraclassWorks.Count),
-                grid.Column(columnName: "Action", style: "action", format: (item) => Html.ActionLink(" ", "Create", new { id = item.id }, new { @class = "fa fa-pencil edit-button" }))
+                grid.Column("Name", "Nombre"),
+                grid.Column("DailyWorkPercentage", "Trabajo Cotidiano"),
+                grid.Column("ConceptPercentage", "Concepto"),
+                grid.Column("AssistancePercentage", "Asistencia"),
+                grid.Column("NumberOfLessons", "Número de Lecciones"),
+                grid.Column("Exams","Exámenes", format: (item) => item.Exams.Count),
+                grid.Column("Extraclases", format: (item) => item.ExtraclassWorks.Count),
+                grid.Column(columnName: "Acciones", style: "action", format: (item) => Html.ActionLink(" ", "Create", new { id = item.id }, new { @class = "fa fa-pencil edit-button" }))
                 ))
             </div>
 

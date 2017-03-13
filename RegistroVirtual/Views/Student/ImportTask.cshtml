@@ -1,7 +1,7 @@
 ﻿@model Models.ImportModel
 
 @{
-    ViewBag.Title = "Import Task";
+    ViewBag.Title = "Importar";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Import Task
+                    Importar Estudiantes
                 </h1>
             </div>
         </div>
@@ -22,10 +22,10 @@
             @using (Html.BeginForm("Import", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
-                    <label>Import File:</label>
+                    <label>Importar Archivo:</label>
                     <input type="file" name="importFile"/>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-large">Import</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large">Importar</button>
             }
         </div>
     </div>

@@ -1,10 +1,14 @@
 ﻿.scores-table {
-    margin: 10px 0;
+    margin: 20px 0;
     display: block;
 }
 
 .score-item .col3Width:first-child {
     font-size: 12px;
+}
+
+.score-item:hover {
+    background-color: #bbbaba;
 }
 
 .scores-table th {
@@ -24,9 +28,13 @@
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('../../images/ajax-loader.gif') 
+                url('../../../images/ajax-loader.gif') 
                 50% 50% 
                 no-repeat;
+}
+
+.score-grid-divider {
+    border-top: 1px solid #ccc;
 }
 
 /* When the body has the loading class, we turn

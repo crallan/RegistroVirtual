@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="login">
-        <h1>Login</h1>
+        <h1>Iniciar Sesión</h1>
 
         @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
         {
@@ -31,7 +31,7 @@
         {
             <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
             @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Usuario" })
-            @Html.PasswordFor(m => m.Password, new { required = "required", placeholder = "Password" })
+            @Html.PasswordFor(m => m.Password, new { required = "required", placeholder = "Contraseña" })
             
             <button type="submit" class="btn btn-primary btn-block btn-large">Autenticar</button>
         }

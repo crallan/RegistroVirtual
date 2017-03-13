@@ -1,0 +1,15 @@
+﻿.profile-exams-grid{
+    display:block;
+}
+
+.profile-exams-grid td{
+    width: 33%;
+}
+
+.profile-extraclasses-grid{
+    display:block;
+}
+
+.profile-extraclasses-grid td{
+    width: 50%;
+}
