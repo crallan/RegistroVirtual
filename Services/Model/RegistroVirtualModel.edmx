@@ -114,7 +114,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CardId" Type="nvarchar" MaxLength="30" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="85" Nullable="false" />
           <Property Name="ClassId" Type="int" />
@@ -726,6 +727,7 @@
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="85" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Students_Classes" FromRole="Students" ToRole="Classes" />
           <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_Scores_Students" FromRole="Students" ToRole="Scores" />
+          <Property Name="CardId" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Students_Classes">
           <End Type="RegistroVirtualDb.Classes" Role="Classes" Multiplicity="0..1" />
@@ -984,6 +986,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="RegistroVirtualDb.Students">
               <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

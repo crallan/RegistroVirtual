@@ -47,6 +47,11 @@
                 @using (Html.BeginForm("Index", "Student", FormMethod.Get))
                 {
                     <div class="form-group col-md-6">
+                        <label>Cédula:</label>
+                        @Html.TextBox("CardIdFilter", string.Empty, new { placeholder = "Cédula", @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-md-6">
                         <label>Nombre:</label>
                         @Html.TextBox("FirstNameFilter", string.Empty, new { placeholder = "Nombre", @class = "form-control" })
                     </div>
@@ -55,7 +60,7 @@
                         <label>Apellidos:</label>
                         @Html.TextBox("LastNameFilter", string.Empty, new { placeholder = "Apellidos", @class = "form-control" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <button type="submit" class="btn btn-primary btn-block btn-large"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
                     </div>
                 }
@@ -76,6 +81,7 @@
                 alternatingRowStyle: "alt",
                 selectedRowStyle: "select",
                 columns: grid.Columns(
+                grid.Column("CardId", "Cédula"),
                 grid.Column("FirstName", "Nombre"),
                 grid.Column("LastName", "Apellidos"),
                 grid.Column(columnName: "Acciones", style: "action", format: (item) => Html.ActionLink(" ", "Create", new { id = item.id }, new { @class = "fa fa-pencil edit-button" }))

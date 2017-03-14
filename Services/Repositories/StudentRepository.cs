@@ -24,10 +24,27 @@ namespace Services.Repositories
                           select new StudentModel()
                            {
                                Id = s.Id,
+                               CardId = s.CardId,
                                FirstName = s.FirstName,
                                LastName = s.LastName,
                                ClassId = s.Classes.Id
                            };
+
+            return student.FirstOrDefault();
+        }
+
+        public StudentModel GetStudentByCardId(string cardId)
+        {
+            var student = from s in context.Students
+                          where s.CardId.Equals(cardId)
+                          select new StudentModel()
+                          {
+                              Id = s.Id,
+                              CardId = s.CardId,
+                              FirstName = s.FirstName,
+                              LastName = s.LastName,
+                              ClassId = s.Classes.Id
+                          };
 
             return student.FirstOrDefault();
         }
@@ -38,6 +55,7 @@ namespace Services.Repositories
                           select new StudentModel()
                           {
                               Id = s.Id,
+                              CardId = s.CardId,
                               FirstName = s.FirstName,
                               LastName = s.LastName,
                               ClassId = s.Classes.Id
@@ -53,6 +71,7 @@ namespace Services.Repositories
                            select new StudentModel()
                            {
                                Id = s.Id,
+                               CardId = s.CardId,
                                FirstName = s.FirstName,
                                LastName = s.LastName,
                                ClassId = s.Classes.Id
@@ -100,18 +119,26 @@ namespace Services.Repositories
                         {
                             //Create the class for these 
                             string className = sheet.Rows.OfType<DataRow>().Where(r => !string.IsNullOrEmpty(r["SECCION"].ToString())).FirstOrDefault()["SECCION"].ToString();
+                            int currentYear = DateTime.Now.Year;
 
                             if (!string.IsNullOrEmpty(className))
                             {
                                 ClassRepository classRepository = new ClassRepository();
-                                Classes dbClass = new Classes();
-                                dbClass.Name = className;
-                                dbClass.Institution = context.Institution.Single(p => p.Id.Equals(1));
-                                dbClass.SchoolYears = context.SchoolYears.Single(s => s.Year.ToString().Equals(className.Substring(0, 1)));
-                                dbClass.YearCreated = DateTime.Now.Year;
 
-                                context.Classes.Add(dbClass);
-                                int resultClass = context.SaveChanges();
+                                Classes dbClass = context.Classes.Where( c=> c.Name.Equals(className) && c.YearCreated.Equals(currentYear)).FirstOrDefault();
+
+                                if (dbClass == null || dbClass.Id.Equals(0)) {
+                                    dbClass = new Classes();
+
+                                    dbClass.Name = className;
+                                    dbClass.Institution = context.Institution.Single(p => p.Id.Equals(1));
+                                    dbClass.SchoolYears = context.SchoolYears.Single(s => s.Year.ToString().Equals(className.Substring(0, 1)));
+                                    dbClass.YearCreated = currentYear;
+
+                                    context.Classes.Add(dbClass);
+                                    int resultClass = context.SaveChanges();
+                                }
+
                                 string classId = dbClass.Id.ToString();
 
                                 if (!classId.Equals(0))
@@ -121,16 +148,26 @@ namespace Services.Repositories
                                     foreach (DataRow row in sheet.Rows)
                                     {
                                         string studentName = row["NOMBRE"].ToString().ToUpper();
+                                        string studentCard = row["CEDULA"].ToString().ToUpper();
                                         string studentLastName1 = row["PRIMER APELLIDO"].ToString().ToUpper();
                                         string studentLastName2 = row["SEGUNDO APELLIDO"].ToString().ToUpper();
 
-                                        if (!string.IsNullOrEmpty(studentName))
+                                        if (!string.IsNullOrEmpty(studentCard) && !string.IsNullOrEmpty(studentName))
                                         {
-                                            Students student = new Students();
-                                            student.FirstName = studentName;
-                                            student.LastName = studentLastName1 + " " + studentLastName2;
-                                            student.Classes = @class;
-                                            context.Students.Add(student);
+                                            Students student = context.Students.Where(c => c.CardId.Equals(studentCard)).FirstOrDefault();
+
+                                            if (student == null || student.Id.Equals(0))
+                                            {
+                                                student = new Students();
+                                                student.FirstName = studentName;
+                                                student.CardId = studentCard;
+                                                student.LastName = studentLastName1 + " " + studentLastName2;
+                                                student.Classes = @class;
+                                                context.Students.Add(student);
+                                            }
+                                            else {
+                                                student.Classes = @class;
+                                            }
                                         }
                                     }
 
@@ -172,6 +209,7 @@ namespace Services.Repositories
                 {
                     dbStudent.FirstName = student.FirstName;
                     dbStudent.LastName = student.LastName;
+                    dbStudent.CardId = student.CardId;
                     dbStudent.Classes = context.Classes.Single(p => p.Id.Equals(student.ClassId));
 
                     context.Students.Add(dbStudent);
@@ -185,6 +223,7 @@ namespace Services.Repositories
                     // set new values
                     dbStudent.FirstName = student.FirstName;
                     dbStudent.LastName = student.LastName;
+                    dbStudent.CardId = student.CardId;
                     dbStudent.Classes = context.Classes.Single(p => p.Id.Equals(student.ClassId));
 
                     // save them back to the database

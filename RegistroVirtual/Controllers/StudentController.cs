@@ -13,11 +13,16 @@ namespace RegistroVirtual.Controllers
     [SessionAuthorize]
     public class StudentController : Controller
     {
-        public ActionResult Index(string FirstNameFilter, string LastNameFilter, bool success = false)
+        public ActionResult Index(string CardIdFilter, string FirstNameFilter, string LastNameFilter, bool success = false)
         {
             List<StudentModel> students = new List<StudentModel>();
             Student student = new Student();
             students = student.GetList().ToList();
+
+            if (!string.IsNullOrEmpty(CardIdFilter))
+            {
+                students = students.Where(x => !string.IsNullOrEmpty(x.CardId) && x.CardId.ToLowerInvariant().Contains(CardIdFilter.ToLowerInvariant())).ToList();
+            }
 
             if (!string.IsNullOrEmpty(FirstNameFilter))
             {

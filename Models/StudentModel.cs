@@ -11,6 +11,7 @@ namespace Models
     {
         public int Id { get; set; }
         public int ClassId { get; set; }
+        public string CardId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<SelectListItem> Classes { get; set; }

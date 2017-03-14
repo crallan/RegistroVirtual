@@ -11,6 +11,7 @@ namespace Services.Specializations
     public interface IStudentRepository : IRepository<StudentModel, string>
     {
         IEnumerable<StudentModel> GetList();
+        StudentModel GetStudentByCardId(string cardId);
         IEnumerable<StudentModel> GetListByClass(int classId);
         bool Import(ImportModel importModel);
     }
