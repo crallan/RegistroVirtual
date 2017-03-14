@@ -76,13 +76,17 @@ namespace Services.Repositories
                     {
                         DataSet importFile = new DataSet();
 
-                        //Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                        IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        IExcelDataReader excelReader = null;
 
                         if (extension.Equals(".xls"))
                         {
                             //Reading from a binary Excel file ('97-2003 format; *.xls)
                             excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                        }
+                        else
+                        {
+                            //Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                            excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                         }
 
                         excelReader.IsFirstRowAsColumnNames = true;
@@ -94,32 +98,45 @@ namespace Services.Repositories
 
                         foreach (DataTable sheet in importFile.Tables)
                         {
-                            //Create the class for these students
-                            ClassRepository classRepository = new ClassRepository();
-                            Classes dbClass = new Classes();
-                            dbClass.Name = sheet.Rows[0]["SECCION"].ToString();
-                            dbClass.Institution = context.Institution.Single(p => p.Id.Equals(1));
+                            //Create the class for these 
+                            string className = sheet.Rows.OfType<DataRow>().Where(r => !string.IsNullOrEmpty(r["SECCION"].ToString())).FirstOrDefault()["SECCION"].ToString();
 
-                            context.Classes.Add(dbClass);
-                            int resultClass = context.SaveChanges();
-                            string classId = dbClass.Id.ToString();
-
-                            if (!classId.Equals(0))
+                            if (!string.IsNullOrEmpty(className))
                             {
-                                Classes @class = context.Classes.Single(p => p.Id.ToString().Equals(classId));
+                                ClassRepository classRepository = new ClassRepository();
+                                Classes dbClass = new Classes();
+                                dbClass.Name = className;
+                                dbClass.Institution = context.Institution.Single(p => p.Id.Equals(1));
+                                dbClass.SchoolYears = context.SchoolYears.Single(s => s.Year.ToString().Equals(className.Substring(0, 1)));
+                                dbClass.YearCreated = DateTime.Now.Year;
 
-                                foreach (DataRow row in sheet.Rows)
+                                context.Classes.Add(dbClass);
+                                int resultClass = context.SaveChanges();
+                                string classId = dbClass.Id.ToString();
+
+                                if (!classId.Equals(0))
                                 {
-                                    Students student = new Students();
-                                    student.FirstName = row["NOMBRE"].ToString().ToUpper();
-                                    student.LastName = row["PRIMER APELLIDO"].ToString().ToUpper() + " " + row["SEGUNDO APELLIDO"].ToString().ToUpper();
-                                    student.Classes = @class;
+                                    Classes @class = context.Classes.Single(p => p.Id.ToString().Equals(classId));
 
-                                    context.Students.Add(student);
+                                    foreach (DataRow row in sheet.Rows)
+                                    {
+                                        string studentName = row["NOMBRE"].ToString().ToUpper();
+                                        string studentLastName1 = row["PRIMER APELLIDO"].ToString().ToUpper();
+                                        string studentLastName2 = row["SEGUNDO APELLIDO"].ToString().ToUpper();
+
+                                        if (!string.IsNullOrEmpty(studentName))
+                                        {
+                                            Students student = new Students();
+                                            student.FirstName = studentName;
+                                            student.LastName = studentLastName1 + " " + studentLastName2;
+                                            student.Classes = @class;
+                                            context.Students.Add(student);
+                                        }
+                                    }
+
+                                    int resultStudents = context.SaveChanges();
+
                                 }
-
-                                int resultStudents = context.SaveChanges();
-
                             }
                         }
 
@@ -134,7 +151,7 @@ namespace Services.Repositories
                     }
                 }
             }
-            catch (Exception) {
+            catch (Exception ex) {
                 result = false;
             }
 

@@ -48,7 +48,7 @@ namespace RegistroVirtual.Controllers
                 ViewBag.SuccessMessage = "El registro de calificaciones se ha guardado de manera exitosa";
             }
             else if (error) {
-                 ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el el registro de calificaciones.";
+                 ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el registro de calificaciones.";
             }
 
             return View(scoreViewModel);
@@ -149,7 +149,7 @@ namespace RegistroVirtual.Controllers
                 columns.Add(new WebGridColumn() { ColumnName = "Belated", Header = "Tardías", Format = (item) => { return new HtmlString(string.Format("<input class='assistance-related-field' type='number' id='Belated' min=0  value='{0}' />", currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).Belated : 0)); }, Style = "col1Width" });
                 columns.Add(new WebGridColumn() { ColumnName = "Absences", Header = "Ausencias", Format = (item) => { return new HtmlString(string.Format("<input class='assistance-related-field' type='number' id='Absences' min=0 value='{0}' />", currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).Absences : 0)); }, Style = "col1Width" });
                 columns.Add(new WebGridColumn() { ColumnName = "AssistancePercentage", Header = "Asistencia", Format = (item) => { return new HtmlString(string.Format("<input type=hidden id='NumberOfLessons' value={0} /> <input type='number' id='AssistancePercentage' readonly max={1} value='{2}' />", selectedRegisterProfile.NumberOfLessons, selectedRegisterProfile.AssistancePercentage, currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).AssistancePercentage : selectedRegisterProfile.AssistancePercentage)); }, Style = "col1Width" });
-                columns.Add(new WebGridColumn() { ColumnName = "ConceptPercentage", Header = "Concepto", Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 max={0} id='ConceptPercentage' value='{1}' />", selectedRegisterProfile.ConceptPercentage, currentScores.Where(x => x.StudentId.Equals(item.StudentId)).Count() > 0 ? currentScores.FirstOrDefault(x => x.StudentId.Equals(item.StudentId)).ConceptPercentage : 0)); }, Style = "col1Width" });
+                columns.Add(new WebGridColumn() { ColumnName = "ConceptPercentage", Header = "Concepto", Format = (item) => { return new HtmlString(string.Format("<input type='number' min=0 max={0} readonly id='ConceptPercentage' value='{1}' />", selectedRegisterProfile.ConceptPercentage, 0)); }, Style = "col1Width" });
                 columns.Add(new WebGridColumn() { ColumnName = "Average", Header = "Promedio", Format = (item) => { return new HtmlString("<input type='number' id='Average' readonly value=0 />");}, Style = "col1Width" });
 
                 ViewBag.Columns = columns;

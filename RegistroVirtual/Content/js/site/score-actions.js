@@ -22,7 +22,7 @@
         }).done(function (response) {
             $("#scores-container").empty().html(response);
             UpdateZeroAsistanceFields();
-            CalculateAllAverage();
+            CalculateAllAverageAndConcept();
             bindScoreGridEvents();
         });
     }
@@ -61,6 +61,31 @@
         }
     }
 
+    function CalculateConcept(studentEntry) {
+        var concept = 0;
+
+        var examScoreFields = studentEntry.find("input.exam-score");
+        examScoreFields.each(function () {
+            concept += parseFloat($(this).val());
+        });
+
+        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
+        extraclassPercentageFields.each(function () {
+            concept += (parseFloat($(this).val()) * 100) / $(this).attr('max');
+        });
+
+        concept += parseFloat(studentEntry.find("#DailyWorkPercentage").val());
+        var maxConceptPercentage = parseFloat(studentEntry.find("#ConceptPercentage").attr('max'));
+
+        var roundConcept = Math.round(((concept / 4) * (maxConceptPercentage / 100)) * 10) / 10;
+
+        if (roundConcept > maxConceptPercentage) {
+            roundConcept = maxConceptPercentage;
+        }
+
+        return roundConcept;
+    }
+
     function CalculateAverage(studentEntry) {
         var average = 0;
         
@@ -81,11 +106,13 @@
         return Math.round(average);
     }
 
-    function CalculateAllAverage()
+    function CalculateAllAverageAndConcept()
     {
         var studentScores = $(".score-item");
 
         studentScores.each(function () {
+            var concept = CalculateConcept($(this));
+            $(this).find("#ConceptPercentage").val(concept);
             var average = CalculateAverage($(this));
             $(this).find("#Average").val(average);
         });
@@ -153,8 +180,10 @@
             ScoreToCalculateExamPercentageAndPoints($(this));
         });
 
-        $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage, #ConceptPercentage").on('change', function () {
+        $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage").on('change', function () {
             var studentEntry = $(this).parent().parent();
+            var concept = CalculateConcept(studentEntry);
+            studentEntry.find("#ConceptPercentage").val(concept);
             var average = CalculateAverage(studentEntry);
             studentEntry.find("#Average").val(average);
         });

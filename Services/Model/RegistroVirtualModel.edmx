@@ -115,8 +115,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="85" Nullable="false" />
           <Property Name="ClassId" Type="int" />
         </EntityType>
         <EntityType Name="Subjects">
@@ -722,8 +722,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="85" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_Students_Classes" FromRole="Students" ToRole="Classes" />
           <NavigationProperty Name="Scores" Relationship="RegistroVirtualDb.FK_Scores_Students" FromRole="Students" ToRole="Scores" />
         </EntityType>

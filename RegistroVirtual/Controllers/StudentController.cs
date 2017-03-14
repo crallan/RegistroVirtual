@@ -68,13 +68,24 @@ namespace RegistroVirtual.Controllers
             return View(student);
         }
 
-        public ActionResult ImportTask()
+        public ActionResult ImportTask(bool success = false, bool error = false)
         {
+            if (success)
+            {
+                ViewBag.SuccessMessage = "La importación de estudiantes se ha realizado de manera exitosa";
+            }
+            else if (error)
+            {
+                ViewBag.ErrorMessage = "Debido a un error no se ha podido realizar la importación de estudiantes. Valide que el archivo contiene la información y estructura correcta.";
+            }
+
             return View();
         }
 
         public ActionResult Import()
         {
+            bool result = false;
+
             if (Request.Files.Count > 0)
             {
                 var importFile = Request.Files[0];
@@ -93,7 +104,21 @@ namespace RegistroVirtual.Controllers
                 }
             }
 
-            return View("ImportTask");
+            if (result)
+            {
+                return RedirectToAction("ImportTask", new { success = true });
+            }
+            else
+            {
+                return RedirectToAction("ImportTask", new { error = true });
+            }
+        }
+
+        public FileResult Download()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
+            string fileName = "myfile.ext";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         public ActionResult Save(StudentModel studentModel)
