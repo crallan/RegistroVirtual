@@ -125,7 +125,7 @@ namespace Services.Repositories
                             {
                                 ClassRepository classRepository = new ClassRepository();
 
-                                Classes dbClass = context.Classes.Where( c=> c.Name.Equals(className) && c.YearCreated.Equals(currentYear)).FirstOrDefault();
+                                Classes dbClass = context.Classes.Where( c=> c.Name == className && c.YearCreated == currentYear).FirstOrDefault();
 
                                 if (dbClass == null || dbClass.Id.Equals(0)) {
                                     dbClass = new Classes();

@@ -145,6 +145,7 @@
     <Content Include="Content\css\site\login.css" />
     <Content Include="Content\css\site\grids\score-grid.css" />
     <Content Include="Content\css\site\grids\register-profile-grid.css" />
+    <Content Include="Content\css\site\pages\import.css" />
     <Content Include="Content\css\site\pages\scores.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\js\bootstrap.js" />

@@ -105,7 +105,7 @@ namespace RegistroVirtual.Controllers
                     importModel.FilePath = path;
 
                     Student student = new Student();
-                    student.Import(importModel);
+                    result = student.Import(importModel);
                 }
             }
 
