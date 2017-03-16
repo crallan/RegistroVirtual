@@ -5,6 +5,8 @@
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
+<link href="~/Content/css/site/pages/import.css" rel="stylesheet" />
+
 <div id="page-wrapper">
     <div class="container-fluid">
 
@@ -38,8 +40,21 @@
             </div>
         }
 
+        <!-- Instructions -->
+        <div class="col-md-6 import-instructions">
+           <p>
+               En el siguiente link podrá encontrar una plantilla con la estructura necesaria para poder realizar la importación
+               de estudiantes de manera correcta. El archivo cuenta con las columnas de cédula, nombre, primer apellido, segundo apellido 
+               y sección. Este proceso de importacíon generará la sección con el nombre definido en la respectiva columna y asignará los estudiantes a 
+               dicha sección.
+
+               El proceso permite importar multiples secciones en un solo archivo, cada seccion debe estar un una hoja del archivo de manera separada.
+           </p>
+           <button type="button" class="btn btn-primary btn-block btn-large" id="download-template">Descargar Plantilla</button>
+        </div>
+
         <!-- Form -->
-        <div class="col-md-4">
+        <div class="col-md-4 import-form">
             @using (Html.BeginForm("Import", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
@@ -52,3 +67,4 @@
     </div>
 </div>
 
+<script src="~/Content/js/site/import.js"></script>

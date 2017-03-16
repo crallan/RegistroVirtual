@@ -162,6 +162,7 @@
     <Content Include="Content\js\plugins\flot\jquery.flot.tooltip.min.js" />
     <Content Include="Content\js\site\common.js" />
     <Content Include="Content\js\site\create-user.js" />
+    <Content Include="Content\js\site\import.js" />
     <Content Include="Content\js\site\register-profile-extraclass.js" />
     <Content Include="Content\js\site\register-profile-exam.js" />
     <Content Include="Content\js\site\score-actions.js" />
@@ -242,6 +243,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Score\Index.cshtml" />
     <Content Include="Views\Score\LoadScores.cshtml" />
+    <Content Include="Content\documents\Template.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -251,7 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\documents\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
