@@ -119,11 +119,9 @@ namespace RegistroVirtual.Controllers
             }
         }
 
-        public FileResult Download()
+        public string DownloadImportTemplate()
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
-            string fileName = "myfile.ext";
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return "/Content/documents/template.xls";
         }
 
         public ActionResult Save(StudentModel studentModel)
