@@ -13,6 +13,8 @@ namespace RegistroVirtual.Controllers
     [SessionAuthorize]
     public class UserController : Controller
     {
+        static List<SubjectViewModel> RelatedSubjects;
+
         public ActionResult Index(string FirstNameFilter, string LastNameFilter, bool success = false)
         {
             List<UserModel> users = new List<UserModel>();
@@ -40,18 +42,28 @@ namespace RegistroVirtual.Controllers
         public ActionResult Create(string id, bool error = false)
         {
             UserModel user = new UserModel();
-            List<SubjectModel> subjects = new Subject().GetList().ToList();
+            List<SelectListItem> institutionsOptions = new List<SelectListItem>();
+            List<InstitutionModel> institutions = new Institution().GetInstitutionsList().ToList();
+            InitStaticVariables();
+
+            foreach (InstitutionModel institution in institutions)
+            {
+                institutionsOptions.Add(new SelectListItem
+                {
+                    Text = institution.Name,
+                    Value = institution.Id.ToString()
+                });
+            }
 
             if (!string.IsNullOrEmpty(id))
             {
                 User userDomain = new User();
                 user = userDomain.Get(id);
 
-                user.Subjects = new MultiSelectList(subjects, "Id", "Name", user.SelectedSubjects.ToArray());
+                //user.Subjects = new MultiSelectList(subjects, "Id", "Name", user.SelectedSubjects.ToArray());
             }
-            else {
-                user.Subjects = new MultiSelectList(subjects, "Id", "Name");
-            }
+
+            user.Institutions = institutionsOptions;
 
             if (error)
             {
@@ -59,6 +71,47 @@ namespace RegistroVirtual.Controllers
             }
 
             return View(user);
+        }
+
+        public PartialViewResult LoadSubjects(int institutionId)
+        {
+            List<ClassModel> relatedClasses = new Class().GetClassesListByInstitution(institutionId).ToList();
+            List<SubjectModel> subjects = new Subject().GetList().ToList();
+            List<SubjectViewModel> subjectViewModels = new List<SubjectViewModel>();
+
+            foreach (SubjectModel subject in subjects) {
+                SubjectViewModel sub = new SubjectViewModel();
+                sub.Id = subject.Id;
+                sub.Name = subject.Name;
+                sub.Classes = new MultiSelectList(relatedClasses, "Id", "Name");
+
+                subjectViewModels.Add(sub);
+            }
+
+            return PartialView(subjectViewModels);
+        }
+
+        public void SaveSubjects(List<SubjectViewModel> subjectAndClasses)
+        {
+            if (subjectAndClasses != null)
+            {
+                foreach (SubjectViewModel subjClass in subjectAndClasses)
+                {
+                    SubjectViewModel sub = RelatedSubjects.Where(x => x.Id.Equals(subjClass.Id)).FirstOrDefault();
+
+                    if (sub != null && sub.Id > 0)
+                    {
+                        RelatedSubjects.Remove(sub);
+                    }
+
+                    RelatedSubjects.Add(subjClass);
+                }
+            }
+        }
+
+        private void InitStaticVariables()
+        {
+            RelatedSubjects = new List<SubjectViewModel>();
         }
 
         public ActionResult ImportTask()
@@ -70,9 +123,34 @@ namespace RegistroVirtual.Controllers
         {
             User user = new User();
 
+            foreach (SubjectViewModel relatedSubject in RelatedSubjects)
+            {
+                if (relatedSubject.SelectedClasses.Count() > 0 && relatedSubject.Id > 0)
+                {
+                    ClassesBySubjectModel classesBySubject = new ClassesBySubjectModel();
+                    SubjectModel sub = new SubjectModel
+                    {
+                        Id = relatedSubject.Id
+                    };
+
+                    classesBySubject.Subject = sub;
+
+                    foreach (int classId in relatedSubject.SelectedClasses)
+                    {
+                        ClassModel @class = new ClassModel
+                        {
+                            Id = classId
+                        };
+
+                        classesBySubject.SelectedClasses.Add(@class);
+                    }
+
+                    userModel.RelatedSubjectsAndClasses.Add(classesBySubject);
+                }
+            }
+
             if (userModel.Password.Equals(userModel.ConfirmPassword))
             {
-
                 if (user.Save(userModel))
                 {
                     return RedirectToAction("Index", new { success = true });

@@ -11,5 +11,7 @@ namespace Services.Specializations
     public interface IClassRepository : IRepository<ClassModel, string>
     {
         IEnumerable<ClassModel> GetClassesList();
+        IEnumerable<ClassModel> GetClassesListByInstitution(int institutionId);
+        IEnumerable<ClassModel> GetClassesListByUser(int userId);
     }
 }

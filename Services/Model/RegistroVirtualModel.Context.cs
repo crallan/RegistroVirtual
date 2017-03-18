@@ -39,5 +39,6 @@ namespace Services.Model
         public virtual DbSet<Scores> Scores { get; set; }
         public virtual DbSet<ExamScores> ExamScores { get; set; }
         public virtual DbSet<ExtraclassWorksScores> ExtraclassWorksScores { get; set; }
+        public virtual DbSet<ClassesByUsers> ClassesByUsers { get; set; }
     }
 }

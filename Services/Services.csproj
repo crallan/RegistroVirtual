@@ -64,6 +64,9 @@
     <Compile Include="Model\Classes.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ClassesByUsers.cs">
+      <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Exams.cs">
       <DependentUpon>RegistroVirtualModel.tt</DependentUpon>
     </Compile>

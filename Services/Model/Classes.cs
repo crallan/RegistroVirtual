@@ -19,6 +19,7 @@ namespace Services.Model
         {
             this.Students = new HashSet<Students>();
             this.Scores = new HashSet<Scores>();
+            this.ClassesByUsers = new HashSet<ClassesByUsers>();
         }
     
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace Services.Model
         public virtual RegisterProfiles RegisterProfiles { get; set; }
         public virtual RegisterProfiles RegisterProfiles1 { get; set; }
         public virtual RegisterProfiles RegisterProfiles2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassesByUsers> ClassesByUsers { get; set; }
     }
 }

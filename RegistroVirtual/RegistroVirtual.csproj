@@ -142,11 +142,13 @@
     <Content Include="Content\css\site\common.css" />
     <Content Include="Content\css\site\dashboard.css" />
     <Content Include="Content\css\site\grid.css" />
+    <Content Include="Content\css\site\grids\subjects-grid.css" />
     <Content Include="Content\css\site\login.css" />
     <Content Include="Content\css\site\grids\score-grid.css" />
     <Content Include="Content\css\site\grids\register-profile-grid.css" />
     <Content Include="Content\css\site\pages\import.css" />
     <Content Include="Content\css\site\pages\scores.css" />
+    <Content Include="Content\css\site\pages\user.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -245,6 +247,7 @@
     <Content Include="Views\Score\Index.cshtml" />
     <Content Include="Views\Score\LoadScores.cshtml" />
     <Content Include="Content\documents\Template.xls" />
+    <Content Include="Views\User\LoadSubjects.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

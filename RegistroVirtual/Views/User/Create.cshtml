@@ -5,7 +5,10 @@
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
+<link href="~/Content/css/site/pages/user.css" rel="stylesheet" />
+<link href="~/Content/css/site/grid.css" rel="stylesheet" />
 <link href="~/Content/css/chosen/chosen.min.css" rel="stylesheet" />
+<link href="~/Content/css/site/grids/subjects-grid.css" rel="stylesheet" />
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -14,7 +17,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Perfil de Usuario 
+                    Perfil de Usuario
                 </h1>
             </div>
         </div>
@@ -30,37 +33,44 @@
         }
 
         <!-- Form -->
-        <div class="col-md-4">
-            @using (Html.BeginForm("Save", "User", FormMethod.Post))
+        <div class="col-lg-6 user-form">
+            @using (Html.BeginForm("Save", "User", FormMethod.Post, new { id="save-user-form" }))
             {
                 @Html.HiddenFor(m => m.Id)
 
-                <div class="form-group">
-                    <label>Nombre:</label>
-                    @Html.TextBoxFor(m => m.FirstName, new { required = "required", placeholder = "Nombre", @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Apellidos:</label>
-                    @Html.TextBoxFor(m => m.LastName, new { required = "required", placeholder = "Apellidos", @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Nombre de Usuario:</label>
-                    @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Nombre de Usuario", @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Contraseña:</label>
-                    @Html.PasswordFor(m => m.Password, new { required = "required", @class = "form-control", value = Model.Password })
-                </div>
-                <div class="form-group">
-                    <label>Confirmar Contraseña:</label>
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { required = "required", @class = "form-control", value = Model.Password })
-                </div>
-                <div class="form-group">
-                    <label>Asignaturas Asociadas:</label>
-                    @Html.ListBoxFor(m => m.SelectedSubjects, Model.Subjects, new { @class = "form-control chzn-select", data_placeholder = "Asignaturas..." })
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        @Html.TextBoxFor(m => m.FirstName, new { required = "required", placeholder = "Nombre", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos:</label>
+                        @Html.TextBoxFor(m => m.LastName, new { required = "required", placeholder = "Apellidos", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Institución:</label>
+                        @Html.DropDownListFor(m => m.InstitutionId, Model.Institutions, new { @class = "form-control", id = "institution-selector" })
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de Usuario:</label>
+                        @Html.TextBoxFor(m => m.Username, new { required = "required", placeholder = "Nombre de Usuario", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        @Html.PasswordFor(m => m.Password, new { required = "required", @class = "form-control", value = Model.Password })
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Contraseña:</label>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { required = "required", @class = "form-control", value = Model.Password })
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block btn-large">Guardar</button>
+                <div id="subjects-container">
+                </div>
+
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block btn-large" id="save-user-button">Guardar</button>
+                </div>
             }
         </div>
     </div>

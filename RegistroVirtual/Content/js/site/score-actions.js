@@ -14,16 +14,27 @@
         var selectedClass = $("#selected-class").val();
         var selectedYear = $("#selected-year").val();
         var selectedTrimester = $("#selected-trimester").val();
+        var selectedSubject = $("#selected-subject").val();
 
         $.ajax({
             url: "/Score/LoadScores",
             dataType: "html",
-            data: { selectedClass: selectedClass, selectedYear: selectedYear, selectedTrimester: selectedTrimester }
+            data: { selectedClass: selectedClass, selectedYear: selectedYear, selectedTrimester: selectedTrimester, selectedSubject: selectedSubject }
         }).done(function (response) {
-            $("#scores-container").empty().html(response);
-            UpdateZeroAsistanceFields();
-            CalculateAllAverageAndConcept();
-            bindScoreGridEvents();
+            var jsonResult;
+            try {
+                jsonResult = JSON.parse(response);
+                var errorMessage = $("#error-searching-scores .error-message");
+                errorMessage.empty().html(jsonResult.responseText);
+                errorMessage.show();
+                errorMessage.fadeOut(5000);
+            }
+            catch (e) {
+                $("#scores-container").empty().html(response);
+                UpdateZeroAsistanceFields();
+                CalculateAllAverageAndConcept();
+                bindScoreGridEvents();
+            };
         });
     }
 

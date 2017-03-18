@@ -1,0 +1,31 @@
+﻿@model  IEnumerable<Models.SubjectViewModel>
+
+
+@{
+    var gridSubjects = new WebGrid(Model, canPage: false,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+
+<div class="row grid-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-subtitle">
+                Asignaturas
+            </h3>
+        </div>
+    </div>
+    <div class="col-lg-10">
+        @gridSubjects.GetHtml(tableStyle: "table table-responsive webGrid subjects-grid",
+                        footerStyle: "footer",
+                        headerStyle: "header",
+                        alternatingRowStyle: "alt",
+                        selectedRowStyle: "select",
+                        mode: WebGridPagerModes.All,
+                        columns: gridSubjects.Columns(
+                             gridSubjects.Column("Name", "Nombre", format: @<text>  <span class="display-mode"> <label id="lblName">@item.Name</label> </span> <input value="@item.Id" type="hidden" id="hdnSubjectId" /></text>, style: "col2Width"),
+                             gridSubjects.Column("Classes", "Clases", format: (item) => @Html.ListBox("SelectedClasses", Model.First().Classes, new { @class = "form-control chosen-select class-selector", data_placeholder="Clases..." }), style: "col3Width")
+                        ))
+    </div>
+
+</div>
+

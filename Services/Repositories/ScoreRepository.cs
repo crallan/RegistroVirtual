@@ -20,11 +20,14 @@ namespace Services.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ScoreModel> GetScores(int classId, int year, int trimester)
+        public IEnumerable<ScoreModel> GetScores(int classId, int year, int trimester, int subject)
         {
             var scores = from s in context.Scores
                          join c in context.Classes on s.Classes.Id equals c.Id
-                         where c.Id.Equals(classId) && s.YearCreated.Equals(year) && s.RegisterProfiles.Trimesters.Id.Equals(trimester)
+                         where c.Id.Equals(classId) 
+                                && s.YearCreated.Equals(year) 
+                                && s.RegisterProfiles.Trimesters.Id.Equals(trimester) 
+                                && s.RegisterProfiles.Subjects.Id.Equals(subject)
                          select new ScoreModel()
                          {
                             Id = s.Id,

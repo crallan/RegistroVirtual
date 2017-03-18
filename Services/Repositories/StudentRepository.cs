@@ -131,7 +131,7 @@ namespace Services.Repositories
                                     dbClass = new Classes();
 
                                     dbClass.Name = className;
-                                    dbClass.Institution = context.Institution.Single(p => p.Id.Equals(1));
+                                    dbClass.Institution = context.Institution.Single(p => p.Id.ToString().Equals(importModel.InstitutionId));
                                     dbClass.SchoolYears = context.SchoolYears.Single(s => s.Year.ToString().Equals(className.Substring(0, 1)));
                                     dbClass.YearCreated = currentYear;
 

@@ -103,6 +103,7 @@ namespace RegistroVirtual.Controllers
 
                     ImportModel importModel = new ImportModel();
                     importModel.FilePath = path;
+                    importModel.InstitutionId = ((UserModel)Session["User"]).InstitutionId.ToString();
 
                     Student student = new Student();
                     result = student.Import(importModel);

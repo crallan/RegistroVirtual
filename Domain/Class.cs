@@ -16,6 +16,11 @@ namespace Domain
             return new ClassRepository().GetClassesList();
         }
 
+        public IEnumerable<ClassModel> GetClassesListByInstitution(int institutionId)
+        {
+            return new ClassRepository().GetClassesListByInstitution(institutionId);
+        }
+
         public bool Save(ClassModel @class)
         {
             return new ClassRepository().Save(@class);

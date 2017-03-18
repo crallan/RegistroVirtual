@@ -6,13 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d7328553918a4559a7758c947527b343" Name="Diagram1">
         <EntityTypeShape EntityType="RegistroVirtualDb.Institution" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RegistroVirtualDb.Users" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.Users" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Classes" Width="1.5" PointX="0.75" PointY="4.375" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Roles" Width="1.5" PointX="5.125" PointY="0.75" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Subjects" Width="1.5" PointX="3" PointY="3.5" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Users_Institution" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Users_Roles" />
-        <AssociationConnector Association="RegistroVirtualDb.SubjectsByUsers" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Classes_Institution" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Students" Width="1.5" PointX="5.875" PointY="4.375" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Students_Classes" />
@@ -41,7 +40,11 @@
         <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorksScores" Width="1.5" PointX="13.375" PointY="7" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" />
-      </Diagram>
+        <EntityTypeShape EntityType="RegistroVirtualDb.ClassesByUsers" Width="1.5" PointX="7" PointY="0.625" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Classes" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Subjects" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Users" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

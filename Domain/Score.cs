@@ -11,9 +11,9 @@ namespace Domain
     public class Score
     {
         //Methods
-        public IEnumerable<ScoreModel> GetScores(int classId, int year, int trimester)
+        public IEnumerable<ScoreModel> GetScores(int classId, int year, int trimester, int subject)
         {
-            return new ScoreRepository().GetScores(classId, year, trimester);
+            return new ScoreRepository().GetScores(classId, year, trimester, subject);
         }
 
         public bool Save(List<ScoreModel> scores)

@@ -50,7 +50,26 @@ namespace Services.Repositories
                            FirstName = u.FirstName,
                            LastName = u.LastName,
                            Password = u.Password,
-                           SelectedSubjects = u.Subjects.Select(s => s.Id).ToList()
+                           RelatedSubjectsAndClasses = (from cu in context.ClassesByUsers
+                                                        where cu.UserId.Equals(u.Id)
+                                                        select new ClassesBySubjectModel()
+                                                        {
+                                                            Subject = (from s in context.Subjects
+                                                                      where s.Id.Equals(cu.Subjects.Id)
+                                                                      select new SubjectModel()
+                                                                      {
+                                                                          Id = s.Id,
+                                                                          Name = s.Name
+                                                                      }).FirstOrDefault(),
+                                                            SelectedClasses = (from c in context.Classes
+                                                                       where c.Id.Equals(cu.Classes.Id)
+                                                                       select new ClassModel()
+                                                                       {
+                                                                           Id = c.Id,
+                                                                           Name = c.Name,
+                                                                       }).ToList(),
+                                                        }).ToList(),
+                           InstitutionId = u.Institution != null ? u.Institution.Id : 0
                        };
 
             return user.FirstOrDefault();
@@ -67,7 +86,26 @@ namespace Services.Repositories
                            FirstName = u.FirstName,
                            LastName = u.LastName,
                            Password = u.Password,
-                           SelectedSubjects = u.Subjects.Select(s => s.Id).ToList()
+                           RelatedSubjectsAndClasses = (from cu in context.ClassesByUsers
+                                                        where cu.UserId.Equals(u.Id)
+                                                        select new ClassesBySubjectModel()
+                                                        {
+                                                            Subject = (from s in context.Subjects
+                                                                       where s.Id.Equals(cu.Subjects.Id)
+                                                                       select new SubjectModel()
+                                                                       {
+                                                                           Id = s.Id,
+                                                                           Name = s.Name
+                                                                       }).FirstOrDefault(),
+                                                            SelectedClasses = (from c in context.Classes
+                                                                               where c.Id.Equals(cu.Classes.Id)
+                                                                               select new ClassModel()
+                                                                               {
+                                                                                   Id = c.Id,
+                                                                                   Name = c.Name,
+                                                                               }).ToList(),
+                                                        }).ToList(),
+                           InstitutionId = u.Institution != null ? u.Institution.Id : 0
                        };
 
             return user.FirstOrDefault();
@@ -88,9 +126,26 @@ namespace Services.Repositories
                     dbUser.LastName = user.LastName;
                     dbUser.Username = user.Username;
                     dbUser.Password = user.Password;
-                    dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
-
+                    dbUser.Institution = context.Institution.Single(p => p.Id.Equals(user.InstitutionId));
+                    
                     context.Users.Add(dbUser);
+                    result = context.SaveChanges();
+
+                    foreach (ClassesBySubjectModel relatedSubject in user.RelatedSubjectsAndClasses)
+                    {
+                        foreach (ClassModel relatedClass in relatedSubject.SelectedClasses)
+                        {
+                            ClassesByUsers newClassByUser = new ClassesByUsers();
+                            newClassByUser.Subjects = context.Subjects.Single(p => p.Id.Equals(relatedSubject.Subject.Id));
+                            newClassByUser.Classes = context.Classes.Single(p => p.Id.Equals(relatedClass.Id));
+                            newClassByUser.Users = dbUser;
+                            newClassByUser.YearCreated = DateTime.Now.Year;
+
+                            context.ClassesByUsers.Add(newClassByUser);
+                        }
+                    }
+
+                    // save them back to the database
                     result = context.SaveChanges();
                 }
                 else
@@ -103,11 +158,24 @@ namespace Services.Repositories
                     dbUser.LastName = user.LastName;
                     dbUser.Username = user.Username;
                     dbUser.Password = user.Password;
-                    dbUser.Subjects.Clear();
+                    dbUser.Institution = context.Institution.Single(p => p.Id.Equals(user.InstitutionId));
+                    dbUser.ClassesByUsers.Clear();
 
                     result = context.SaveChanges();
 
-                    dbUser.Subjects = context.Subjects.Where(x => user.SelectedSubjects.Contains(x.Id)).ToList();
+                    foreach (ClassesBySubjectModel relatedSubject in user.RelatedSubjectsAndClasses)
+                    {
+                        foreach (ClassModel relatedClass in relatedSubject.SelectedClasses)
+                        {
+                            ClassesByUsers newClassByUser = new ClassesByUsers();
+                            newClassByUser.Subjects = context.Subjects.Single(p => p.Id.Equals(relatedSubject.Subject.Id));
+                            newClassByUser.Classes = context.Classes.Single(p => p.Id.Equals(relatedClass.Id));
+                            newClassByUser.Users = dbUser;
+                            newClassByUser.YearCreated = DateTime.Now.Year;
+
+                            context.ClassesByUsers.Add(newClassByUser);
+                        }
+                    }
 
                     // save them back to the database
                     result = context.SaveChanges();

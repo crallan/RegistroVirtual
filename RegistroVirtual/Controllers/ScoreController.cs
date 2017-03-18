@@ -18,16 +18,28 @@ namespace RegistroVirtual.Controllers
             ScoreViewModel scoreViewModel = new ScoreViewModel();
             List<SelectListItem> classOptions = new List<SelectListItem>();
             List<SelectListItem> trimesterOptions = new List<SelectListItem>();
-            List<ClassModel> classes = new Class().GetClassesList().ToList();
+            //List<ClassModel> classes = new Class().GetClassesList().ToList();
             List<TrimesterModel> trimesters = new Trimester().GetTrimesters().ToList();
+            List<SelectListItem> subjectOptions = new List<SelectListItem>();
+            UserModel contextUser = new User().GetUserByUsername(((UserModel)Session["User"]).Username);
+            List<SubjectModel> subjects = new Subject().GetList().ToList().Where(x => contextUser.RelatedSubjectsAndClasses.Select(r => r.Subject.Id).Contains(x.Id)).ToList();
+            List<List<ClassModel>> classes = contextUser.RelatedSubjectsAndClasses.Select(r => r.SelectedClasses).ToList();
 
-            foreach (ClassModel @class in classes)
+            foreach (List<ClassModel> classesList in classes)
             {
-                classOptions.Add(new SelectListItem
+                foreach (ClassModel @class in classesList)
                 {
-                    Text = @class.Name,
-                    Value = @class.Id.ToString()
-                });
+                    SelectListItem option = new SelectListItem
+                    {
+                        Text = @class.Name,
+                        Value = @class.Id.ToString()
+                    };
+
+                    if(classOptions.Where( x => x.Value.Equals(@class.Id.ToString())).Count() == 0)
+                    {
+                        classOptions.Add(option);
+                    }
+                }
             }
 
             foreach (TrimesterModel trimester in trimesters)
@@ -39,6 +51,16 @@ namespace RegistroVirtual.Controllers
                 });
             }
 
+            foreach (SubjectModel subject in subjects)
+            {
+                subjectOptions.Add(new SelectListItem
+                {
+                    Text = subject.Name,
+                    Value = subject.Id.ToString()
+                });
+            }
+
+            scoreViewModel.Subjects = subjectOptions;
             scoreViewModel.Classes = classOptions;
             scoreViewModel.Trimesters = trimesterOptions;
 
@@ -54,7 +76,7 @@ namespace RegistroVirtual.Controllers
             return View(scoreViewModel);
         }
 
-        public ActionResult LoadScores(string selectedClass, string selectedYear, string selectedTrimester)
+        public ActionResult LoadScores(string selectedClass, string selectedYear, string selectedTrimester, string selectedSubject)
         {
             List<ScoreModel> scores = new List<ScoreModel>();
 
@@ -80,7 +102,7 @@ namespace RegistroVirtual.Controllers
                     selectedRegisterProfile = profileDomain.Get(@class.ThirdTrimesterProfileId.ToString());
                 }
 
-                List<ScoreModel> currentScores = new Score().GetScores(Convert.ToInt32(selectedClass), Convert.ToInt32(selectedYear), Convert.ToInt32(selectedTrimester)).ToList();
+                List<ScoreModel> currentScores = new Score().GetScores(Convert.ToInt32(selectedClass), Convert.ToInt32(selectedYear), Convert.ToInt32(selectedTrimester), Convert.ToInt32(selectedSubject)).ToList();
 
                 foreach (StudentModel student in students)
                 {
@@ -154,8 +176,9 @@ namespace RegistroVirtual.Controllers
 
                 ViewBag.Columns = columns;
             }
-            catch (Exception ex) {
-                return Redirect("/Score?error=true");
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = "Debido a un error no se pudo obtener las calificaciones para los filtros seleccionados. Es posible que no haya una rúbrica definida." }, JsonRequestBehavior.AllowGet);
             }
 
             return PartialView(scores);

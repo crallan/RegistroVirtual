@@ -18,6 +18,18 @@
           <Property Name="ThirdTrimesterProfileId" Type="int" />
           <Property Name="YearCreated" Type="int" />
         </EntityType>
+        <EntityType Name="ClassesByUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="YearCreated" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="YearCreated" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Exams">
           <Key>
             <PropertyRef Name="Id" />
@@ -127,14 +139,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" />
         </EntityType>
-        <EntityType Name="SubjectsByUsers">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="SubjectId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="SubjectId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Trimesters">
           <Key>
             <PropertyRef Name="Id" />
@@ -211,6 +215,42 @@
             </Principal>
             <Dependent Role="Classes">
               <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesByUsers_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="ClassesByUsers" Type="Self.ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesByUsers_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="ClassesByUsers" Type="Self.ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesByUsers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ClassesByUsers" Type="Self.ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,30 +422,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SubjectsByUsers_SubjectsByUsers">
-          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
-          <End Role="SubjectsByUsers" Type="Self.SubjectsByUsers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subjects">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubjectsByUsers">
-              <PropertyRef Name="SubjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubjectsByUsers_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="SubjectsByUsers" Type="Self.SubjectsByUsers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubjectsByUsers">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Users_Institution">
           <End Role="Institution" Type="Self.Institution" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -432,6 +448,7 @@
         </Association>
         <EntityContainer Name="RegistroVirtualDbStoreContainer">
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassesByUsers" EntityType="Self.ClassesByUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exams" EntityType="Self.Exams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExamScores" EntityType="Self.ExamScores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExtraclassWorks" EntityType="Self.ExtraclassWorks" Schema="dbo" store:Type="Tables" />
@@ -443,7 +460,6 @@
           <EntitySet Name="Scores" EntityType="Self.Scores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SubjectsByUsers" EntityType="Self.SubjectsByUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trimesters" EntityType="Self.Trimesters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Classes_Institution" Association="Self.FK_Classes_Institution">
@@ -465,6 +481,18 @@
           <AssociationSet Name="FK_Classes_SchoolYears" Association="Self.FK_Classes_SchoolYears">
             <End Role="SchoolYears" EntitySet="SchoolYears" />
             <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesByUsers_Classes" Association="Self.FK_ClassesByUsers_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesByUsers_Subjects" Association="Self.FK_ClassesByUsers_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesByUsers_Users" Association="Self.FK_ClassesByUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_Exams_RegisterProfiles" Association="Self.FK_Exams_RegisterProfiles">
             <End Role="RegisterProfiles" EntitySet="RegisterProfiles" />
@@ -522,14 +550,6 @@
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
-          <AssociationSet Name="FK_SubjectsByUsers_SubjectsByUsers" Association="Self.FK_SubjectsByUsers_SubjectsByUsers">
-            <End Role="Subjects" EntitySet="Subjects" />
-            <End Role="SubjectsByUsers" EntitySet="SubjectsByUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubjectsByUsers_Users" Association="Self.FK_SubjectsByUsers_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="SubjectsByUsers" EntitySet="SubjectsByUsers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Users_Institution" Association="Self.FK_Users_Institution">
             <End Role="Institution" EntitySet="Institution" />
             <End Role="Users" EntitySet="Users" />
@@ -561,10 +581,10 @@
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Institution" Relationship="RegistroVirtualDb.FK_Users_Institution" FromRole="Users" ToRole="Institution" />
           <NavigationProperty Name="Roles" Relationship="RegistroVirtualDb.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
-          <NavigationProperty Name="Subjects" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Users" ToRole="Subjects" />
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Users" FromRole="Users" ToRole="RegisterProfiles" />
           <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassesByUsers" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Users" FromRole="Users" ToRole="ClassesByUsers" />
         </EntityType>
         <EntityContainer Name="RegistroVirtualEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Institution" EntityType="Self.Institution" />
@@ -578,10 +598,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="RegistroVirtualDb.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="SubjectsByUsers" Association="RegistroVirtualDb.SubjectsByUsers">
-            <End Role="Subjects" EntitySet="Subjects" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Classes_Institution" Association="RegistroVirtualDb.FK_Classes_Institution">
@@ -669,7 +685,20 @@
             <End Role="Scores" EntitySet="Scores" />
             <End Role="ExtraclassWorksScores" EntitySet="ExtraclassWorksScores" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="ClassesByUsers" EntityType="RegistroVirtualDb.ClassesByUsers" />
+          <AssociationSet Name="FK_ClassesByUsers_Classes" Association="RegistroVirtualDb.FK_ClassesByUsers_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesByUsers_Subjects" Association="RegistroVirtualDb.FK_ClassesByUsers_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesByUsers_Users" Association="RegistroVirtualDb.FK_ClassesByUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ClassesByUsers" EntitySet="ClassesByUsers" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Classes">
           <Key>
             <PropertyRef Name="Id" />
@@ -684,7 +713,8 @@
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles" FromRole="Classes" ToRole="RegisterProfiles" />
           <NavigationProperty Name="RegisterProfiles1" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles1" FromRole="Classes" ToRole="RegisterProfiles" />
           <NavigationProperty Name="RegisterProfiles2" Relationship="RegistroVirtualDb.FK_Classes_RegisterProfiles2" FromRole="Classes" ToRole="RegisterProfiles" />
-        </EntityType>
+          <NavigationProperty Name="ClassesByUsers" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Classes" FromRole="Classes" ToRole="ClassesByUsers" />
+          </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
@@ -699,8 +729,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.SubjectsByUsers" FromRole="Subjects" ToRole="Users" />
           <NavigationProperty Name="RegisterProfiles" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Subjects" FromRole="Subjects" ToRole="RegisterProfiles" />
+          <NavigationProperty Name="ClassesByUsers" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Subjects" FromRole="Subjects" ToRole="ClassesByUsers" />
         </EntityType>
         <Association Name="FK_Users_Institution">
           <End Type="RegistroVirtualDb.Institution" Role="Institution" Multiplicity="0..1" />
@@ -708,10 +738,6 @@
         </Association>
         <Association Name="FK_Users_Roles">
           <End Type="RegistroVirtualDb.Roles" Role="Roles" Multiplicity="0..1" />
-          <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="*" />
-        </Association>
-        <Association Name="SubjectsByUsers">
-          <End Type="RegistroVirtualDb.Subjects" Role="Subjects" Multiplicity="*" />
           <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="*" />
         </Association>
         <Association Name="FK_Classes_Institution">
@@ -899,7 +925,58 @@
           <End Type="RegistroVirtualDb.Scores" Role="Scores" Multiplicity="1" />
           <End Type="RegistroVirtualDb.ExtraclassWorksScores" Role="ExtraclassWorksScores" Multiplicity="*" />
         </Association>
-      </Schema>
+        <EntityType Name="ClassesByUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="SubjectId" />
+            <PropertyRef Name="YearCreated" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="YearCreated" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Classes" FromRole="ClassesByUsers" ToRole="Classes" />
+          <NavigationProperty Name="Subjects" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Subjects" FromRole="ClassesByUsers" ToRole="Subjects" />
+          <NavigationProperty Name="Users" Relationship="RegistroVirtualDb.FK_ClassesByUsers_Users" FromRole="ClassesByUsers" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_ClassesByUsers_Classes">
+          <End Type="RegistroVirtualDb.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ClassesByUsers" Role="ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesByUsers_Subjects">
+          <End Type="RegistroVirtualDb.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ClassesByUsers" Role="ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesByUsers_Users">
+          <End Type="RegistroVirtualDb.Users" Role="Users" Multiplicity="1" />
+          <End Type="RegistroVirtualDb.ClassesByUsers" Role="ClassesByUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassesByUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -966,14 +1043,6 @@
               <ScalarProperty Name="Id" ColumnName="RolId" />
             </EndProperty>
             <Condition ColumnName="RolId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="SubjectsByUsers" TypeName="RegistroVirtualDb.SubjectsByUsers" StoreEntitySet="SubjectsByUsers">
-            <EndProperty Name="Users">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Subjects">
-              <ScalarProperty Name="Id" ColumnName="SubjectId" />
-            </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="FK_Classes_Institution" TypeName="RegistroVirtualDb.FK_Classes_Institution" StoreEntitySet="Classes">
             <EndProperty Name="Classes">
@@ -1221,6 +1290,16 @@
               <ScalarProperty Name="Id" ColumnName="ScoreRegisterId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ClassesByUsers">
+            <EntityTypeMapping TypeName="RegistroVirtualDb.ClassesByUsers">
+              <MappingFragment StoreEntitySet="ClassesByUsers">
+                <ScalarProperty Name="YearCreated" ColumnName="YearCreated" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

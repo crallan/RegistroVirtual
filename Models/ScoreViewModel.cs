@@ -11,8 +11,10 @@ namespace Models
     {
         public int ClassId { get; set; }
         public int TrimesterId { get; set; }
+        public int SubjectId { get; set; }
         public List<SelectListItem> Classes { get; set; }
         public List<SelectListItem> Trimesters { get; set; }
+        public List<SelectListItem> Subjects { get; set; }
         public SelectList Years { get; set; }
 
         public ScoreViewModel()
@@ -20,6 +22,7 @@ namespace Models
             Years = new SelectList(Enumerable.Range(2017, (DateTime.Now.Year - 2017) + 1));
             Classes = new List<SelectListItem>();
             Trimesters = new List<SelectListItem>();
+            Subjects = new List<SelectListItem>();
         }
     }
 }

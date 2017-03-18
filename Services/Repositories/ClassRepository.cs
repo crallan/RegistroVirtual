@@ -23,9 +23,10 @@ namespace Services.Repositories
                              Id = c.Id,
                              Name = c.Name,
                              SchoolYearId = c.SchoolYears.Id,
-                             FirstTrimesterProfileId = c.RegisterProfiles.Id,
-                             SecondTrimesterProfileId = c.RegisterProfiles.Id,
-                             ThirdTrimesterProfileId = c.RegisterProfiles.Id
+                             FirstTrimesterProfileId = c.RegisterProfiles != null ? c.RegisterProfiles.Id : 0,
+                             SecondTrimesterProfileId = c.RegisterProfiles1 != null ? c.RegisterProfiles1.Id : 0,
+                             ThirdTrimesterProfileId = c.RegisterProfiles2 != null ? c.RegisterProfiles2.Id : 0,
+                             InstitutionId = c.Institution != null ? c.Institution.Id : 0
                          };
 
             return @class.FirstOrDefault();
@@ -39,10 +40,47 @@ namespace Services.Repositories
                            Id = c.Id,
                            Name = c.Name,
                            SchoolYearId = c.SchoolYears.Id,
-                           FirstTrimesterProfileId = c.RegisterProfiles.Id,
-                           SecondTrimesterProfileId = c.RegisterProfiles.Id,
-                           ThirdTrimesterProfileId = c.RegisterProfiles.Id
+                           FirstTrimesterProfileId = c.RegisterProfiles != null ? c.RegisterProfiles.Id : 0,
+                           SecondTrimesterProfileId = c.RegisterProfiles1 != null ? c.RegisterProfiles1.Id : 0,
+                           ThirdTrimesterProfileId = c.RegisterProfiles2 != null ? c.RegisterProfiles2.Id : 0,
+                           InstitutionId = c.Institution != null ? c.Institution.Id : 0
                        };
+
+            return classes;
+        }
+
+        public IEnumerable<ClassModel> GetClassesListByInstitution(int institutionId)
+        {
+            var classes = from c in context.Classes
+                          where c.Institution != null && c.Institution.Id.Equals(institutionId)
+                          select new ClassModel()
+                          {
+                              Id = c.Id,
+                              Name = c.Name,
+                              SchoolYearId = c.SchoolYears.Id,
+                              FirstTrimesterProfileId = c.RegisterProfiles != null ? c.RegisterProfiles.Id : 0,
+                              SecondTrimesterProfileId = c.RegisterProfiles1 != null ? c.RegisterProfiles1.Id : 0,
+                              ThirdTrimesterProfileId = c.RegisterProfiles2 != null ? c.RegisterProfiles2.Id : 0,
+                              InstitutionId = c.Institution != null ? c.Institution.Id : 0
+                          };
+
+            return classes;
+        }
+
+        public IEnumerable<ClassModel> GetClassesListByUser(int userId)
+        {
+            var classes = from c in context.Classes
+                          where c.Institution != null && c.Institution.Id.Equals(userId)
+                          select new ClassModel()
+                          {
+                              Id = c.Id,
+                              Name = c.Name,
+                              SchoolYearId = c.SchoolYears.Id,
+                              FirstTrimesterProfileId = c.RegisterProfiles != null ? c.RegisterProfiles.Id : 0,
+                              SecondTrimesterProfileId = c.RegisterProfiles1 != null ? c.RegisterProfiles1.Id : 0,
+                              ThirdTrimesterProfileId = c.RegisterProfiles2 != null ? c.RegisterProfiles2.Id : 0,
+                              InstitutionId = c.Institution != null ? c.Institution.Id : 0
+                          };
 
             return classes;
         }
