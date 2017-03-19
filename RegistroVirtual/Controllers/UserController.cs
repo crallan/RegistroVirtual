@@ -75,15 +75,24 @@ namespace RegistroVirtual.Controllers
 
         public PartialViewResult LoadSubjects(int institutionId)
         {
-            List<ClassModel> relatedClasses = new Class().GetClassesListByInstitution(institutionId).ToList();
+            List<ClassModel> classes = new Class().GetClassesListByInstitution(institutionId).ToList();
             List<SubjectModel> subjects = new Subject().GetList().ToList();
             List<SubjectViewModel> subjectViewModels = new List<SubjectViewModel>();
 
             foreach (SubjectModel subject in subjects) {
-                SubjectViewModel sub = new SubjectViewModel();
-                sub.Id = subject.Id;
-                sub.Name = subject.Name;
-                sub.Classes = new MultiSelectList(relatedClasses, "Id", "Name");
+                SubjectViewModel sub = RelatedSubjects.Where(x => x.Id.Equals(subject.Id)).FirstOrDefault();
+
+                if (sub != null)
+                {
+                    sub.Classes = new MultiSelectList(classes, "Id", "Name", sub.SelectedClasses.ToArray());
+                }
+                else
+                {
+                    sub = new SubjectViewModel();
+                    sub.Id = subject.Id;
+                    sub.Name = subject.Name;
+                    sub.Classes = new MultiSelectList(classes, "Id", "Name");
+                }
 
                 subjectViewModels.Add(sub);
             }
@@ -112,6 +121,16 @@ namespace RegistroVirtual.Controllers
         private void InitStaticVariables()
         {
             RelatedSubjects = new List<SubjectViewModel>();
+            List<ClassesBySubjectModel> classesAndSubjects = ((UserModel)Session["User"]).RelatedSubjectsAndClasses;
+
+            foreach (ClassesBySubjectModel relatedSubject in classesAndSubjects) {
+                SubjectViewModel subViewOption = new SubjectViewModel();
+                subViewOption.Id = relatedSubject.Subject.Id;
+                subViewOption.Name = relatedSubject.Subject.Name;
+                subViewOption.SelectedClasses = relatedSubject.SelectedClasses.Select(x => x.Id).ToList();
+
+                RelatedSubjects.Add(subViewOption);
+            }
         }
 
         public ActionResult ImportTask()
@@ -153,6 +172,9 @@ namespace RegistroVirtual.Controllers
             {
                 if (user.Save(userModel))
                 {
+                    //update user instance in the session variable
+                    Session["User"] = userModel;
+
                     return RedirectToAction("Index", new { success = true });
                 }
                 else
