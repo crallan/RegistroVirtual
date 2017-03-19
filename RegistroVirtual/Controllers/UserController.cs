@@ -133,7 +133,6 @@ namespace RegistroVirtual.Controllers
             List<ClassesBySubjectModel> classesAndSubjects = ((UserModel)Session["User"]).RelatedSubjectsAndClasses;
 
             foreach (ClassesBySubjectModel relatedSubject in classesAndSubjects) {
-
                 SubjectViewModel subViewOption = RelatedSubjects.Where(x => x.Id.Equals(relatedSubject.Subject.Id)).FirstOrDefault();
 
                 if (subViewOption != null && subViewOption.Id > 0)
@@ -157,7 +156,6 @@ namespace RegistroVirtual.Controllers
                 }
 
             }
-
         }
 
         public ActionResult ImportTask()
