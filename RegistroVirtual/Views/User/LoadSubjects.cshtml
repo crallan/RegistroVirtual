@@ -23,7 +23,7 @@
                         mode: WebGridPagerModes.All,
                         columns: gridSubjects.Columns(
                              gridSubjects.Column("Name", "Nombre", format: @<text>  <span class="display-mode"> <label id="lblName">@item.Name</label> </span> <input value="@item.Id" type="hidden" id="hdnSubjectId" /></text>, style: "col2Width"),
-                             gridSubjects.Column("Classes", "Clases", format: (item) => @Html.ListBox("SelectedClasses", Model.First().Classes, new { @class = "form-control chosen-select class-selector", data_placeholder="Clases..." }), style: "col3Width")
+                             gridSubjects.Column("Classes", "Clases", format: (item) => @Html.ListBox("SelectedClasses", (IEnumerable<SelectListItem>)@item.Classes, new { @class = "form-control chosen-select class-selector", data_placeholder="Clases..." }), style: "col3Width")
                         ))
     </div>
 
