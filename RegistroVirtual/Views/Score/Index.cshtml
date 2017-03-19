@@ -55,16 +55,16 @@
 
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Sección:</label>
+                    <label>Año:</label>
+                    @Html.DropDownList("selectedYear", Model.Years, new { @class = "form-control", id = "selected-year" })
+                </div>
+                <div class="form-group">
+                    <label>Asignatura:</label>
                     @Html.DropDownList("selectedSubject", Model.Subjects, new { @class = "form-control", id="selected-subject" })
                 </div>
                 <div class="form-group">
                     <label>Sección:</label>
                     @Html.DropDownList("selectedClass", Model.Classes, new { @class = "form-control", id = "selected-class" })
-                </div>
-                <div class="form-group">
-                    <label>Año:</label>
-                    @Html.DropDownList("selectedYear", Model.Years, new { @class = "form-control", id = "selected-year" })
                 </div>
                 <div class="form-group">
                     <label>Trimestre:</label>

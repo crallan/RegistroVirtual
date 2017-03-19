@@ -18,18 +18,23 @@ namespace RegistroVirtual.Controllers
             ScoreViewModel scoreViewModel = new ScoreViewModel();
             List<SelectListItem> classOptions = new List<SelectListItem>();
             List<SelectListItem> trimesterOptions = new List<SelectListItem>();
-            //List<ClassModel> classes = new Class().GetClassesList().ToList();
             List<TrimesterModel> trimesters = new Trimester().GetTrimesters().ToList();
             List<SelectListItem> subjectOptions = new List<SelectListItem>();
             UserModel contextUser = new User().GetUserByUsername(((UserModel)Session["User"]).Username);
-            List<SubjectModel> subjects = new Subject().GetList().ToList().Where(x => contextUser.RelatedSubjectsAndClasses.Select(r => r.Subject.Id).Contains(x.Id)).ToList();
-            List<List<ClassModel>> classes = contextUser.RelatedSubjectsAndClasses.Select(r => r.SelectedClasses).ToList();
 
-            foreach (List<ClassModel> classesList in classes)
+            foreach (ClassesBySubjectModel classesBySubject in contextUser.RelatedSubjectsAndClasses)
             {
-                foreach (ClassModel @class in classesList)
+                SelectListItem subjectOption = new SelectListItem
                 {
-                    SelectListItem option = new SelectListItem
+                    Text = classesBySubject.Subject.Name,
+                    Value = classesBySubject.Subject.Id.ToString()
+                };
+
+                subjectOptions.Add(subjectOption);
+
+                foreach (ClassModel @class in classesBySubject.SelectedClasses)
+                {
+                    SelectListItem classOption = new SelectListItem
                     {
                         Text = @class.Name,
                         Value = @class.Id.ToString()
@@ -37,7 +42,7 @@ namespace RegistroVirtual.Controllers
 
                     if(classOptions.Where( x => x.Value.Equals(@class.Id.ToString())).Count() == 0)
                     {
-                        classOptions.Add(option);
+                        classOptions.Add(classOption);
                     }
                 }
             }
@@ -48,15 +53,6 @@ namespace RegistroVirtual.Controllers
                 {
                     Text = trimester.Name,
                     Value = trimester.Id.ToString()
-                });
-            }
-
-            foreach (SubjectModel subject in subjects)
-            {
-                subjectOptions.Add(new SelectListItem
-                {
-                    Text = subject.Name,
-                    Value = subject.Id.ToString()
                 });
             }
 
