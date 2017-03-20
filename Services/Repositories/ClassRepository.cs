@@ -116,9 +116,9 @@ namespace Services.Repositories
                     dbClass.Name = classModel.Name;
                     dbClass.Institution = context.Institution.Single(p => p.Id.Equals(classModel.InstitutionId));
                     dbClass.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(classModel.SchoolYearId));
-                    dbClass.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.FirstTrimesterProfileId));
-                    dbClass.RegisterProfiles1 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.SecondTrimesterProfileId));
-                    dbClass.RegisterProfiles2 = context.RegisterProfiles.Single(p => p.Id.Equals(classModel.ThirdTrimesterProfileId));
+                    dbClass.RegisterProfiles = context.RegisterProfiles.Single(p => p.Id == classModel.FirstTrimesterProfileId);
+                    dbClass.RegisterProfiles1 = context.RegisterProfiles.Single(p => p.Id == classModel.SecondTrimesterProfileId);
+                    dbClass.RegisterProfiles2 = context.RegisterProfiles.Single(p => p.Id == classModel.ThirdTrimesterProfileId);
 
                     // save them back to the database
                     result = context.SaveChanges();

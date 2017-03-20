@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label>Nombre:</label>
-                    @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Name", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Name, new { required = "required", placeholder = "Nombre", @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Institución:</label>
@@ -47,15 +47,15 @@
                 </div>
                 <div class="form-group">
                     <label>Rúbrica Primer Trimestre:</label>
-                    @Html.DropDownListFor(m => m.FirstTrimesterProfileId, Model.RegisterProfiles, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.FirstTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Rúbrica Segundo Trimestre:</label>
-                    @Html.DropDownListFor(m => m.SecondTrimesterProfileId, Model.RegisterProfiles, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.SecondTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Rúbrica Tercer Trimestre:</label>
-                    @Html.DropDownListFor(m => m.ThirdTrimesterProfileId, Model.RegisterProfiles, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.ThirdTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block btn-large">Guardar</button>

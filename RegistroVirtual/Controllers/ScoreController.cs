@@ -30,7 +30,9 @@ namespace RegistroVirtual.Controllers
                     Value = classesBySubject.Subject.Id.ToString()
                 };
 
-                subjectOptions.Add(subjectOption);
+                if(subjectOptions.Where( x=> x.Value.ToString() == subjectOption.Value.ToString()).Count() == 0){
+                    subjectOptions.Add(subjectOption);
+                }
 
                 foreach (ClassModel @class in classesBySubject.SelectedClasses)
                 {

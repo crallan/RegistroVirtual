@@ -46,6 +46,34 @@ namespace RegistroVirtual.Controllers
             List<InstitutionModel> institutions = new Institution().GetInstitutionsList().ToList();
             InitStaticVariables();
 
+            List<ClassesBySubjectModel> classesAndSubjects = new User().Get(id).RelatedSubjectsAndClasses;
+
+            foreach (ClassesBySubjectModel relatedSubject in classesAndSubjects)
+            {
+                SubjectViewModel subViewOption = RelatedSubjects.Where(x => x.Id.Equals(relatedSubject.Subject.Id)).FirstOrDefault();
+
+                if (subViewOption != null && subViewOption.Id > 0)
+                {
+                    foreach (int classId in relatedSubject.SelectedClasses.Select(x => x.Id).ToList())
+                    {
+                        if (!subViewOption.SelectedClasses.Contains(classId))
+                        {
+                            subViewOption.SelectedClasses.Add(classId);
+                        }
+                    }
+                }
+                else
+                {
+                    subViewOption = new SubjectViewModel();
+                    subViewOption.Id = relatedSubject.Subject.Id;
+                    subViewOption.Name = relatedSubject.Subject.Name;
+                    subViewOption.SelectedClasses = relatedSubject.SelectedClasses.Select(x => x.Id).ToList();
+
+                    RelatedSubjects.Add(subViewOption);
+                }
+
+            }
+
             foreach (InstitutionModel institution in institutions)
             {
                 institutionsOptions.Add(new SelectListItem
@@ -111,13 +139,9 @@ namespace RegistroVirtual.Controllers
 
                     if (sub != null && sub.Id > 0)
                     {
-                        foreach (int classId in subjClass.SelectedClasses)
-                        {
-                            if (!sub.SelectedClasses.Contains(classId))
-                            {
-                                sub.SelectedClasses.Add(classId);
-                            }
-                        }
+                        RelatedSubjects.Remove(sub);
+                        RelatedSubjects.Add(subjClass);
+
                     }
                     else
                     {
@@ -130,32 +154,6 @@ namespace RegistroVirtual.Controllers
         private void InitStaticVariables()
         {
             RelatedSubjects = new List<SubjectViewModel>();
-            List<ClassesBySubjectModel> classesAndSubjects = ((UserModel)Session["User"]).RelatedSubjectsAndClasses;
-
-            foreach (ClassesBySubjectModel relatedSubject in classesAndSubjects) {
-                SubjectViewModel subViewOption = RelatedSubjects.Where(x => x.Id.Equals(relatedSubject.Subject.Id)).FirstOrDefault();
-
-                if (subViewOption != null && subViewOption.Id > 0)
-                {
-                    foreach (int classId in relatedSubject.SelectedClasses.Select( x => x.Id).ToList())
-                    {
-                        if (!subViewOption.SelectedClasses.Contains(classId))
-                        {
-                            subViewOption.SelectedClasses.Add(classId);
-                        }
-                    }
-                }
-                else
-                {
-                    subViewOption = new SubjectViewModel();
-                    subViewOption.Id = relatedSubject.Subject.Id;
-                    subViewOption.Name = relatedSubject.Subject.Name;
-                    subViewOption.SelectedClasses = relatedSubject.SelectedClasses.Select(x => x.Id).ToList();
-
-                    RelatedSubjects.Add(subViewOption);
-                }
-
-            }
         }
 
         public ActionResult ImportTask()
@@ -197,9 +195,6 @@ namespace RegistroVirtual.Controllers
             {
                 if (user.Save(userModel))
                 {
-                    //update user instance in the session variable
-                    Session["User"] = userModel;
-
                     return RedirectToAction("Index", new { success = true });
                 }
                 else
