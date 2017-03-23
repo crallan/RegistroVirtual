@@ -32,9 +32,6 @@ namespace Services.Model
         public virtual SchoolYears SchoolYears { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scores> Scores { get; set; }
-        public virtual RegisterProfiles RegisterProfiles { get; set; }
-        public virtual RegisterProfiles RegisterProfiles1 { get; set; }
-        public virtual RegisterProfiles RegisterProfiles2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassesByUsers> ClassesByUsers { get; set; }
     }

@@ -34,6 +34,28 @@ namespace Services.Repositories
             return profile.FirstOrDefault();
         }
 
+        public RegisterProfileModel GetProfile(int schoolYear, int year, int trimester, int subject)
+        {
+            var profile = from r in context.RegisterProfiles
+                          where r.SchoolYears.Id == schoolYear
+                               && r.YearCreated == year
+                               && r.Trimesters.Id ==trimester
+                               && r.Subjects.Id == subject
+                          select new RegisterProfileModel()
+                          {
+                              Id = r.Id,
+                              Name = r.Name,
+                              DailyWorkPercentage = (float)r.DailyWorkPercentage,
+                              ConceptPercentage = (float)r.ConceptPercentage,
+                              AssistancePercentage = (float)r.AssistancePercentage,
+                              TrimesterId = r.Trimesters.Id,
+                              SchoolYearId = r.SchoolYears.Id,
+                              NumberOfLessons = r.NumberOfLessons
+                          };
+
+            return profile.FirstOrDefault();
+        }
+
         public IEnumerable<RegisterProfileModel> GetProfiles()
         {
             var profiles = from r in context.RegisterProfiles

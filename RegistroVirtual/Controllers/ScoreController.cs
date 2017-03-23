@@ -74,6 +74,29 @@ namespace RegistroVirtual.Controllers
             return View(scoreViewModel);
         }
 
+        public JsonResult GetRelatedClasses(int selectedSubject)
+        {
+            UserModel contextUser = new User().GetUserByUsername(((UserModel)Session["User"]).Username);
+            List<ClassModel> relatedClasses = new List<ClassModel>();
+            List<ClassesBySubjectModel> classesBySubjectList = contextUser.RelatedSubjectsAndClasses.Where(x => x.Subject.Id == selectedSubject).ToList();
+
+            if(classesBySubjectList != null && classesBySubjectList.Count() > 0)
+            {
+                foreach (ClassesBySubjectModel classesBySubject in classesBySubjectList)
+                {
+                    foreach (ClassModel @class in classesBySubject.SelectedClasses)
+                    {
+                        if (relatedClasses.Where(x => x.Id.Equals(@class.Id.ToString())).Count() == 0)
+                        {
+                            relatedClasses.Add(@class);
+                        }
+                    }
+                }
+            }
+
+            return Json(new { classes = relatedClasses }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult LoadScores(string selectedClass, string selectedYear, string selectedTrimester, string selectedSubject)
         {
             List<ScoreModel> scores = new List<ScoreModel>();
@@ -85,22 +108,14 @@ namespace RegistroVirtual.Controllers
 
                 RegisterProfile profileDomain = new RegisterProfile();
                 TrimesterModel trimester = new Trimester().Get(selectedTrimester);
-                RegisterProfileModel selectedRegisterProfile = new RegisterProfileModel();
 
-                if (trimester.Name.Equals("Primer"))
-                {
-                    selectedRegisterProfile = profileDomain.Get(@class.FirstTrimesterProfileId.ToString());
-                }
-                else if (trimester.Name.Equals("Segundo"))
-                {
-                    selectedRegisterProfile = profileDomain.Get(@class.SecondTrimesterProfileId.ToString());
-                }
-                else
-                {
-                    selectedRegisterProfile = profileDomain.Get(@class.ThirdTrimesterProfileId.ToString());
-                }
+                int classId = Convert.ToInt32(selectedClass);
+                int year = Convert.ToInt32(selectedYear);
+                int trimesterId = Convert.ToInt32(selectedTrimester);
+                int subject = Convert.ToInt32(selectedSubject);
 
-                List<ScoreModel> currentScores = new Score().GetScores(Convert.ToInt32(selectedClass), Convert.ToInt32(selectedYear), Convert.ToInt32(selectedTrimester), Convert.ToInt32(selectedSubject)).ToList();
+                RegisterProfileModel selectedRegisterProfile = profileDomain.GetProfile(@class.SchoolYearId, year, trimesterId, subject);
+                List<ScoreModel> currentScores = new Score().GetScores(classId, year, trimesterId, subject).ToList();
 
                 foreach (StudentModel student in students)
                 {
@@ -176,7 +191,7 @@ namespace RegistroVirtual.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, responseText = "Debido a un error no se pudo obtener las calificaciones para los filtros seleccionados. Es posible que no haya una rúbrica definida." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, responseText = "Debido a un error no se pudo obtener las calificaciones para los filtros seleccionados. Es posible que no haya una rúbrica definida para los filtros seleccionados." }, JsonRequestBehavior.AllowGet);
             }
 
             return PartialView(scores);

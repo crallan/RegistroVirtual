@@ -45,18 +45,6 @@
                     <label>Año escolar:</label>
                     @Html.DropDownListFor(m => m.SchoolYearId, Model.SchoolYears, new { @class = "form-control" })
                 </div>
-                <div class="form-group">
-                    <label>Rúbrica Primer Trimestre:</label>
-                    @Html.DropDownListFor(m => m.FirstTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Rúbrica Segundo Trimestre:</label>
-                    @Html.DropDownListFor(m => m.SecondTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Rúbrica Tercer Trimestre:</label>
-                    @Html.DropDownListFor(m => m.ThirdTrimesterProfileId, Model.RegisterProfiles, "Seleccione una rúbrica", new { @class = "form-control" })
-                </div>
 
                 <button type="submit" class="btn btn-primary btn-block btn-large">Guardar</button>
             }

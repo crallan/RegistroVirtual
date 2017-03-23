@@ -195,6 +195,11 @@ namespace RegistroVirtual.Controllers
             {
                 if (user.Save(userModel))
                 {
+
+                    if (userModel.Id.Equals(((UserModel)Session["User"]).Id)) {
+                        Session["User"] = userModel;
+                    }
+
                     return RedirectToAction("Index", new { success = true });
                 }
                 else

@@ -25,5 +25,10 @@ namespace Domain
         {
             return new RegisterProfileRepository().Get(id);
         }
+
+        public RegisterProfileModel GetProfile(int schoolYear, int year, int trimester, int subject)
+        {
+            return new RegisterProfileRepository().GetProfile(schoolYear, year, trimester, subject);
+        }
     }
 }

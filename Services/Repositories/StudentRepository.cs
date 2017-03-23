@@ -137,15 +137,6 @@ namespace Services.Repositories
                                     dbClass.SchoolYears = context.SchoolYears.Single(s => s.Year.ToString().Equals(schoolYear));
                                     dbClass.YearCreated = currentYear;
 
-                                    RegisterProfiles profile = context.RegisterProfiles.Where(x => x.SchoolYears.Id == dbClass.SchoolYears.Id && x.YearCreated == currentYear).FirstOrDefault();
-
-                                    if (profile != null && profile.Id > 0)
-                                    {
-                                        dbClass.RegisterProfiles = profile;
-                                        dbClass.RegisterProfiles1 = profile;
-                                        dbClass.RegisterProfiles2 = profile;
-                                    }
-                                    
                                     context.Classes.Add(dbClass);
                                     int resultClass = context.SaveChanges();
                                 }

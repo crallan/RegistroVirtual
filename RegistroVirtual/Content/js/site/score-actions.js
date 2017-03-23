@@ -6,9 +6,33 @@
         ajaxStop: function () { $body.removeClass("loading"); }
     });
 
+    GetRelatedClasses($("#selected-subject").val());
+
     $("#score-search-button").click(function () {
         LoadGridScores();
     });
+
+    $("#selected-subject").on('change', function () {
+        GetRelatedClasses($(this).val());
+    });
+
+    function GetRelatedClasses(subject) {
+        $.ajax({
+            url: "/Score/GetRelatedClasses",
+            dataType: "json",
+            data: { selectedSubject: subject }
+        }).done(function (response) {
+            if (response.classes.length > 0) {
+                $("#selected-class").empty();
+                $.each(response.classes, function (index, element) {
+                    $('#selected-class')
+                        .append($("<option></option>")
+                                   .attr("value", element.Id)
+                                   .text(element.Name));
+                });
+            }
+        });
+    }
 
     function LoadGridScores() {
         var selectedClass = $("#selected-class").val();

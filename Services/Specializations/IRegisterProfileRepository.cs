@@ -11,5 +11,6 @@ namespace Services.Specializations
     public interface IRegisterProfileRepository : IRepository<RegisterProfileModel, string>
     {
         IEnumerable<RegisterProfileModel> GetProfiles();
+        RegisterProfileModel GetProfile(int schoolYear, int year, int trimester, int subject);
     }
 }
