@@ -16,11 +16,15 @@ namespace Services.Repositories
 
         public bool Authenticate(UserModel user)
         {
-            var users = context.Users.Where(x => x.Username.Equals(user.Username)
-                       && x.Password.Equals(user.Password));
+            if (context != null)
+            {
+                var users = context.Users.Where(x => x.Username.Equals(user.Username)
+                           && x.Password.Equals(user.Password));
 
-            if (users.Count() > 0) {
-                return true;
+                if (users.Count() > 0)
+                {
+                    return true;
+                }
             }
 
             return false;

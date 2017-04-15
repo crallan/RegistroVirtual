@@ -124,7 +124,7 @@ namespace RegistroVirtual.Controllers
 
         public PartialViewResult LoadExams()
         {
-            return PartialView(Exams.Where( x => !x.Percentage.Equals(-1)).OrderByDescending( x => x.Percentage));
+            return PartialView(Exams.Where( x => !x.Percentage.Equals(-1)).OrderByDescending( x => x.Id));
         }
 
         public ActionResult AddExam(string Id, string Name,  string Percentage, string Score)
@@ -195,7 +195,7 @@ namespace RegistroVirtual.Controllers
 
         public PartialViewResult LoadExtraclasses()
         {
-            return PartialView(Extraclasses.Where(x => !x.Percentage.Equals(-1)).OrderByDescending(x => x.Percentage));
+            return PartialView(Extraclasses.Where(x => !x.Percentage.Equals(-1)).OrderByDescending(x => x.Id));
         }
 
         public ActionResult AddExtraclass(string Id, string Name, string Percentage)

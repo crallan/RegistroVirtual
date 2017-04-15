@@ -28,6 +28,7 @@ namespace Services.Repositories
                               AssistancePercentage = (float)r.AssistancePercentage,
                               TrimesterId = r.Trimesters.Id,
                               SchoolYearId = r.SchoolYears.Id,
+                              SubjectId = r.Subjects.Id,
                               NumberOfLessons = r.NumberOfLessons
                           };
 
