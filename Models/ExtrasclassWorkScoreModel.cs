@@ -12,13 +12,15 @@ namespace Models
         public int ScoreRegisterId { get; set; }
         public int ExtraclassWorkId { get; set; }
         public float ExtraclassWorkPercentage { get; set; }
+        public float ExtraclassWorkScore { get; set; }
 
-        public ExtrasclassWorkScoreModel(int Id, int ScoreRegisterId, int ExtraclassWorkId, float ExtraclassWorkPercentage)
+        public ExtrasclassWorkScoreModel(int Id, int ScoreRegisterId, int ExtraclassWorkId, float ExtraclassWorkPercentage, float ExtraclassWorkScore)
         {
             this.Id = Id;
             this.ScoreRegisterId = ScoreRegisterId;
             this.ExtraclassWorkId = ExtraclassWorkId;
             this.ExtraclassWorkPercentage = ExtraclassWorkPercentage;
+            this.ExtraclassWorkScore = ExtraclassWorkScore;
         }
 
         public ExtrasclassWorkScoreModel()

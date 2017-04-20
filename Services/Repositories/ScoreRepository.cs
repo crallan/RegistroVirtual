@@ -55,7 +55,8 @@ namespace Services.Repositories
                                                 Id = et.Id,
                                                 ExtraclassWorkId = et.ExtraclassWorks.Id,
                                                 ScoreRegisterId = et.Scores.Id,
-                                                ExtraclassWorkPercentage = (float)et.ExtraclassWorkPercentage
+                                                ExtraclassWorkPercentage = (float)et.ExtraclassWorkPercentage,
+                                                ExtraclassWorkScore = (float)et.ExtraclassWorkScore
                                             }).ToList()
                          };
 
@@ -116,6 +117,7 @@ namespace Services.Repositories
                                 extraclass.Scores = dbScores;
                                 extraclass.ExtraclassWorks = context.ExtraclassWorks.Single(p => p.Id.Equals(extraclassModel.ExtraclassWorkId));
                                 extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+                                extraclass.ExtraclassWorkScore = extraclassModel.ExtraclassWorkScore;
 
                                 context.ExtraclassWorksScores.Add(extraclass);
                             }
@@ -174,6 +176,7 @@ namespace Services.Repositories
                                 extraclass.Scores = dbScores;
                                 extraclass.ExtraclassWorks = context.ExtraclassWorks.Single(p => p.Id.Equals(extraclassModel.ExtraclassWorkId));
                                 extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+                                extraclass.ExtraclassWorkScore = extraclassModel.ExtraclassWorkScore;
 
                                 context.ExtraclassWorksScores.Add(extraclass);
                             }

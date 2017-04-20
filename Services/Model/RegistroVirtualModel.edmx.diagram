@@ -15,11 +15,9 @@
         <AssociationConnector Association="RegistroVirtualDb.FK_Classes_Institution" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Students" Width="1.5" PointX="5.875" PointY="4.375" />
         <AssociationConnector Association="RegistroVirtualDb.FK_Students_Classes" />
-        <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorks" Width="1.5" PointX="11.125" PointY="7.625" />
         <EntityTypeShape EntityType="RegistroVirtualDb.RegisterProfiles" Width="1.5" PointX="8.875" PointY="0.75" />
         <EntityTypeShape EntityType="RegistroVirtualDb.SchoolYears" Width="1.5" PointX="6.625" PointY="9.875" />
         <EntityTypeShape EntityType="RegistroVirtualDb.Trimesters" Width="1.5" PointX="6.625" PointY="7.625" />
-        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorks_RegisterProfiles" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_SchoolYears" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Trimesters" />
         <AssociationConnector Association="RegistroVirtualDb.FK_RegisterProfiles_Users" />
@@ -34,13 +32,15 @@
         <EntityTypeShape EntityType="RegistroVirtualDb.ExamScores" Width="1.5" PointX="13.375" PointY="4" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ExamScores_Scores" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ExamScores_Exams" />
-        <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorksScores" Width="1.5" PointX="13.375" PointY="7" />
-        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" />
-        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" />
         <EntityTypeShape EntityType="RegistroVirtualDb.ClassesByUsers" Width="1.5" PointX="7" PointY="0.625" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Classes" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Subjects" />
         <AssociationConnector Association="RegistroVirtualDb.FK_ClassesByUsers_Users" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorks" Width="1.5" PointX="11.125" PointY="8.625" />
+        <EntityTypeShape EntityType="RegistroVirtualDb.ExtraclassWorksScores" Width="1.5" PointX="13.375" PointY="7.375" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorks_RegisterProfiles" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_ExtraclassWorks" />
+        <AssociationConnector Association="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

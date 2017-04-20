@@ -170,10 +170,20 @@ namespace RegistroVirtual.Controllers
                 foreach (ExtraclassWorkModel extraclass in selectedRegisterProfile.ExtraclassWorks)
                 {
                     string extraclassPercentageFieldId = string.Format("extraclass-percentage-{0}", extraclassIndex);
-                   
+                    string extraclassScoreFieldId = string.Format("extraclass-score-{0}", extraclassIndex);
+
+                    columns.Add(new WebGridColumn()
+                    {
+                        Header = string.Format("{0} Nota Obt.", extraclass.Name),
+                        Format = (item) => {
+                            return new HtmlString(string.Format("<input type='number' class='extraclass-score' min=0 max=100 id={0} value={1} data-extraclass-id={2} />", extraclassScoreFieldId,
+                                   currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExtraclasWorkResults.Where(t => t.ExtraclassWorkId.Equals(extraclass.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExtraclasWorkResults.Where(t => t.ExtraclassWorkId.Equals(extraclass.Id)).FirstOrDefault().ExtraclassWorkScore : 0, extraclass.Id));},
+                        Style = "col1Width"
+                    });
+
                     columns.Add(new WebGridColumn() {
                         Header = string.Format("{0} - {1}%", extraclass.Name, extraclass.Percentage),
-                        Format = (item) => { return new HtmlString(string.Format("<input type='number' class='extraclass-score' min=0 max={0} id={1} value={2} data-extraclass-id={3} />", extraclass.Percentage, extraclassPercentageFieldId,
+                        Format = (item) => { return new HtmlString(string.Format("<input type='number' class='extraclass-percentage' min=0 max={0} id={1} value={2} data-extraclass-id={3} readonly />", extraclass.Percentage, extraclassPercentageFieldId,
                             currentScores.Where(x => x.StudentId.Equals(item.StudentId) && x.ExtraclasWorkResults.Where(t => t.ExtraclassWorkId.Equals(extraclass.Id)).Count() > 0).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(item.StudentId)).First().ExtraclasWorkResults.Where(t => t.ExtraclassWorkId.Equals(extraclass.Id)).FirstOrDefault().ExtraclassWorkPercentage : 0, extraclass.Id)); },
                         Style = "col1Width" });
 

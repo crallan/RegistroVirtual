@@ -34,15 +34,18 @@
             var ExtraclassId = $(this).attr("data-extraclass-id");
             var Name = tr.find("#Name").val();
             var Percentage = tr.find("#Percentage").val();
+            var Points = tr.find("#Points").val();
 
             tr.find("#lblName").text(Name);
             tr.find("#lblPercentage").text(Percentage);
+            tr.find("#lblPoints").text(Points);
             tr.find('.edit-mode, .display-mode').toggle();
             var ExtraclassModel =
             {
                 "Id": ExtraclassId,
                 "Name": Name,
-                "Percentage": Percentage
+                "Percentage": Percentage,
+                "Points": Points
             };
 
             $.ajax({

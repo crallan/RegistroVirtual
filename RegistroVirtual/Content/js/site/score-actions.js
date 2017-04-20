@@ -71,8 +71,8 @@
         if (examPercentageField != null && examPercentageField != undefined) {
             var examMaxPercentage = examPercentageField.attr('max');
             var examMaxPoints = examPointsField.attr('max');
-            var score = Math.round(((parseInt(examPointsField.val()) * 100) / parseInt(examMaxPoints)) * 10) / 10;
-            var percentage = Math.round((score * ((parseInt(examMaxPercentage) / 100))) * 10) / 10;
+            var score = Math.round(((parseFloat(examPointsField.val()) * 100) / parseFloat(examMaxPoints)) * 10) / 10;
+            var percentage = Math.round((score * ((parseFloat(examMaxPercentage) / 100))) * 10) / 10;
             examScoreField.val(score);
             examPercentageField.val(percentage);
         }
@@ -88,11 +88,25 @@
             var examMaxPercentage = examPercentageField.attr('max');
             var examMaxPoints = examPointsField.attr('max');
 
-            var points = Math.round(((parseInt(examScoreField.val()) * parseInt(examMaxPoints)) / 100) * 10) / 10;
-            var percentage = Math.round((examScoreField.val() * ((parseInt(examMaxPercentage) / 100))) * 10) / 10;
+            var points = Math.round(((parseFloat(examScoreField.val()) * parseFloat(examMaxPoints)) / 100) * 10) / 10;
+            var percentage = Math.round((parseFloat(examScoreField.val()) * (parseFloat(examMaxPercentage) / 100)) * 10) / 10;
 
             examPointsField.val(points);
             examPercentageField.val(percentage);
+        }
+    }
+
+    function ScoreToCalculateExtraclassPercentage(extraclassScoreField)
+    {
+        var studentEntry = extraclassScoreField.parent().parent();
+        var extraclassId = extraclassScoreField.attr('data-extraclass-id');
+        var extraclassPercentageField = studentEntry.find("input.extraclass-percentage[data-extraclass-id='" + extraclassId + "']");
+
+        if (extraclassPercentageField != null && extraclassPercentageField != undefined)
+        {
+            var extraclassMaxPercentage = extraclassPercentageField.attr('max');
+            var percentage = Math.round((parseFloat(extraclassScoreField.val()) * (parseFloat(extraclassMaxPercentage) / 100)) * 10) / 10;
+            extraclassPercentageField.val(percentage);
         }
     }
 
@@ -104,7 +118,7 @@
             concept += parseFloat($(this).val());
         });
 
-        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
+        var extraclassPercentageFields = studentEntry.find("input.extraclass-percentage");
         extraclassPercentageFields.each(function () {
             concept += (parseFloat($(this).val()) * 100) / $(this).attr('max');
         });
@@ -129,7 +143,7 @@
             average += parseFloat($(this).val());
         });
 
-        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
+        var extraclassPercentageFields = studentEntry.find("input.extraclass-percentage");
         extraclassPercentageFields.each(function () {
             average += parseFloat($(this).val());
         });
@@ -215,6 +229,10 @@
             ScoreToCalculateExamPercentageAndPoints($(this));
         });
 
+        $(".extraclass-score").on('change', function () {
+            ScoreToCalculateExtraclassPercentage($(this));
+        });
+
         $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage").on('change', function () {
             var studentEntry = $(this).parent().parent();
             var concept = CalculateConcept(studentEntry);
@@ -262,17 +280,19 @@
                 });
 
 
-                var extraclassWorkFields = studentEntry.find(".extraclass-score");
+                var extraclassWorkFields = studentEntry.find(".extraclass-percentage");
                 var ExtraclasWorkResults = [];
 
                 extraclassWorkFields.each(function () {
                     var extraclassId = $(this).attr('data-extraclass-id');
                     var extraclassPercentage = $(this).val();
+                    var extraclassPointsField = studentEntry.find("input.extraclass-score[data-extraclass-id='" + extraclassId + "']");
 
                     var ExtraclassWork =
                     {
                         "ExtraclassWorkId": extraclassId,
                         "ExtraclassWorkPercentage": extraclassPercentage,
+                        "ExtraclassWorkScore": extraclassPointsField.val()
                     };
 
                     ExtraclasWorkResults.push(ExtraclassWork);

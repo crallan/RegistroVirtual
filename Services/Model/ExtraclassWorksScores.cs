@@ -16,6 +16,7 @@ namespace Services.Model
     {
         public int Id { get; set; }
         public double ExtraclassWorkPercentage { get; set; }
+        public double ExtraclassWorkScore { get; set; }
     
         public virtual ExtraclassWorks ExtraclassWorks { get; set; }
         public virtual Scores Scores { get; set; }
