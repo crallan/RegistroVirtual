@@ -48,6 +48,13 @@ namespace RegistroVirtual.Controllers
             List<SelectListItem> classOptions = new List<SelectListItem>();
             List<ClassModel> classes = new Class().GetClassesList().ToList();
 
+            //Add default option
+            classOptions.Add(new SelectListItem
+            {
+                Text = "-- Sin sección asociada --",
+                Value = "0"
+            });
+
             foreach (ClassModel @class in classes)
             {
                 classOptions.Add(new SelectListItem

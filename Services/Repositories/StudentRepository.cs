@@ -27,8 +27,8 @@ namespace Services.Repositories
                                CardId = s.CardId,
                                FirstName = s.FirstName,
                                LastName = s.LastName,
-                               ClassId = s.Classes.Id
-                           };
+                               ClassId = s.Classes != null ? s.Classes.Id : 0
+                          };
 
             return student.FirstOrDefault();
         }
@@ -43,7 +43,7 @@ namespace Services.Repositories
                               CardId = s.CardId,
                               FirstName = s.FirstName,
                               LastName = s.LastName,
-                              ClassId = s.Classes.Id
+                              ClassId = s.Classes != null ? s.Classes.Id : 0
                           };
 
             return student.FirstOrDefault();
@@ -52,13 +52,13 @@ namespace Services.Repositories
         public IEnumerable<StudentModel> GetList()
         {
             var students = from s in context.Students
-                          select new StudentModel()
-                          {
-                              Id = s.Id,
-                              CardId = s.CardId,
-                              FirstName = s.FirstName,
-                              LastName = s.LastName,
-                              ClassId = s.Classes.Id
+                           select new StudentModel()
+                           {
+                               Id = s.Id,
+                               CardId = s.CardId,
+                               FirstName = s.FirstName,
+                               LastName = s.LastName,
+                               ClassId = s.Classes != null ? s.Classes.Id : 0
                           };
 
             return students;
@@ -74,7 +74,7 @@ namespace Services.Repositories
                                CardId = s.CardId,
                                FirstName = s.FirstName,
                                LastName = s.LastName,
-                               ClassId = s.Classes.Id
+                               ClassId = s.Classes != null ? s.Classes.Id : 0
                            };
 
             return students;
@@ -212,7 +212,7 @@ namespace Services.Repositories
                     dbStudent.FirstName = student.FirstName;
                     dbStudent.LastName = student.LastName;
                     dbStudent.CardId = student.CardId;
-                    dbStudent.Classes = context.Classes.Single(p => p.Id.Equals(student.ClassId));
+                    dbStudent.Classes = context.Classes.Where(p => p.Id.Equals(student.ClassId)).FirstOrDefault();
 
                     context.Students.Add(dbStudent);
                     result = context.SaveChanges();
@@ -226,7 +226,9 @@ namespace Services.Repositories
                     dbStudent.FirstName = student.FirstName;
                     dbStudent.LastName = student.LastName;
                     dbStudent.CardId = student.CardId;
-                    dbStudent.Classes = context.Classes.Single(p => p.Id.Equals(student.ClassId));
+
+                    Classes relatedClass = context.Classes.Where(p => p.Id.Equals(student.ClassId)).FirstOrDefault();
+                    dbStudent.Classes = relatedClass;
 
                     // save them back to the database
                     result = context.SaveChanges();

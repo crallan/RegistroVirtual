@@ -32,13 +32,14 @@ namespace Services.Repositories
         public IEnumerable<ClassModel> GetClassesList()
         {
             var classes = from c in context.Classes
-                       select new ClassModel()
-                       {
-                           Id = c.Id,
-                           Name = c.Name,
-                           SchoolYearId = c.SchoolYears.Id,
-                           InstitutionId = c.Institution != null ? c.Institution.Id : 0
-                       };
+                          orderby c.Name 
+                           select new ClassModel()
+                           {
+                               Id = c.Id,
+                               Name = c.Name,
+                               SchoolYearId = c.SchoolYears.Id,
+                               InstitutionId = c.Institution != null ? c.Institution.Id : 0
+                           };
 
             return classes;
         }
@@ -46,6 +47,7 @@ namespace Services.Repositories
         public IEnumerable<ClassModel> GetClassesListByInstitution(int institutionId)
         {
             var classes = from c in context.Classes
+                          orderby c.Name
                           where c.Institution != null && c.Institution.Id.Equals(institutionId)
                           select new ClassModel()
                           {
