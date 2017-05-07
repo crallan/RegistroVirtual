@@ -16,6 +16,11 @@ namespace Domain
             return new ScoreRepository().GetScores(classId, year, trimester, subject);
         }
 
+        public ScoreModel GetStudentScore(int classId, int year, int trimester, int subject, int studentId)
+        {
+            return new ScoreRepository().GetStudentScore(classId, year, trimester, subject, studentId);
+        }
+
         public bool Save(List<ScoreModel> scores)
         {
             return new ScoreRepository().SaveScores(scores);

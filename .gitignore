@@ -252,3 +252,4 @@ paket-files/
 *.sln.iml
 *.xlsx
 *.xls
+RegistroVirtual/App_Data/
