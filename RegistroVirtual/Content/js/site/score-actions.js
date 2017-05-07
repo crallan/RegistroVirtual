@@ -110,6 +110,17 @@
         }
     }
 
+    function ScoreToCalculateDailyWorkPercentage(dailyWorkScoreField) {
+        var studentEntry = dailyWorkScoreField.parent().parent();
+        var dailyWorkPercentageField = studentEntry.find("#DailyWorkPercentage");
+
+        if (dailyWorkPercentageField != null && dailyWorkPercentageField != undefined) {
+            var dailyWorkMaxPercentage = dailyWorkPercentageField.attr('max');
+            var percentage = Math.round((parseFloat(dailyWorkScoreField.val()) * (parseFloat(dailyWorkMaxPercentage) / 100)) * 10) / 10;
+            dailyWorkPercentageField.val(percentage);
+        }
+    }
+
     function CalculateConcept(studentEntry) {
         var concept = 0;
 
@@ -233,7 +244,11 @@
             ScoreToCalculateExtraclassPercentage($(this));
         });
 
-        $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, #DailyWorkPercentage, #AssistancePercentage").on('change', function () {
+        $(".daily-work-score").on('change', function () {
+            ScoreToCalculateDailyWorkPercentage($(this));
+        });
+
+        $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, .daily-work-score, #AssistancePercentage").on('change', function () {
             var studentEntry = $(this).parent().parent();
             var concept = CalculateConcept(studentEntry);
             studentEntry.find("#ConceptPercentage").val(concept);
@@ -254,6 +269,7 @@
                 var YearCreated = $("#selected-year").val();
                 var RegisterProfileId = studentEntry.find("#RegisterProfileId").val();
                 var DailyWorkPercentage = studentEntry.find("#DailyWorkPercentage").val();
+                var DailyWorkScore = studentEntry.find("#DailyWorkScore").val();
                 var Absences = studentEntry.find("#Absences").val();
                 var Belated = studentEntry.find("#Belated").val();
                 var AssistancePercentage = studentEntry.find("#AssistancePercentage").val();
@@ -306,6 +322,7 @@
                     "YearCreated": YearCreated,
                     "RegisterProfileId": RegisterProfileId,
                     "DailyWorkPercentage": DailyWorkPercentage,
+                    "DailyWorkScore": DailyWorkScore,
                     "Absences": Absences,
                     "Belated": Belated,
                     "AssistancePercentage": AssistancePercentage,

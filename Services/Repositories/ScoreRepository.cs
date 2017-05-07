@@ -32,6 +32,7 @@ namespace Services.Repositories
                          {
                             Id = s.Id,
                             DailyWorkPercentage = (float)s.DailyWorkPercentage,
+                            DailyWorkScore = (float)s.DailyWorkScore,
                             ConceptPercentage = (float)s.ConceptPercentage,
                             AssistancePercentage = (float)s.AssistancePercentage,
                             Absences = s.Absences,
@@ -76,6 +77,7 @@ namespace Services.Repositories
                          {
                              Id = s.Id,
                              DailyWorkPercentage = (float)s.DailyWorkPercentage,
+                             DailyWorkScore = (float)s.DailyWorkScore,
                              ConceptPercentage = (float)s.ConceptPercentage,
                              AssistancePercentage = (float)s.AssistancePercentage,
                              Absences = s.Absences,
@@ -132,8 +134,8 @@ namespace Services.Repositories
                         dbScores.Absences = scoreEntry.Absences;
                         dbScores.Belated = scoreEntry.Belated;
                         dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
-                        dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
                         dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
+                        dbScores.DailyWorkScore = scoreEntry.DailyWorkScore;
                         dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
                         dbScores.YearCreated = scoreEntry.YearCreated;
 
@@ -181,6 +183,7 @@ namespace Services.Repositories
                         dbScores.Belated = scoreEntry.Belated;
                         dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
                         dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
+                        dbScores.DailyWorkScore = scoreEntry.DailyWorkScore;
                         dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
 
                         foreach (ExamScoreModel examModel in scoreEntry.ExamResults)

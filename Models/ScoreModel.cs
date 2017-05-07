@@ -14,6 +14,7 @@ namespace Models
         public string StudentName { get; set; }
         public int ClassId { get; set; }
         public float DailyWorkPercentage { get; set; }
+        public float DailyWorkScore { get; set; }
         public float ConceptPercentage { get; set; }
         public float AssistancePercentage { get; set; }
         public int Belated { get; set; }

@@ -114,6 +114,7 @@
           <Property Name="StudentId" Type="int" Nullable="false" />
           <Property Name="ClassId" Type="int" Nullable="false" />
           <Property Name="DailyWorkPercentage" Type="float" Nullable="false" />
+          <Property Name="DailyWorkScore" Type="float" Nullable="false" />
           <Property Name="ConceptPercentage" Type="float" Nullable="false" />
           <Property Name="AssistancePercentage" Type="float" Nullable="false" />
           <Property Name="Belated" Type="int" Nullable="false" />
@@ -774,6 +775,7 @@
           <Property Name="YearCreated" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ExamScores" Relationship="RegistroVirtualDb.FK_ExamScores_Scores" FromRole="Scores" ToRole="ExamScores" />
           <NavigationProperty Name="ExtraclassWorksScores" Relationship="RegistroVirtualDb.FK_ExtraclassWorksScores_Scores" FromRole="Scores" ToRole="ExtraclassWorksScores" />
+          <Property Name="DailyWorkScore" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_RegisterProfiles_Subjects">
           <End Type="RegistroVirtualDb.Subjects" Role="Subjects" Multiplicity="1" />
@@ -1067,6 +1069,7 @@
           <EntitySetMapping Name="Scores">
             <EntityTypeMapping TypeName="RegistroVirtualDb.Scores">
               <MappingFragment StoreEntitySet="Scores">
+                <ScalarProperty Name="DailyWorkScore" ColumnName="DailyWorkScore" />
                 <ScalarProperty Name="YearCreated" ColumnName="YearCreated" />
                 <ScalarProperty Name="Absences" ColumnName="Absences" />
                 <ScalarProperty Name="Belated" ColumnName="Belated" />

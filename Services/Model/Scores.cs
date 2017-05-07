@@ -28,6 +28,7 @@ namespace Services.Model
         public int Belated { get; set; }
         public int Absences { get; set; }
         public int YearCreated { get; set; }
+        public double DailyWorkScore { get; set; }
     
         public virtual RegisterProfiles RegisterProfiles { get; set; }
         public virtual Students Students { get; set; }
