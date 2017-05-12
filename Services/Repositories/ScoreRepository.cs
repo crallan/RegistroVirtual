@@ -217,6 +217,7 @@ namespace Services.Repositories
                             if (extraclass != null)
                             {
                                 extraclass.ExtraclassWorkPercentage = extraclassModel.ExtraclassWorkPercentage;
+                                extraclass.ExtraclassWorkScore = extraclassModel.ExtraclassWorkScore;
                             }
                             else
                             {
