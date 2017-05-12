@@ -129,12 +129,12 @@
             concept += parseFloat($(this).val());
         });
 
-        var extraclassPercentageFields = studentEntry.find("input.extraclass-percentage");
+        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
         extraclassPercentageFields.each(function () {
             concept += (parseFloat($(this).val()) * 100) / $(this).attr('max');
         });
 
-        concept += parseFloat(studentEntry.find("#DailyWorkPercentage").val());
+        concept += parseFloat(studentEntry.find("#DailyWorkScore").val());
         var maxConceptPercentage = parseFloat(studentEntry.find("#ConceptPercentage").attr('max'));
 
         var roundConcept = Math.round(((concept / 4) * (maxConceptPercentage / 100)) * 10) / 10;

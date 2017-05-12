@@ -21,7 +21,7 @@ namespace Services.Repositories
                 var users = context.Users.Where(x => x.Username.Equals(user.Username)
                            && x.Password.Equals(user.Password));
 
-                if (users.Count() > 0)
+                if (users != null && users.Count() > 0)
                 {
                     return true;
                 }
