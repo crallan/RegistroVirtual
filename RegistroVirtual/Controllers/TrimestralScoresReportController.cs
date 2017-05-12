@@ -129,13 +129,13 @@ namespace RegistroVirtual.Controllers
                     StudentModel student = students.Where(x => x.Id.ToString().Equals(score.StudentId.ToString())).FirstOrDefault();
                     StringBuilder headerBuilder = new StringBuilder();
                     StringBuilder bodyBuilder = new StringBuilder();
-                    string columnStyle = "border: 1px solid #2b5569;text-align:center;font-size: 11px;";
+                    string columnStyle = "border: 1px solid #2b5569;text-align:center;font-size: 11px;page-break-inside: avoid;";
 
-                    htmlBuilder.Append("<table class='table table-responsive scores-table webGrid' style='margin-top:10px;'>");
+                    htmlBuilder.Append("<table class='table table-responsive scores-table webGrid' style='margin-top:10px;width:100%;'>");
                     headerBuilder.Append("<thead>");
-                    headerBuilder.Append("<tr class='header' style='background-color: #337ab7;font-size: 14px;color: #fff;'>");
+                    headerBuilder.Append("<tr class='header' style='background-color: #337ab7;font-size: 14px;color: #fff;page-break-inside: avoid;'>");
                     bodyBuilder.Append("<tbody>");
-                    bodyBuilder.Append("<tr class='score-item'>");
+                    bodyBuilder.Append("<tr class='score-item' style='page-break-inside: avoid;'>");
                     
                     headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Estudiante");
                     bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.FirstName, student.LastName);
