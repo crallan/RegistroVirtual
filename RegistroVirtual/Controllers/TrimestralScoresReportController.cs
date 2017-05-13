@@ -67,10 +67,10 @@ namespace RegistroVirtual.Controllers
 
             if (success)
             {
-                ViewBag.SuccessMessage = "El registro de calificaciones se ha guardado de manera exitosa";
+                ViewBag.SuccessMessage = "El registro de calificaciones trimestral se ha generado de manera exitosa";
             }
             else if (error) {
-                 ViewBag.ErrorMessage = "Debido a un error no se ha podido guardar el registro de calificaciones.";
+                 ViewBag.ErrorMessage = "Debido a un error no se ha podido generar el registro de calificaciones trimestral.";
             }
 
             return View(scoreViewModel);
@@ -127,60 +127,63 @@ namespace RegistroVirtual.Controllers
                 {
                     float average = 0;
                     StudentModel student = students.Where(x => x.Id.ToString().Equals(score.StudentId.ToString())).FirstOrDefault();
-                    StringBuilder headerBuilder = new StringBuilder();
-                    StringBuilder bodyBuilder = new StringBuilder();
-                    string columnStyle = "border: 1px solid #2b5569;text-align:center;font-size: 11px;page-break-inside: avoid;";
-
-                    htmlBuilder.Append("<table class='table table-responsive scores-table webGrid' style='margin-top:10px;width:100%;'>");
-                    headerBuilder.Append("<thead>");
-                    headerBuilder.Append("<tr class='header' style='background-color: #337ab7;font-size: 14px;color: #fff;page-break-inside: avoid;'>");
-                    bodyBuilder.Append("<tbody>");
-                    bodyBuilder.Append("<tr class='score-item' style='page-break-inside: avoid;'>");
-                    
-                    headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Estudiante");
-                    bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.FirstName, student.LastName);
-
-                    foreach (ExamModel exam in selectedRegisterProfile.Exams)
+                    if (student != null)
                     {
-                        float examResult = score.ExamResults.Where(e => e.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPercentage;
-                        average += examResult;
-                        headerBuilder.AppendFormat("<th scope='col' style='{0}'> {1} - {2}%</th>", columnStyle, exam.Name, exam.Percentage);
-                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, examResult);
+                        StringBuilder headerBuilder = new StringBuilder();
+                        StringBuilder bodyBuilder = new StringBuilder();
+                        string columnStyle = "border: 1px solid #2b5569;text-align:center;font-size: 11px;page-break-inside: avoid;";
+
+                        htmlBuilder.Append("<table class='table table-responsive scores-table webGrid' style='margin-top:10px;width:100%;'>");
+                        headerBuilder.Append("<thead>");
+                        headerBuilder.Append("<tr class='header' style='background-color: #337ab7;font-size: 14px;color: #fff;page-break-inside: avoid;'>");
+                        bodyBuilder.Append("<tbody>");
+                        bodyBuilder.Append("<tr class='score-item' style='page-break-inside: avoid;'>");
+
+                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Estudiante");
+                        bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.FirstName, student.LastName);
+
+                        foreach (ExamModel exam in selectedRegisterProfile.Exams)
+                        {
+                            float examResult = score.ExamResults.Where(e => e.ExamId.Equals(exam.Id)).FirstOrDefault().ExamPercentage;
+                            average += examResult;
+                            headerBuilder.AppendFormat("<th scope='col' style='{0}'> {1} - {2}%</th>", columnStyle, exam.Name, exam.Percentage);
+                            bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, examResult);
+                        }
+
+                        foreach (ExtraclassWorkModel extraclass in selectedRegisterProfile.ExtraclassWorks)
+                        {
+                            float extraclassResult = score.ExtraclasWorkResults.Where(e => e.ExtraclassWorkId.Equals(extraclass.Id)).FirstOrDefault().ExtraclassWorkPercentage;
+                            average += extraclassResult;
+                            headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1} - {2}%</th>", columnStyle, extraclass.Name, extraclass.Percentage);
+                            bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, extraclassResult);
+                        }
+
+                        average += score.DailyWorkPercentage;
+                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Trabajo Cotidiano");
+                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.DailyWorkPercentage);
+
+                        average += score.AssistancePercentage;
+                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Asistencia");
+                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.AssistancePercentage);
+
+                        average += score.ConceptPercentage;
+                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Concepto");
+                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.ConceptPercentage);
+
+                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Promedio");
+                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, average);
+
+                        bodyBuilder.Append("</tr>");
+                        bodyBuilder.Append("</tbody>");
+                        headerBuilder.Append("</tr>");
+                        headerBuilder.Append("</thead>");
+
+                        //Concat header and body
+                        htmlBuilder.Append(headerBuilder);
+                        htmlBuilder.Append(bodyBuilder);
+
+                        htmlBuilder.Append("</table>");
                     }
-
-                    foreach (ExtraclassWorkModel extraclass in selectedRegisterProfile.ExtraclassWorks)
-                    {
-                        float extraclassResult = score.ExtraclasWorkResults.Where(e => e.ExtraclassWorkId.Equals(extraclass.Id)).FirstOrDefault().ExtraclassWorkPercentage;
-                        average += extraclassResult;
-                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1} - {2}%</th>", columnStyle, extraclass.Name, extraclass.Percentage);
-                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, extraclassResult);
-                    }
-
-                    average += score.DailyWorkPercentage;
-                    headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Trabajo Cotidiano");
-                    bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.DailyWorkPercentage);
-
-                    average += score.AssistancePercentage;
-                    headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Asistencia");
-                    bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.AssistancePercentage);
-
-                    average += score.ConceptPercentage;
-                    headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Concepto");
-                    bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.ConceptPercentage);
-
-                    headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Promedio");
-                    bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, average);
-
-                    bodyBuilder.Append("</tr>");
-                    bodyBuilder.Append("</tbody>");
-                    headerBuilder.Append("</tr>");
-                    headerBuilder.Append("</thead>");
-
-                    //Concat header and body
-                    htmlBuilder.Append(headerBuilder);
-                    htmlBuilder.Append(bodyBuilder);
-
-                    htmlBuilder.Append("</table>");
                 }
                 
                 var pdfBytes = generator.GeneratePdf(htmlBuilder.ToString());
@@ -198,7 +201,7 @@ namespace RegistroVirtual.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, responseText = "Debido a un error no se pudo obtener las calificaciones para los filtros seleccionados. Es posible que no haya una rúbrica definida para los filtros seleccionados." }, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index", new { error = true });
             }
         }
     }
