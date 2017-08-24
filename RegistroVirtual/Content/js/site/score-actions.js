@@ -192,19 +192,19 @@
         {
             assistancePercentage = 5;
         }
-        else if (percentage >= 1 && percentage <= 12)
+        else if (percentage > 0 && percentage <= 12)
         {
             assistancePercentage = 4;
         }
-        else if (percentage >= 13 && percentage <= 25)
+        else if (percentage > 12 && percentage <= 25)
         {
             assistancePercentage = 3;
         }
-        else if (percentage >= 26 && percentage <= 38)
+        else if (percentage > 25 && percentage <= 38)
         {
             assistancePercentage = 2;
         }
-        else if (percentage >= 39 && percentage <= 50)
+        else if (percentage > 38 && percentage <= 50)
         {
             assistancePercentage = 1;
         }
