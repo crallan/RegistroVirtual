@@ -64,6 +64,50 @@ namespace Services.Repositories
             return scores;
         }
 
+        public IEnumerable<ScoreModel> GetScores(int classId, int year, int subject)
+        {
+            var scores = from s in context.Scores
+                         join c in context.Classes on s.Classes.Id equals c.Id
+                         where c.Id.Equals(classId)
+                                && s.YearCreated.Equals(year)
+                                && s.RegisterProfiles.Subjects.Id.Equals(subject)
+                         select new ScoreModel()
+                         {
+                             Id = s.Id,
+                             DailyWorkPercentage = (float)s.DailyWorkPercentage,
+                             DailyWorkScore = (float)s.DailyWorkScore,
+                             ConceptPercentage = (float)s.ConceptPercentage,
+                             AssistancePercentage = (float)s.AssistancePercentage,
+                             Absences = s.Absences,
+                             Belated = s.Belated,
+                             RegisterProfileId = s.RegisterProfiles.Id,
+                             StudentId = s.Students.Id,
+                             ExamResults = (from ex in context.ExamScores
+                                            where ex.Scores.Id.Equals(s.Id)
+                                            select new ExamScoreModel()
+                                            {
+                                                Id = ex.Id,
+                                                ExamId = ex.Exams.Id,
+                                                ScoreRegisterId = ex.Scores.Id,
+                                                ExamScore = (float)ex.ExamScore,
+                                                ExamPoints = (float)ex.ExamPoints,
+                                                ExamPercentage = (float)ex.ExamPercentage
+                                            }).ToList(),
+                             ExtraclasWorkResults = (from et in context.ExtraclassWorksScores
+                                                     where et.Scores.Id.Equals(s.Id)
+                                                     select new ExtrasclassWorkScoreModel()
+                                                     {
+                                                         Id = et.Id,
+                                                         ExtraclassWorkId = et.ExtraclassWorks.Id,
+                                                         ScoreRegisterId = et.Scores.Id,
+                                                         ExtraclassWorkPercentage = (float)et.ExtraclassWorkPercentage,
+                                                         ExtraclassWorkScore = (float)et.ExtraclassWorkScore
+                                                     }).ToList()
+                         };
+
+            return scores;
+        }
+
         public ScoreModel GetStudentScore(int classId, int year, int trimester, int subject,int student)
         {
             var score = from s in context.Scores

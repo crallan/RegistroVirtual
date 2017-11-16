@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -188,6 +189,7 @@
     <Compile Include="Controllers\InstitutionController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterProfileController.cs" />
+    <Compile Include="Controllers\AnnualScoresReportController.cs" />
     <Compile Include="Controllers\TrimestralScoresReportController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -255,6 +257,7 @@
     <Content Include="Content\documents\Template.xls" />
     <Content Include="Views\User\LoadSubjects.cshtml" />
     <Content Include="Views\TrimestralScoresReport\Index.cshtml" />
+    <Content Include="Views\AnnualScoresReport\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
