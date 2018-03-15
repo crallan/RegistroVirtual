@@ -23,7 +23,6 @@ namespace Services.Model
     
         public int Id { get; set; }
         public double DailyWorkPercentage { get; set; }
-        public double ConceptPercentage { get; set; }
         public double AssistancePercentage { get; set; }
         public int Belated { get; set; }
         public int Absences { get; set; }

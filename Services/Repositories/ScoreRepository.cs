@@ -33,7 +33,6 @@ namespace Services.Repositories
                             Id = s.Id,
                             DailyWorkPercentage = (float)s.DailyWorkPercentage,
                             DailyWorkScore = (float)s.DailyWorkScore,
-                            ConceptPercentage = (float)s.ConceptPercentage,
                             AssistancePercentage = (float)s.AssistancePercentage,
                             Absences = s.Absences,
                             Belated = s.Belated,
@@ -76,7 +75,6 @@ namespace Services.Repositories
                              Id = s.Id,
                              DailyWorkPercentage = (float)s.DailyWorkPercentage,
                              DailyWorkScore = (float)s.DailyWorkScore,
-                             ConceptPercentage = (float)s.ConceptPercentage,
                              AssistancePercentage = (float)s.AssistancePercentage,
                              Absences = s.Absences,
                              Belated = s.Belated,
@@ -122,7 +120,6 @@ namespace Services.Repositories
                              Id = s.Id,
                              DailyWorkPercentage = (float)s.DailyWorkPercentage,
                              DailyWorkScore = (float)s.DailyWorkScore,
-                             ConceptPercentage = (float)s.ConceptPercentage,
                              AssistancePercentage = (float)s.AssistancePercentage,
                              Absences = s.Absences,
                              Belated = s.Belated,
@@ -180,7 +177,6 @@ namespace Services.Repositories
                         dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
                         dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
                         dbScores.DailyWorkScore = scoreEntry.DailyWorkScore;
-                        dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
                         dbScores.YearCreated = scoreEntry.YearCreated;
 
                         context.Scores.Add(dbScores);
@@ -228,7 +224,6 @@ namespace Services.Repositories
                         dbScores.AssistancePercentage = scoreEntry.AssistancePercentage;
                         dbScores.DailyWorkPercentage = scoreEntry.DailyWorkPercentage;
                         dbScores.DailyWorkScore = scoreEntry.DailyWorkScore;
-                        dbScores.ConceptPercentage = scoreEntry.ConceptPercentage;
 
                         foreach (ExamScoreModel examModel in scoreEntry.ExamResults)
                         {

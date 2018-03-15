@@ -71,14 +71,12 @@ namespace RegistroVirtual.Controllers
                 if (registerProfile == null) {
                     registerProfile = new RegisterProfileModel();
                     registerProfile.AssistancePercentage = 1;
-                    registerProfile.ConceptPercentage = 1;
                     registerProfile.DailyWorkPercentage = 1;
                 }
 
             }
             else {
                 registerProfile.AssistancePercentage = 1;
-                registerProfile.ConceptPercentage = 1;
                 registerProfile.DailyWorkPercentage = 1;
             }
 

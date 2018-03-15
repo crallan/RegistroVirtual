@@ -150,7 +150,6 @@ namespace RegistroVirtual.Controllers
 
                             average += score.DailyWorkPercentage;
                             average += score.AssistancePercentage;
-                            average += score.ConceptPercentage;
                         }
 
                         headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Promedio " + trimester.Name);

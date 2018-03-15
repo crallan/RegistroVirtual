@@ -166,10 +166,6 @@ namespace RegistroVirtual.Controllers
                         headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Asistencia");
                         bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.AssistancePercentage);
 
-                        average += score.ConceptPercentage;
-                        headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Concepto");
-                        bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, score.ConceptPercentage);
-
                         headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Promedio");
                         bodyBuilder.AppendFormat("<td class='col1Width' style='{0}'>{1}</td>", columnStyle, average);
 

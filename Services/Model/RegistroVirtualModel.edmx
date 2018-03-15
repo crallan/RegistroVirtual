@@ -85,7 +85,6 @@
           <Property Name="TrimesterId" Type="int" Nullable="false" />
           <Property Name="SchoolYearId" Type="int" Nullable="false" />
           <Property Name="DailyWorkPercentage" Type="float" Nullable="false" />
-          <Property Name="ConceptPercentage" Type="float" Nullable="false" />
           <Property Name="AssistancePercentage" Type="float" Nullable="false" />
           <Property Name="NumberOfLessons" Type="int" Nullable="false" />
           <Property Name="YearCreated" Type="int" />
@@ -115,7 +114,6 @@
           <Property Name="ClassId" Type="int" Nullable="false" />
           <Property Name="DailyWorkPercentage" Type="float" Nullable="false" />
           <Property Name="DailyWorkScore" Type="float" Nullable="false" />
-          <Property Name="ConceptPercentage" Type="float" Nullable="false" />
           <Property Name="AssistancePercentage" Type="float" Nullable="false" />
           <Property Name="Belated" Type="int" Nullable="false" />
           <Property Name="Absences" Type="int" Nullable="false" />
@@ -702,7 +700,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="DailyWorkPercentage" Type="Double" Nullable="false" />
-          <Property Name="ConceptPercentage" Type="Double" Nullable="false" />
           <Property Name="AssistancePercentage" Type="Double" Nullable="false" />
           <NavigationProperty Name="SchoolYears" Relationship="RegistroVirtualDb.FK_RegisterProfiles_SchoolYears" FromRole="RegisterProfiles" ToRole="SchoolYears" />
           <NavigationProperty Name="Trimesters" Relationship="RegistroVirtualDb.FK_RegisterProfiles_Trimesters" FromRole="RegisterProfiles" ToRole="Trimesters" />
@@ -765,7 +762,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DailyWorkPercentage" Type="Double" Nullable="false" />
-          <Property Name="ConceptPercentage" Type="Double" Nullable="false" />
           <Property Name="AssistancePercentage" Type="Double" Nullable="false" />
           <Property Name="Belated" Type="Int32" Nullable="false" />
           <Property Name="Absences" Type="Int32" Nullable="false" />
@@ -1000,7 +996,6 @@
                 <ScalarProperty Name="NumberOfLessons" ColumnName="NumberOfLessons" />
                 <ScalarProperty Name="YearCreated" ColumnName="YearCreated" />
                 <ScalarProperty Name="AssistancePercentage" ColumnName="AssistancePercentage" />
-                <ScalarProperty Name="ConceptPercentage" ColumnName="ConceptPercentage" />
                 <ScalarProperty Name="DailyWorkPercentage" ColumnName="DailyWorkPercentage" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1074,7 +1069,6 @@
                 <ScalarProperty Name="Absences" ColumnName="Absences" />
                 <ScalarProperty Name="Belated" ColumnName="Belated" />
                 <ScalarProperty Name="AssistancePercentage" ColumnName="AssistancePercentage" />
-                <ScalarProperty Name="ConceptPercentage" ColumnName="ConceptPercentage" />
                 <ScalarProperty Name="DailyWorkPercentage" ColumnName="DailyWorkPercentage" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -25,7 +25,6 @@ namespace Services.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public double DailyWorkPercentage { get; set; }
-        public double ConceptPercentage { get; set; }
         public double AssistancePercentage { get; set; }
         public Nullable<int> YearCreated { get; set; }
         public int NumberOfLessons { get; set; }

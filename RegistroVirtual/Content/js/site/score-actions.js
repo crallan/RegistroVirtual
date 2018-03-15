@@ -56,7 +56,6 @@
             catch (e) {
                 $("#scores-container").empty().html(response);
                 UpdateZeroAsistanceFields();
-                CalculateAllAverageAndConcept();
                 bindScoreGridEvents();
             };
         });
@@ -121,31 +120,6 @@
         }
     }
 
-    function CalculateConcept(studentEntry) {
-        var concept = 0;
-
-        var examScoreFields = studentEntry.find("input.exam-score");
-        examScoreFields.each(function () {
-            concept += parseFloat($(this).val());
-        });
-
-        var extraclassPercentageFields = studentEntry.find("input.extraclass-score");
-        extraclassPercentageFields.each(function () {
-            concept += (parseFloat($(this).val()) * 100) / $(this).attr('max');
-        });
-
-        concept += parseFloat(studentEntry.find("#DailyWorkScore").val());
-        var maxConceptPercentage = parseFloat(studentEntry.find("#ConceptPercentage").attr('max'));
-
-        var roundConcept = Math.round(((concept / 4) * (maxConceptPercentage / 100)) * 10) / 10;
-
-        if (roundConcept > maxConceptPercentage) {
-            roundConcept = maxConceptPercentage;
-        }
-
-        return roundConcept;
-    }
-
     function CalculateAverage(studentEntry) {
         var average = 0;
         
@@ -160,22 +134,9 @@
         });
 
         average += parseFloat(studentEntry.find("#DailyWorkPercentage").val());
-        average += parseFloat(studentEntry.find("#ConceptPercentage").val());
         average += parseFloat(studentEntry.find("#AssistancePercentage").val());
 
         return Math.round(average);
-    }
-
-    function CalculateAllAverageAndConcept()
-    {
-        var studentScores = $(".score-item");
-
-        studentScores.each(function () {
-            var concept = CalculateConcept($(this));
-            $(this).find("#ConceptPercentage").val(concept);
-            var average = CalculateAverage($(this));
-            $(this).find("#Average").val(average);
-        });
     }
 
     function CalculateAssitance(assistanceRelatedField) {
@@ -188,25 +149,38 @@
         var percentage = ((parseInt(Absences) + (parseInt(Belated) / 3)) * 100) / parseInt(NumberOfLessons);
         var assistancePercentage = 0;
 
-        if (percentage === 0)
+        if (percentage < 1)
         {
-            assistancePercentage = 5;
+            assistancePercentage = 10;
         }
-        else if (percentage > 0 && percentage <= 12)
+        else if (percentage >= 1 && percentage < 10)
         {
+            assistancePercentage = 9;
+        }
+        else if (percentage >= 10 && percentage < 20) {
+            assistancePercentage = 8;
+        }
+        else if (percentage >= 20 && percentage < 30) {
+            assistancePercentage = 7;
+        } else if (percentage >= 30 && percentage < 40) {
+            assistancePercentage = 6;
+        }
+        else if (percentage >= 40 && percentage < 50) {
+            assistancePercentage = 5;
+        } else if (percentage >= 50 && percentage < 60) {
             assistancePercentage = 4;
         }
-        else if (percentage > 12 && percentage <= 25)
-        {
+        else if (percentage >= 60 && percentage < 70) {
             assistancePercentage = 3;
         }
-        else if (percentage > 25 && percentage <= 38)
-        {
+        else if (percentage >= 70 && percentage < 80) {
             assistancePercentage = 2;
         }
-        else if (percentage > 38 && percentage <= 50)
-        {
+        else if (percentage >= 80 && percentage < 90) {
             assistancePercentage = 1;
+        }
+        else if (percentage >= 90 && percentage <= 100) {
+            assistancePercentage = 0;
         }
 
         AssistanceField.val(assistancePercentage);
@@ -250,8 +224,7 @@
 
         $(".exam-score, .exam-points, .extraclass-score, .assistance-related-field, .daily-work-score, #AssistancePercentage").on('change', function () {
             var studentEntry = $(this).parent().parent();
-            var concept = CalculateConcept(studentEntry);
-            studentEntry.find("#ConceptPercentage").val(concept);
+
             var average = CalculateAverage(studentEntry);
             studentEntry.find("#Average").val(average);
         });
@@ -273,7 +246,6 @@
                 var Absences = studentEntry.find("#Absences").val();
                 var Belated = studentEntry.find("#Belated").val();
                 var AssistancePercentage = studentEntry.find("#AssistancePercentage").val();
-                var ConceptPercentage = studentEntry.find("#ConceptPercentage").val();
 
                 var examScoreFields = studentEntry.find(".exam-score");
                 var ExamResults = [];
@@ -326,7 +298,6 @@
                     "Absences": Absences,
                     "Belated": Belated,
                     "AssistancePercentage": AssistancePercentage,
-                    "ConceptPercentage": ConceptPercentage,
                     "ExamResults": ExamResults,
                     "ExtraclasWorkResults": ExtraclasWorkResults
                 };

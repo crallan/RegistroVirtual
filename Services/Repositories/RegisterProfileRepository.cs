@@ -24,7 +24,6 @@ namespace Services.Repositories
                               Id = r.Id,
                               Name = r.Name,
                               DailyWorkPercentage = (float)r.DailyWorkPercentage,
-                              ConceptPercentage = (float)r.ConceptPercentage,
                               AssistancePercentage = (float)r.AssistancePercentage,
                               TrimesterId = r.Trimesters.Id,
                               SchoolYearId = r.SchoolYears.Id,
@@ -47,7 +46,6 @@ namespace Services.Repositories
                               Id = r.Id,
                               Name = r.Name,
                               DailyWorkPercentage = (float)r.DailyWorkPercentage,
-                              ConceptPercentage = (float)r.ConceptPercentage,
                               AssistancePercentage = (float)r.AssistancePercentage,
                               TrimesterId = r.Trimesters.Id,
                               SchoolYearId = r.SchoolYears.Id,
@@ -65,7 +63,6 @@ namespace Services.Repositories
                                Id = r.Id,
                                Name = r.Name,
                                DailyWorkPercentage = (float)r.DailyWorkPercentage,
-                               ConceptPercentage = (float)r.ConceptPercentage,
                                AssistancePercentage = (float)r.AssistancePercentage,
                                TrimesterId = r.Trimesters.Id,
                                SchoolYearId = r.SchoolYears.Id,
@@ -92,7 +89,6 @@ namespace Services.Repositories
                         dbProfiles.Users = context.Users.Single(p => p.Id.Equals(profileModel.UserId));
                         dbProfiles.AssistancePercentage = profileModel.AssistancePercentage;
                         dbProfiles.DailyWorkPercentage = profileModel.DailyWorkPercentage;
-                        dbProfiles.ConceptPercentage = profileModel.ConceptPercentage;
                         dbProfiles.Trimesters = context.Trimesters.Single(p => p.Id.Equals(profileModel.TrimesterId));
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
                         dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
@@ -146,7 +142,6 @@ namespace Services.Repositories
                         dbProfiles.Users = context.Users.Single(p => p.Id.Equals(profileModel.UserId));
                         dbProfiles.AssistancePercentage = profileModel.AssistancePercentage;
                         dbProfiles.DailyWorkPercentage = profileModel.DailyWorkPercentage;
-                        dbProfiles.ConceptPercentage = profileModel.ConceptPercentage;
                         dbProfiles.Trimesters = context.Trimesters.Single(p => p.Id.Equals(profileModel.TrimesterId));
                         dbProfiles.SchoolYears = context.SchoolYears.Single(p => p.Id.Equals(profileModel.SchoolYearId));
                         dbProfiles.Subjects = context.Subjects.Single(p => p.Id.Equals(profileModel.SubjectId));
