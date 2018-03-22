@@ -48,7 +48,7 @@ namespace Services.Repositories
         {
             var classes = from c in context.Classes
                           orderby c.Name
-                          where c.Institution != null && c.Institution.Id.Equals(institutionId)
+                          where c.Institution != null && c.Institution.Id.Equals(institutionId) && c.YearCreated == DateTime.Now.Year
                           select new ClassModel()
                           {
                               Id = c.Id,

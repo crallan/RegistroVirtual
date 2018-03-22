@@ -19,7 +19,7 @@ namespace Models
 
         public ScoreViewModel()
         {
-            Years = new SelectList(Enumerable.Range(2017, (DateTime.Now.Year - 2017) + 1));
+            Years = new SelectList(Enumerable.Range(2017, (DateTime.Now.Year - 2017) + 1), DateTime.Now.Year);
             Classes = new List<SelectListItem>();
             Trimesters = new List<SelectListItem>();
             Subjects = new List<SelectListItem>();
