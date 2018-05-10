@@ -140,7 +140,7 @@ namespace RegistroVirtual.Controllers
                         bodyBuilder.Append("<tr class='score-item' style='page-break-inside: avoid;'>");
 
                         headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Estudiante");
-                        bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.FirstName, student.LastName);
+                        bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.LastName, student.FirstName);
 
                         foreach (ExamModel exam in selectedRegisterProfile.Exams)
                         {

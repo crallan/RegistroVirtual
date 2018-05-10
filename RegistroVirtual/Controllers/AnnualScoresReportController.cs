@@ -122,7 +122,7 @@ namespace RegistroVirtual.Controllers
                     List<ScoreModel> studentScores = currentScores.Where(x => x.StudentId.ToString().Equals(student.Id.ToString())).ToList();
 
                     headerBuilder.AppendFormat("<th scope='col' style='{0}'>{1}</th>", columnStyle, "Estudiante");
-                    bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.FirstName, student.LastName);
+                    bodyBuilder.AppendFormat("<td class='col2Width' style='{0}'>{1} {2}</td>", columnStyle, student.LastName, student.FirstName);
 
                     foreach (TrimesterModel trimester in trimesters)
                     {

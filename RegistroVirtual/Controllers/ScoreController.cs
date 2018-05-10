@@ -121,7 +121,7 @@ namespace RegistroVirtual.Controllers
                 {
                     ScoreModel scoreEntry = currentScores.Where(x => x.StudentId.Equals(student.Id)).Count() > 0 ? currentScores.Where(x => x.StudentId.Equals(student.Id)).First() : new ScoreModel();
                     scoreEntry.StudentId = student.Id;
-                    scoreEntry.StudentName = string.Format("{0} {1}", student.FirstName, student.LastName);
+                    scoreEntry.StudentName = string.Format("{0} {1}", student.LastName, student.FirstName);
 
                     scores.Add(scoreEntry);
                 }

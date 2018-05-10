@@ -34,6 +34,18 @@
         });
     }
 
+    function CalculateAllScores()
+    {
+        var studentScores = $(".score-item");
+        var Scores = [];
+
+        studentScores.each(function () {
+            var studentEntry = $(this);
+            var average = CalculateAverage(studentEntry);
+            studentEntry.find("#Average").val(average);
+        })
+    }
+
     function LoadGridScores() {
         var selectedClass = $("#selected-class").val();
         var selectedYear = $("#selected-year").val();
@@ -57,6 +69,7 @@
                 $("#scores-container").empty().html(response);
                 UpdateZeroAsistanceFields();
                 bindScoreGridEvents();
+                CalculateAllScores();
             };
         });
     }

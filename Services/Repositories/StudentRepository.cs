@@ -52,6 +52,7 @@ namespace Services.Repositories
         public IEnumerable<StudentModel> GetList()
         {
             var students = from s in context.Students
+                           orderby s.LastName
                            select new StudentModel()
                            {
                                Id = s.Id,
@@ -67,6 +68,7 @@ namespace Services.Repositories
         public IEnumerable<StudentModel> GetListByClass(int classId)
         {
             var students = from s in context.Students
+                           orderby s.LastName
                            where s.Classes.Id.Equals(classId)
                            select new StudentModel()
                            {
