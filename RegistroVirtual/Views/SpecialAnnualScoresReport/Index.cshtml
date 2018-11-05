@@ -1,7 +1,7 @@
 ﻿@model Models.ScoreViewModel
 
 @{
-    ViewBag.Title = "Reporte Anual de Calificaciones";
+    ViewBag.Title = "Reporte Anual Especial 2018 de Calificaciones";
     Layout = "~/Layouts/DashboardLayout.cshtml";
 }
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Reporte Anual de Calificaciones
+                    Reporte Anual de Calificaciones 2018
                 </h1>
             </div>
         </div>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="col-md-6">
-            @Html.ActionLink("Descargar Reporte", "GeneratePDF", "AnnualScoresReport", new { selectedClass = "cParam", selectedYear = "yParam", selectedSubject = "sParam" }, new { id = "print-report-button", @class= "btn btn-primary btn-block btn-large" })
+            @Html.ActionLink("Descargar Reporte", "GeneratePDF", "SpecialAnnualScoresReport", new { selectedClass = "cParam", selectedYear = "yParam", selectedSubject = "sParam" }, new { id = "print-report-button", @class= "btn btn-primary btn-block btn-large" })
         </div>
 
         <hr class="score-grid-divider">
