@@ -160,11 +160,11 @@ namespace RegistroVirtual.Controllers
                             //Calculate annual
                             if (trimester.Id.Equals(2))
                             {
-                                annual += average * float.Parse("0.6");
+                                annual += average * float.Parse("0.4");
                             }
                             else
                             {
-                                annual += average * float.Parse("0.4");
+                                annual += average * float.Parse("0.6");
                             }
                         }
                     }
