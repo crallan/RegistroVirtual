@@ -15,8 +15,6 @@
           <Property Name="SchoolYearId" Type="int" Nullable="false" />
           <Property Name="InstitutionId" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbd09ced05da2243d2ae21aafd00321f31.dbo.ClassesByUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ClassesByUsers">
           <Key>
             <PropertyRef Name="UserId" />
@@ -128,9 +126,9 @@ warning 6002: The table/view 'dbd09ced05da2243d2ae21aafd00321f31.dbo.ClassesByUs
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CardId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CardId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ClassId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Subjects">
@@ -437,6 +435,7 @@ warning 6002: The table/view 'dbd09ced05da2243d2ae21aafd00321f31.dbo.ClassesByUs
         </Association>
         <EntityContainer Name="RegistroVirtualModelStoreContainer">
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassesByUsers" EntityType="Self.ClassesByUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exams" EntityType="Self.Exams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExamScores" EntityType="Self.ExamScores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExtraclassWorks" EntityType="Self.ExtraclassWorks" Schema="dbo" store:Type="Tables" />
@@ -450,14 +449,6 @@ warning 6002: The table/view 'dbd09ced05da2243d2ae21aafd00321f31.dbo.ClassesByUs
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trimesters" EntityType="Self.Trimesters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClassesByUsers" EntityType="Self.ClassesByUsers" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ClassesByUsers].[UserId] AS [UserId], 
-    [ClassesByUsers].[ClassId] AS [ClassId], 
-    [ClassesByUsers].[SubjectId] AS [SubjectId], 
-    [ClassesByUsers].[YearCreated] AS [YearCreated]
-    FROM [dbo].[ClassesByUsers] AS [ClassesByUsers]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Classes_Institution" Association="Self.FK_Classes_Institution">
             <End Role="Institution" EntitySet="Institution" />
             <End Role="Classes" EntitySet="Classes" />

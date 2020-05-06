@@ -186,7 +186,7 @@ namespace Services.Repositories
                     result = context.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
