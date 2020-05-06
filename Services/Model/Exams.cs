@@ -24,9 +24,10 @@ namespace Services.Model
         public double Percentage { get; set; }
         public int Score { get; set; }
         public string Name { get; set; }
+        public int RegisterProfileId { get; set; }
     
-        public virtual RegisterProfiles RegisterProfiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamScores> ExamScores { get; set; }
+        public virtual RegisterProfiles RegisterProfiles { get; set; }
     }
 }

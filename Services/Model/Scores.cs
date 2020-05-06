@@ -28,13 +28,16 @@ namespace Services.Model
         public int Absences { get; set; }
         public int YearCreated { get; set; }
         public double DailyWorkScore { get; set; }
+        public int RegisterProfileId { get; set; }
+        public int StudentId { get; set; }
+        public int ClassId { get; set; }
     
-        public virtual RegisterProfiles RegisterProfiles { get; set; }
-        public virtual Students Students { get; set; }
-        public virtual Classes Classes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamScores> ExamScores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraclassWorksScores> ExtraclassWorksScores { get; set; }
+        public virtual RegisterProfiles RegisterProfiles { get; set; }
+        public virtual Classes Classes { get; set; }
+        public virtual Students Students { get; set; }
     }
 }

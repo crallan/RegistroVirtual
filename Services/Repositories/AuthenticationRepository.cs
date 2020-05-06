@@ -81,6 +81,7 @@ namespace Services.Repositories
 
         public UserModel GetUserByUsername(string username)
         {
+            var DataBaseScript = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
             var user = from u in context.Users
                        where u.Username.Equals(username)
                        select new UserModel()

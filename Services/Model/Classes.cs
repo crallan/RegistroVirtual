@@ -17,22 +17,24 @@ namespace Services.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Classes()
         {
-            this.Students = new HashSet<Students>();
-            this.Scores = new HashSet<Scores>();
             this.ClassesByUsers = new HashSet<ClassesByUsers>();
+            this.Scores = new HashSet<Scores>();
+            this.Students = new HashSet<Students>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> YearCreated { get; set; }
+        public int YearCreated { get; set; }
+        public int SchoolYearId { get; set; }
+        public int InstitutionId { get; set; }
     
         public virtual Institution Institution { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Students> Students { get; set; }
         public virtual SchoolYears SchoolYears { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassesByUsers> ClassesByUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scores> Scores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassesByUsers> ClassesByUsers { get; set; }
+        public virtual ICollection<Students> Students { get; set; }
     }
 }

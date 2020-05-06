@@ -17,8 +17,10 @@ namespace Services.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RegisterProfiles()
         {
-            this.Exams = new HashSet<Exams>();
+            this.ExamScores = new HashSet<ExamScores>();
+            this.ExtraclassWorksScores = new HashSet<ExtraclassWorksScores>();
             this.Scores = new HashSet<Scores>();
+            this.Exams = new HashSet<Exams>();
             this.ExtraclassWorks = new HashSet<ExtraclassWorks>();
         }
     
@@ -26,18 +28,26 @@ namespace Services.Model
         public string Name { get; set; }
         public double DailyWorkPercentage { get; set; }
         public double AssistancePercentage { get; set; }
-        public Nullable<int> YearCreated { get; set; }
+        public int YearCreated { get; set; }
         public int NumberOfLessons { get; set; }
+        public int TrimesterId { get; set; }
+        public int SchoolYearId { get; set; }
+        public int SubjectId { get; set; }
+        public int UserId { get; set; }
     
-        public virtual SchoolYears SchoolYears { get; set; }
-        public virtual Trimesters Trimesters { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Exams> Exams { get; set; }
+        public virtual ICollection<ExamScores> ExamScores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExtraclassWorksScores> ExtraclassWorksScores { get; set; }
+        public virtual SchoolYears SchoolYears { get; set; }
         public virtual Subjects Subjects { get; set; }
+        public virtual Trimesters Trimesters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scores> Scores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exams> Exams { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraclassWorks> ExtraclassWorks { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

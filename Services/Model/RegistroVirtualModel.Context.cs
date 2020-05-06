@@ -25,20 +25,20 @@ namespace Services.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Institution> Institution { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Classes> Classes { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Subjects> Subjects { get; set; }
-        public virtual DbSet<Students> Students { get; set; }
-        public virtual DbSet<RegisterProfiles> RegisterProfiles { get; set; }
-        public virtual DbSet<SchoolYears> SchoolYears { get; set; }
-        public virtual DbSet<Trimesters> Trimesters { get; set; }
         public virtual DbSet<Exams> Exams { get; set; }
-        public virtual DbSet<Scores> Scores { get; set; }
         public virtual DbSet<ExamScores> ExamScores { get; set; }
-        public virtual DbSet<ClassesByUsers> ClassesByUsers { get; set; }
         public virtual DbSet<ExtraclassWorks> ExtraclassWorks { get; set; }
         public virtual DbSet<ExtraclassWorksScores> ExtraclassWorksScores { get; set; }
+        public virtual DbSet<Institution> Institution { get; set; }
+        public virtual DbSet<RegisterProfiles> RegisterProfiles { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<SchoolYears> SchoolYears { get; set; }
+        public virtual DbSet<Scores> Scores { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<Trimesters> Trimesters { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<ClassesByUsers> ClassesByUsers { get; set; }
+        public virtual DbSet<Students> Students { get; set; }
     }
 }

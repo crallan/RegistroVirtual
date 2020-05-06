@@ -18,8 +18,12 @@ namespace Services.Model
         public double ExamScore { get; set; }
         public double ExamPercentage { get; set; }
         public double ExamPoints { get; set; }
+        public int RegisterProfileId { get; set; }
+        public int ExamId { get; set; }
+        public int ScoreRegisterId { get; set; }
     
-        public virtual Scores Scores { get; set; }
         public virtual Exams Exams { get; set; }
+        public virtual RegisterProfiles RegisterProfiles { get; set; }
+        public virtual Scores Scores { get; set; }
     }
 }
